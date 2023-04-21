@@ -15,8 +15,33 @@ typedef struct player{
 }t_player;
 
 
-t_player ballon(t_player player){
-    BITMAP;
+void ballon(t_player player, BITMAP *buffer){
+    BITMAP *acceuil_base;
+    acceuil_base = load_bitmap("../images/tir_ballon.bmp",NULL);
+    if (!acceuil_base){
+        allegro_message("Pb de l'image tir_ballon");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    BITMAP *acceuil_zoom;
+    acceuil_zoom = load_bitmap("../images/tir_ballon1.bmp",NULL);
+    if (!acceuil_zoom){
+        allegro_message("Pb de l'image tir_ballon1");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    show_mouse(screen);
+    int condition;
+    do {
+        if (((mouse_x >= 250 && mouse_x <= 550) && (mouse_y >= 400 && mouse_y <= 550)) == 0) {
+            stretch_blit(acceuil_base, buffer, 0, 0, acceuil_base->w, acceuil_base->h, 0, 0, 800, 600);
+        } else {
+            stretch_blit(acceuil_zoom, buffer, 0, 0, acceuil_zoom->w, acceuil_zoom->h, 0, 0, 800, 600);
+            if (mouse_b == 1)
+                condition = 1;
+        }
+        blit(buffer,screen,0,0,0,0,buffer->w,buffer->h);
+    } while (condition!=1);
 }
 
 void initEcran(){
@@ -128,6 +153,8 @@ int main(){
         if (!key[KEY_UP] && !key[KEY_DOWN] && !key[KEY_LEFT] && !key[KEY_RIGHT]){
             goku.animation=0;
         }
+        if (key[KEY_SPACE])
+            ballon(goku,buffer);
         }
     allegro_exit();
     return 1;
