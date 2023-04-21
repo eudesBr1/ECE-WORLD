@@ -28,6 +28,9 @@ void initEcran(){
 
 int main(){
     allegro_init();
+    player goku;
+    goku.x=10;
+    goku.y=10;
     initEcran();
     install_keyboard();
     install_mouse();
@@ -60,9 +63,13 @@ int main(){
     }
     //stretch_blit(carte,screen,0,0,carte->w,carte->h,0,0,screen->w,screen->h);
     while (!key[KEY_ESC]){
-        blit(carte,buffer,0,0,0,0,screen->w,screen->h);
-        draw_sprite(buffer,GOKU,0,0);
+        blit(carte,buffer,goku.x,goku.y,0,0,screen->w,screen->h);
+        draw_sprite(buffer,GOKU,goku.x,goku.y);
         blit(buffer,screen,0,0,0,0,screen->w, screen->h);
+        if(key[KEY_LEFT]) goku.x -= 2;
+        if(key[KEY_RIGHT]) goku.x += 2;
+        if(key[KEY_UP]) goku.y -= 2;
+        if(key[KEY_DOWN]) goku.y += 2;
         rest(10);
         }
     allegro_exit();
