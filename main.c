@@ -23,6 +23,26 @@ int main(){
     install_keyboard();
     install_mouse();
     BITMAP *carte;
+    BITMAP *GOKUTEMPLATE;
+    BITMAP *GOKU;
+    BITMAP *buffer= create_bitmap(screen->w,screen->h);
+    clear(buffer);
+    GOKUTEMPLATE = load_bitmap("../images/gokuSprite.bmp",NULL);
+    if (!GOKUTEMPLATE){
+        allegro_message("Pb de l'image chargee");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    GOKUTEMPLATE = create_sub_bitmap(GOKUTEMPLATE,0,0,32,48);
+    // Créer un sous-bitmap pour extraire le premier sprite
+    BITMAP *spriteTemplate = create_sub_bitmap(GOKUTEMPLATE, 0, 0, 32, 48);
+
+    // Créer un nouveau bitmap pour votre personnage
+    GOKU = create_bitmap(spriteTemplate->w, spriteTemplate->h);
+
+    // Copier le sprite extrait dans votre nouveau bitmap
+    clear_bitmap(GOKU);
+    blit(spriteTemplate, GOKU, 0, 0, 0, 0, spriteTemplate->w, spriteTemplate->h);
     carte = load_bitmap("../images/map_pokemon.bmp",NULL);
     if (!carte){
         allegro_message("Pb de l'image chargee");
@@ -30,9 +50,12 @@ int main(){
         exit(EXIT_FAILURE);
     }
     //stretch_blit(carte,screen,0,0,carte->w,carte->h,0,0,screen->w,screen->h);
-    while (!key[KEY_ESC])
-        blit(carte,screen,0,0,0,0,screen->w, screen->w);
-
+    while (!key[KEY_ESC]){
+        blit(carte,buffer,0,0,0,0,screen->w,screen->h);
+        draw_sprite(buffer,GOKU,0,0);
+        blit(buffer,screen,0,0,0,0,screen->w, screen->h);
+        rest(10);
+        }
     allegro_exit();
     return 1;
 }
