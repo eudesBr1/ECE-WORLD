@@ -13,8 +13,29 @@ typedef struct player{
 }t_player;
 
 
-t_player ballon(t_player player){
-    BITMAP
+void ballon(BITMAP *buffer){
+    int condition = 0;
+    BITMAP *chargement_ballon;
+    chargement_ballon = load_bitmap("tir_ballon.bmp",NULL);
+    if (!chargement_ballon){
+        allegro_message("Pb de l'image ballon");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    BITMAP *boutton_enfoncer;
+
+    show_mouse(screen);
+    boutton_enfoncer = load_bitmap("tir_ballon1.bmp",NULL);
+    if (!boutton_enfoncer){
+        allegro_message("Pb de l'image ballon");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    while (!key[KEY_ESC]) {
+        clear_bitmap(buffer);
+        blit(chargement_ballon, buffer, 0,0,0,100,chargement_ballon->w, chargement_ballon->h);
+        blit(buffer, screen, 0,0,0,0, buffer->w, buffer->h);
+    }
 }
 
 void initEcran(){
@@ -28,7 +49,7 @@ void initEcran(){
 
 int main(){
     allegro_init();
-    player goku;
+    t_player goku;
     goku.x=10;
     goku.y=10;
     initEcran();
@@ -71,6 +92,8 @@ int main(){
         if(key[KEY_UP]) goku.y -= 2;
         if(key[KEY_DOWN]) goku.y += 2;
         rest(10);
+        if (key[KEY_SPACE])
+            ballon(buffer);
         }
     allegro_exit();
     return 1;
