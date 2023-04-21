@@ -10,7 +10,7 @@ typedef struct player{
     BITMAP *bas[3];
     BITMAP *droite[3];
     BITMAP *gauche[3];
-    int position[3];
+    int position;
     int animation;
 }t_player;
 
@@ -81,25 +81,50 @@ int main(){
         blit(carte,buffer,goku.x,goku.y,0,0,screen->w,screen->h);
         if(key[KEY_LEFT]){
             goku.x -= vitesse;
-            draw_sprite(buffer,goku.gauche[goku.animation/10],goku.x,goku.y);
+            goku.position = 3;
+            goku.animation++;
+            if (goku.animation==30){
+                goku.animation=0;
+            }
         }
         if(key[KEY_RIGHT]){
-            goku.x += vitesse;
-            draw_sprite(buffer,goku.droite[goku.animation/10],goku.x,goku.y);
+            goku.x += vitesse*2;
+            goku.position=1;
+            goku.animation++;
+            if (goku.animation==30){
+                goku.animation=0;
+            }
         }
         if(key[KEY_UP]) {
             goku.y -= vitesse;
-            draw_sprite(buffer,goku.haut[goku.animation/10],goku.x,goku.y);
+            goku.position=0;
+            goku.animation++;
+            if (goku.animation==30){
+                goku.animation=0;
+            }
         }
         if(key[KEY_DOWN]){
-            goku.y += vitesse*3;
+            goku.y += vitesse*2;
+            goku.position=2;
+            goku.animation++;
+            if (goku.animation==30){
+                goku.animation=0;
+            }
+        }
+        if (goku.position==0){
+            draw_sprite(buffer,goku.haut[goku.animation/10],goku.x,goku.y);
+        }
+        if (goku.position==1){
+            draw_sprite(buffer,goku.droite[goku.animation/10],goku.x,goku.y);
+        }
+        if (goku.position==2){
             draw_sprite(buffer,goku.bas[goku.animation/10],goku.x,goku.y);
         }
-        rest(9);
-        goku.animation++;
-        if (goku.animation==30){
-            goku.animation=0;
+        if (goku.position==3){
+            draw_sprite(buffer,goku.gauche[goku.animation/10],goku.x,goku.y);
         }
+
+        rest(9);
      //   printf("%d",goku.animation);
         }
     allegro_exit();
