@@ -6,7 +6,16 @@
 typedef struct player{
     int x,y,ticket,points;
     char* name;
-}player;
+    BITMAP *haut[4];
+    BITMAP *bas[4];
+    BITMAP *droite[4];
+    BITMAP *gauche[4];
+}t_player;
+
+
+t_player ballon(t_player player){
+    BITMAP
+}
 
 void initEcran(){
     set_color_depth(desktop_color_depth());
@@ -58,5 +67,6 @@ int main(){
         }
     allegro_exit();
     return 1;
+
 }
 END_OF_MAIN()
