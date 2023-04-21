@@ -18,13 +18,12 @@ void initEcran(){
 }
 
 int main(){
-    printf("Bonjour");
-    printf("Bonjour2");
     allegro_init();
     initEcran();
     install_keyboard();
     install_mouse();
     BITMAP *carte;
+    //TODO Mettre image ville menu
     carte = load_bitmap("ville_menu.bmp",NULL);
     if (!carte){
         allegro_message("Pb de l'image chargee");
