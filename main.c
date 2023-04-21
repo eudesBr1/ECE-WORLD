@@ -13,9 +13,31 @@ typedef struct player{
 }t_player;
 
 
-t_player ballon(t_player player){
-    BITMAP
+typedef struct event{
+    int event[10];
+}t_event;
+
+t_player ballon(t_player *player){
+    int condition = 0;
+    BITMAP *chargement_enfoncer;
+    BITMAP *chargement_ballon;
+    BITMAP *buffer;
+    chargement_ballon = load_bitmap("../image/tir_ballon.bmp",NULL);
+    chargement_enfoncer = load_bitmap("../image/tir_ballon1.bmp",NULL);
+    show_mouse(screen);
+    while (!key[KEY_ESC]){
+        if (((mouse_x >= 250 && mouse_x <= 550) && (mouse_y >= 400 && mouse_y <= 550))==0) {
+            blit(chargement_enfoncer, buffer, 0, 0,0,0,chargement_enfoncer->w,chargement_enfoncer->h);
+        } else {
+            blit(chargement_enfoncer, buffer, 0, 0,0,0,chargement_ballon->w,chargement_ballon->h);
+            if (mouse_b == 1)
+                condition = 1;
+        }
+        blit(buffer,screen,0,0,0,0,buffer->w,buffer->h);
+        rest( 5000);
+    }return *player;
 }
+
 
 void initEcran(){
     set_color_depth(desktop_color_depth());
@@ -28,7 +50,8 @@ void initEcran(){
 
 int main(){
     allegro_init();
-    player goku;
+    install_mouse();
+    t_player goku;
     goku.x=10;
     goku.y=10;
     initEcran();
@@ -71,9 +94,12 @@ int main(){
         if(key[KEY_UP]) goku.y -= 2;
         if(key[KEY_DOWN]) goku.y += 2;
         rest(10);
+        if (key[KEY_SPACE])
+            goku = ballon(&goku);
         }
     allegro_exit();
     return 1;
 
 }
 END_OF_MAIN()
+
