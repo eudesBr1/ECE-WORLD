@@ -2,42 +2,22 @@
 #include <time.h>
 #include "allegro.h"
 #include "stdio.h"
-
+#define vitesse 1.25
 typedef struct player{
     int x,y,ticket,points;
     char* name;
-    BITMAP *haut[4];
-    BITMAP *bas[4];
-    BITMAP *droite[4];
-    BITMAP *gauche[4];
+    BITMAP *haut[3];
+    BITMAP *bas[3];
+    BITMAP *droite[3];
+    BITMAP *gauche[3];
+    int position[3];
+    int animation;
 }t_player;
 
 
-typedef struct event{
-    int event[10];
-}t_event;
-
-t_player ballon(t_player *player){
-    int condition = 0;
-    BITMAP *chargement_enfoncer;
-    BITMAP *chargement_ballon;
-    BITMAP *buffer;
-    chargement_ballon = load_bitmap("../image/tir_ballon.bmp",NULL);
-    chargement_enfoncer = load_bitmap("../image/tir_ballon1.bmp",NULL);
-    show_mouse(screen);
-    while (!key[KEY_ESC]){
-        if (((mouse_x >= 250 && mouse_x <= 550) && (mouse_y >= 400 && mouse_y <= 550))==0) {
-            blit(chargement_enfoncer, buffer, 0, 0,0,0,chargement_enfoncer->w,chargement_enfoncer->h);
-        } else {
-            blit(chargement_enfoncer, buffer, 0, 0,0,0,chargement_ballon->w,chargement_ballon->h);
-            if (mouse_b == 1)
-                condition = 1;
-        }
-        blit(buffer,screen,0,0,0,0,buffer->w,buffer->h);
-        rest( 5000);
-    }return *player;
+t_player ballon(t_player player){
+    BITMAP;
 }
-
 
 void initEcran(){
     set_color_depth(desktop_color_depth());
@@ -50,10 +30,9 @@ void initEcran(){
 
 int main(){
     allegro_init();
-    install_mouse();
     t_player goku;
-    goku.x=10;
-    goku.y=10;
+    goku.x=100;
+    goku.y=100;
     initEcran();
     install_keyboard();
     install_mouse();
@@ -68,7 +47,18 @@ int main(){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-    GOKUTEMPLATE = create_sub_bitmap(GOKUTEMPLATE,0,0,32,48);
+    for (int i = 0; i < 3; ++i) {
+        goku.haut[i] = create_sub_bitmap(GOKUTEMPLATE,32*i,149,32,48);
+    }
+    for (int i = 0; i < 3; ++i) {
+        goku.gauche[i] = create_sub_bitmap(GOKUTEMPLATE,32*i,46,32,49);
+    }
+    for (int i = 0; i < 3; ++i) {
+        goku.droite[i] = create_sub_bitmap(GOKUTEMPLATE,32*i,96,32,49);
+    }
+    for (int i = 0; i < 3; ++i) {
+        goku.bas[i] = create_sub_bitmap(GOKUTEMPLATE,32*i,0,32,48);
+    }
     // Créer un sous-bitmap pour extraire le premier sprite
     BITMAP *spriteTemplate = create_sub_bitmap(GOKUTEMPLATE, 0, 0, 32, 48);
 
@@ -85,21 +75,34 @@ int main(){
         exit(EXIT_FAILURE);
     }
     //stretch_blit(carte,screen,0,0,carte->w,carte->h,0,0,screen->w,screen->h);
+    goku.animation=0;
     while (!key[KEY_ESC]){
-        blit(carte,buffer,goku.x,goku.y,0,0,screen->w,screen->h);
-        draw_sprite(buffer,GOKU,goku.x,goku.y);
         blit(buffer,screen,0,0,0,0,screen->w, screen->h);
-        if(key[KEY_LEFT]) goku.x -= 2;
-        if(key[KEY_RIGHT]) goku.x += 2;
-        if(key[KEY_UP]) goku.y -= 2;
-        if(key[KEY_DOWN]) goku.y += 2;
-        rest(10);
-        if (key[KEY_SPACE])
-            goku = ballon(&goku);
+        blit(carte,buffer,goku.x,goku.y,0,0,screen->w,screen->h);
+        if(key[KEY_LEFT]){
+            goku.x -= vitesse;
+            draw_sprite(buffer,goku.gauche[goku.animation/10],goku.x,goku.y);
+        }
+        if(key[KEY_RIGHT]){
+            goku.x += vitesse;
+            draw_sprite(buffer,goku.droite[goku.animation/10],goku.x,goku.y);
+        }
+        if(key[KEY_UP]) {
+            goku.y -= vitesse;
+            draw_sprite(buffer,goku.haut[goku.animation/10],goku.x,goku.y);
+        }
+        if(key[KEY_DOWN]){
+            goku.y += vitesse*3;
+            draw_sprite(buffer,goku.bas[goku.animation/10],goku.x,goku.y);
+        }
+        rest(9);
+        goku.animation++;
+        if (goku.animation==30){
+            goku.animation=0;
+        }
+     //   printf("%d",goku.animation);
         }
     allegro_exit();
     return 1;
-
 }
 END_OF_MAIN()
-
