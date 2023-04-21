@@ -19,6 +19,7 @@ void initEcran(){
 
 int main(){
     printf("Bonjour");
+    printf("Bonjour2");
     allegro_init();
     initEcran();
     install_keyboard();
