@@ -6,15 +6,16 @@
 typedef struct player{
     int x,y,ticket,points;
     char* name;
-    BITMAP *haut[4];
-    BITMAP *bas[4];
-    BITMAP *droite[4];
-    BITMAP *gauche[4];
+    BITMAP *haut[3];
+    BITMAP *bas[3];
+    BITMAP *droite[3];
+    BITMAP *gauche[3];
+    int position[3];
 }t_player;
 
 
 t_player ballon(t_player player){
-    BITMAP
+    BITMAP;
 }
 
 void initEcran(){
@@ -28,7 +29,7 @@ void initEcran(){
 
 int main(){
     allegro_init();
-    player goku;
+    t_player goku;
     goku.x=10;
     goku.y=10;
     initEcran();
@@ -45,7 +46,10 @@ int main(){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-    GOKUTEMPLATE = create_sub_bitmap(GOKUTEMPLATE,0,0,32,48);
+    goku.haut[0] = create_sub_bitmap(GOKUTEMPLATE,0,149,32,48);
+    goku.gauche[0] = create_sub_bitmap(GOKUTEMPLATE,0,46,32,49);
+    goku.droite[0] = create_sub_bitmap(GOKUTEMPLATE,0,96,32,49);
+    goku.bas[0] = create_sub_bitmap(GOKUTEMPLATE,0,0,32,49);
     // Créer un sous-bitmap pour extraire le premier sprite
     BITMAP *spriteTemplate = create_sub_bitmap(GOKUTEMPLATE, 0, 0, 32, 48);
 
@@ -63,13 +67,24 @@ int main(){
     }
     //stretch_blit(carte,screen,0,0,carte->w,carte->h,0,0,screen->w,screen->h);
     while (!key[KEY_ESC]){
-        blit(carte,buffer,goku.x,goku.y,0,0,screen->w,screen->h);
-        draw_sprite(buffer,GOKU,goku.x,goku.y);
         blit(buffer,screen,0,0,0,0,screen->w, screen->h);
-        if(key[KEY_LEFT]) goku.x -= 2;
-        if(key[KEY_RIGHT]) goku.x += 2;
-        if(key[KEY_UP]) goku.y -= 2;
-        if(key[KEY_DOWN]) goku.y += 2;
+        blit(carte,buffer,goku.x,goku.y,0,0,screen->w,screen->h);
+        if(key[KEY_LEFT]){
+            goku.x -= 2;
+            draw_sprite(buffer,goku.gauche[0],goku.x,goku.y);
+        }
+        if(key[KEY_RIGHT]){
+            goku.x += 2;
+            draw_sprite(buffer,goku.droite[0],goku.x,goku.y);
+        }
+        if(key[KEY_UP]) {
+            goku.y -= 2;
+            draw_sprite(buffer,goku.haut[0],goku.x,goku.y);
+        }
+        if(key[KEY_DOWN]){
+            goku.y += 2;
+            draw_sprite(buffer,goku.bas[0],goku.x,goku.y);
+        }
         rest(10);
         }
     allegro_exit();
