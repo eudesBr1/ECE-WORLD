@@ -2,7 +2,7 @@
 #include <time.h>
 #include "allegro.h"
 #include "stdio.h"
-#define vitesse 1.25
+#define vitesse 1
 typedef struct player{
     int x,y,ticket,points;
     char* name;
@@ -88,14 +88,14 @@ int main(){
             }
         }
         if(key[KEY_RIGHT]){
-            goku.x += vitesse*2;
+            goku.x += vitesse;
             goku.position=1;
             goku.animation++;
             if (goku.animation==30){
                 goku.animation=0;
             }
         }
-        if(key[KEY_UP]) {
+        else if(key[KEY_UP]) {
             goku.y -= vitesse;
             goku.position=0;
             goku.animation++;
@@ -104,7 +104,7 @@ int main(){
             }
         }
         if(key[KEY_DOWN]){
-            goku.y += vitesse*2;
+            goku.y += vitesse;
             goku.position=2;
             goku.animation++;
             if (goku.animation==30){
@@ -125,7 +125,9 @@ int main(){
         }
 
         rest(9);
-     //   printf("%d",goku.animation);
+        if (!key[KEY_UP] && !key[KEY_DOWN] && !key[KEY_LEFT] && !key[KEY_RIGHT]){
+            goku.animation=0;
+        }
         }
     allegro_exit();
     return 1;
