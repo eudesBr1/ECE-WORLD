@@ -1,57 +1,7 @@
-#include <stdlib.h>
-#include <time.h>
-#include "allegro.h"
-#include "stdio.h"
-#define vitesse 1
-typedef struct player{
-    int x,y,ticket,points;
-    char* name;
-    BITMAP *haut[3];
-    BITMAP *bas[3];
-    BITMAP *droite[3];
-    BITMAP *gauche[3];
-    int position;
-    int animation;
-}t_player;
+#include "Mabibli.h"
 
 
-void ballon(t_player player, BITMAP *buffer){
-    BITMAP *acceuil_base;
-    acceuil_base = load_bitmap("../images/tir_ballon.bmp",NULL);
-    if (!acceuil_base){
-        allegro_message("Pb de l'image tir_ballon");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
-    BITMAP *acceuil_zoom;
-    acceuil_zoom = load_bitmap("../images/tir_ballon1.bmp",NULL);
-    if (!acceuil_zoom){
-        allegro_message("Pb de l'image tir_ballon1");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
-    show_mouse(screen);
-    int condition;
-    do {
-        if (((mouse_x >= 250 && mouse_x <= 550) && (mouse_y >= 400 && mouse_y <= 550)) == 0) {
-            stretch_blit(acceuil_base, buffer, 0, 0, acceuil_base->w, acceuil_base->h, 0, 0, 800, 600);
-        } else {
-            stretch_blit(acceuil_zoom, buffer, 0, 0, acceuil_zoom->w, acceuil_zoom->h, 0, 0, 800, 600);
-            if (mouse_b == 1)
-                condition = 1;
-        }
-        blit(buffer,screen,0,0,0,0,buffer->w,buffer->h);
-    } while (condition!=1);
-}
 
-void initEcran(){
-    set_color_depth(desktop_color_depth());
-    if ((set_gfx_mode(GFX_AUTODETECT_WINDOWED, 800, 600, 0, 0)) != 0) {
-        allegro_message("Pb de mode graphique");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
-}
 
 int main(){
     allegro_init();
@@ -64,6 +14,7 @@ int main(){
     BITMAP *carte;
     BITMAP *GOKUTEMPLATE;
     BITMAP *GOKU;
+    srand(time(NULL));
     BITMAP *buffer= create_bitmap(screen->w,screen->h);
     clear(buffer);
     GOKUTEMPLATE = load_bitmap("../images/gokuSprite.bmp",NULL);
