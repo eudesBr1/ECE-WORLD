@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "allegro.h"
+#include "stdio.h"
 
 typedef struct player{
     int x,y,ticket,points;
@@ -17,6 +18,7 @@ void initEcran(){
 }
 
 int main(){
+    printf("Bonjour");
     allegro_init();
     initEcran();
     install_keyboard();
