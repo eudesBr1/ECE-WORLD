@@ -95,7 +95,7 @@ int main(){
             goku.y += vitesse*3;
             draw_sprite(buffer,goku.bas[goku.animation/10],goku.x,goku.y);
         }
-        rest(10);
+        rest(9);
         goku.animation++;
         if (goku.animation==30){
             goku.animation=0;
