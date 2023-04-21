@@ -2,7 +2,7 @@
 #include <time.h>
 #include "allegro.h"
 #include "stdio.h"
-#define vitesse 1
+#define vitesse 1.25
 typedef struct player{
     int x,y,ticket,points;
     char* name;
@@ -21,7 +21,7 @@ t_player ballon(t_player player){
 
 void initEcran(){
     set_color_depth(desktop_color_depth());
-    if ((set_gfx_mode(GFX_AUTODETECT_WINDOWED, 800, 600, 0, 0)) != 0) {
+    if ((set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, 1920, 1080, 0, 0)) != 0) {
         allegro_message("Pb de mode graphique");
         allegro_exit();
         exit(EXIT_FAILURE);
@@ -78,9 +78,9 @@ int main(){
     goku.animation=0;
     while (!key[KEY_ESC]){
         blit(buffer,screen,0,0,0,0,screen->w, screen->h);
-        blit(carte,buffer,goku.x,goku.y,0,0,screen->w,screen->h);
+        blit(carte,buffer,20,100,0,0,screen->w,screen->h);
         if(key[KEY_LEFT]){
-            goku.x -= vitesse;
+            goku.x -= vitesse/2;
             goku.position = 3;
             goku.animation++;
             if (goku.animation==30){
@@ -95,8 +95,8 @@ int main(){
                 goku.animation=0;
             }
         }
-        else if(key[KEY_UP]) {
-            goku.y -= vitesse;
+        if(key[KEY_UP]) {
+            goku.y -= vitesse/2;
             goku.position=0;
             goku.animation++;
             if (goku.animation==30){
