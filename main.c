@@ -23,8 +23,7 @@ int main(){
     install_keyboard();
     install_mouse();
     BITMAP *carte;
-    //TODO Mettre image ville menu
-    carte = load_bitmap("ville_menu.bmp",NULL);
+    carte = load_bitmap("../images/map_pokemon.bmp",NULL);
     if (!carte){
         allegro_message("Pb de l'image chargee");
         allegro_exit();
