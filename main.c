@@ -1,8 +1,5 @@
 #include "Mabibli.h"
 
-
-
-
 int main(){
     allegro_init();
     t_player goku;
@@ -55,38 +52,7 @@ int main(){
     while (!key[KEY_ESC]){
         blit(buffer,screen,0,0,0,0,screen->w, screen->h);
         blit(carte,buffer,goku.x,goku.y,0,0,screen->w,screen->h);
-        if(key[KEY_LEFT]){
-            goku.x -= vitesse;
-            goku.position = 3;
-            goku.animation++;
-            if (goku.animation==30){
-                goku.animation=0;
-            }
-        }
-        if(key[KEY_RIGHT]){
-            goku.x += vitesse;
-            goku.position=1;
-            goku.animation++;
-            if (goku.animation==30){
-                goku.animation=0;
-            }
-        }
-        else if(key[KEY_UP]) {
-            goku.y -= vitesse;
-            goku.position=0;
-            goku.animation++;
-            if (goku.animation==30){
-                goku.animation=0;
-            }
-        }
-        if(key[KEY_DOWN]){
-            goku.y += vitesse;
-            goku.position=2;
-            goku.animation++;
-            if (goku.animation==30){
-                goku.animation=0;
-            }
-        }
+        mouvementPersonnage(&goku);
         if (goku.position==0){
             draw_sprite(buffer,goku.haut[goku.animation/10],goku.x,goku.y);
         }
@@ -111,3 +77,4 @@ int main(){
     return 1;
 }
 END_OF_MAIN()
+
