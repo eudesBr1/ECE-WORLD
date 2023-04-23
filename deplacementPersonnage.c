@@ -36,6 +36,9 @@ t_player mouvementPersonnageFleche(t_player *player){
             player->animation=0;
         }
     }
+    if (!key[KEY_UP] && !key[KEY_DOWN] && !key[KEY_LEFT] && !key[KEY_RIGHT]){
+        player->animation=0;
+    }
     return *player;
 }
 
@@ -71,6 +74,9 @@ t_player mouvementPersonnageZQSD(t_player *player){
         if (player->animation==30){
             player->animation=0;
         }
+    }
+    if (!key[KEY_W] && !key[KEY_S] && !key[KEY_A] && !key[KEY_D]){
+        player->animation=0;
     }
     return *player;
 }
