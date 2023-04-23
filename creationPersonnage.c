@@ -12,13 +12,13 @@ t_player creationPersonnage(t_player *player){
         exit(EXIT_FAILURE);
     }
     BITMAP *GOKU;
-    // Créer un sous-bitmap pour extraire le premier sprite
+    // crée un sous-bitmap pour extraire le premier sprite
     BITMAP *spriteTemplate = create_sub_bitmap(GOKUTEMPLATE, 0, 0, 32, 48);
 
-    // Créer un nouveau bitmap pour votre personnage
+    // cree un nouveau bitmap pour votre personnage
     GOKU = create_bitmap(spriteTemplate->w, spriteTemplate->h);
 
-    // Copier le sprite extrait dans votre nouveau bitmap
+    // copie le sprite extrait dans  nouveau bitmap
     clear_bitmap(GOKU);
     blit(spriteTemplate, GOKU, 0, 0, 0, 0, spriteTemplate->w, spriteTemplate->h);
     for (int i = 0; i < 3; ++i) {
