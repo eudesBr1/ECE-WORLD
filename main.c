@@ -23,9 +23,8 @@ int main(){
     while (!key[KEY_ESC]){
         blit(buffer,screen,0,0,0,0,screen->w, screen->h);
         blit(carte,buffer,goku.x,goku.y,0,0,screen->w,screen->h);
-        //TODO le deplacement ZQSD ne rend pas l'animation ?
         mouvementPersonnageZQSD(&goku);
-        mouvementPersonnageFleche(&goku);
+     //   mouvementPersonnageFleche(&goku);
         if (goku.position==0){
             draw_sprite(buffer,goku.haut[goku.animation/10],goku.x,goku.y);
         }
@@ -40,9 +39,7 @@ int main(){
         }
 
         rest(9);
-        if (!key[KEY_UP] && !key[KEY_DOWN] && !key[KEY_LEFT] && !key[KEY_RIGHT]){
-            goku.animation=0;
-        }
+
         if (key[KEY_SPACE])
             ballon(goku,buffer);
         }
