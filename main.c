@@ -7,11 +7,11 @@ int main(){
     initEcran();
     install_keyboard();
     install_mouse();
-
     srand(time(NULL));
-
+    /// crée personnage de ville
     creationPersonnage(&goku);
     //TODO mettre break pour jeu ballon
+    /// affiche ville menu
     affichageVille(goku);
 
  //   allegro_exit();
