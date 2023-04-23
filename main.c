@@ -3,6 +3,7 @@
 int main(){
     allegro_init();
     t_player goku;
+    t_player naruto;
     initEcran();
     install_keyboard();
     install_mouse();
@@ -22,7 +23,9 @@ int main(){
     while (!key[KEY_ESC]){
         blit(buffer,screen,0,0,0,0,screen->w, screen->h);
         blit(carte,buffer,goku.x,goku.y,0,0,screen->w,screen->h);
-        mouvementPersonnage(&goku);
+        //TODO le deplacement ZQSD ne rend pas l'animation ?
+        mouvementPersonnageZQSD(&goku);
+        mouvementPersonnageFleche(&goku);
         if (goku.position==0){
             draw_sprite(buffer,goku.haut[goku.animation/10],goku.x,goku.y);
         }
