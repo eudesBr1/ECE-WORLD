@@ -55,7 +55,7 @@ t_player mouvementPersonnageZQSD(t_player *player){
         player->x += vitesse;
         player->position=1;
         player->animation++;
-        if (player->animation==30){
+        if (player->animation==40){
             player->animation=0;
         }
     }
