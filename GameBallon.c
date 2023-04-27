@@ -4,7 +4,7 @@
 
 #include "Mabibli.h"
 
-void ballon(t_player player, BITMAP *buffer){
+void ballon(t_player *player, BITMAP *buffer){
     BITMAP *acceuil_base;
     acceuil_base = load_bitmap("../images/tir_ballon.bmp",NULL);
     if (!acceuil_base){
@@ -123,6 +123,16 @@ void ballon(t_player player, BITMAP *buffer){
         if (score == 10){
             clear(buffer);
             allegro_message("bravo vous avez fini en %f secondes",timer);
+            if (timer <= 10){
+                allegro_message("vous avez fini en moins de 10 secondes remportez donc 1 points et 2 tickets");
+                player.ticket+=2;
+                player.points++;
+            }
+            else if (timer <= 15){
+                allegro_message("vous avez fini en moins de 15 secondes vous remportez donc 1 points et 1 ticket");
+                player.ticket++;
+                player.points++;
+            }
             break;
         }
     }

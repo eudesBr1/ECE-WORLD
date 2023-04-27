@@ -33,6 +33,6 @@ void affichageVille(t_player player){
             draw_sprite(buffer,player.gauche[player.animation/10],player.x,player.y);
         }
         rest(9);
-        if (key[KEY_SPACE]) ballon(player,buffer);
+        if (key[KEY_SPACE]) ballon(&player,buffer);
     }
 }
