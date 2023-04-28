@@ -36,7 +36,8 @@ typedef struct player{
 
 
 void initEcran();
-void ballon(t_player player, BITMAP *buffer);
+void ballon(t_player *player, BITMAP *buffer);
+int collision(t_player *perso);
 t_player mouvementPersonnageFleche(t_player *player);
 t_player mouvementPersonnageZQSD(t_player *player);
 t_player creationPersonnage(t_player *player);

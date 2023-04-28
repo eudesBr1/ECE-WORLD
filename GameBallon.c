@@ -4,7 +4,7 @@
 
 #include "Mabibli.h"
 
-void ballon(t_player player, BITMAP *buffer){
+void ballon(t_player *player, BITMAP *buffer){
     BITMAP *acceuil_base;
     acceuil_base = load_bitmap("../images/tir_ballon.bmp",NULL);
     if (!acceuil_base){
@@ -20,7 +20,7 @@ void ballon(t_player player, BITMAP *buffer){
         exit(EXIT_FAILURE);
     }
     show_mouse(screen);
-    int condition;
+    int condition = 0;
     do {
         if (((mouse_x >= 250 && mouse_x <= 550) && (mouse_y >= 400 && mouse_y <= 550)) == 0) {
             stretch_blit(acceuil_base, buffer, 0, 0, acceuil_base->w, acceuil_base->h, 0, 0, 800, 600);
@@ -31,13 +31,13 @@ void ballon(t_player player, BITMAP *buffer){
         }
         blit(buffer,screen,0,0,0,0,buffer->w,buffer->h);
         if (key[KEY_ESC]){
-            rest(500);
+            allegro_message("vous avez quitter l'activité");
+            condition = 2;
             break;
         }
-    } while (condition!=1);
+    } while (condition!=1&&condition!=2);
     ///initialisation du jeux
     int score = 0;
-    condition = 0;
     float timer = 0;
     t_ballon tabBall[10];
     for (int i = 0; i < 10; i++) {
@@ -50,7 +50,6 @@ void ballon(t_player player, BITMAP *buffer){
 
     ///dessin de l'aire de jeux
     clear(buffer);
-
     BITMAP *viseur;
     viseur = load_bitmap("../images/viseur.bmp",NULL);
     if (!viseur){
@@ -63,6 +62,8 @@ void ballon(t_player player, BITMAP *buffer){
     stretch_blit(viseur, spriteViseur,0,0,viseur->w,viseur->h,0,0, spriteViseur->w,spriteViseur->h);
 
     for (int i = 0; i < 100000; ++i) {
+        if (condition == 2)
+            break;
         clear(buffer);
         rectfill(buffer,0,0,buffer->w,buffer->h, makeacol(255,30,30,0));
         rectfill(buffer,100,150,buffer->w-100,buffer->h-50, makeacol(0,0,0,0));
@@ -123,6 +124,16 @@ void ballon(t_player player, BITMAP *buffer){
         if (score == 10){
             clear(buffer);
             allegro_message("bravo vous avez fini en %f secondes",timer);
+            if (timer <= 10){
+                allegro_message("vous avez fini en moins de 10 secondes remportez donc 1 points et 2 tickets");
+                player->ticket+=2;
+                player->points++;
+            }
+            else if (timer <= 15){
+                allegro_message("vous avez fini en moins de 15 secondes vous remportez donc 1 points et 1 ticket");
+                player->ticket++;
+                player->points++;
+            }
             break;
         }
     }
