@@ -21,6 +21,7 @@ int collision(t_player *perso){
     int g = getpixel(fond,x,y+20);
     int noir = makecol(0,0,0);
     int renvoie = 1;
+    printf("%d/%d\t %d/%d\n",perso->x,perso->y,x,y);
     //multiple de 3 si le personnage peut monter
     //multiple de 5 si le personnage peut aller a droite
     //multiple de 7 si le personnage peut descendre
