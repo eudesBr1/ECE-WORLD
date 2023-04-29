@@ -8,7 +8,7 @@ t_player mouvementPersonnageFleche(t_player *player){
         player->x -= vitesse;
         player->position = 3;
         player->animation++;
-        if (player->animation==30){
+        if (player->animation==40){
             player->animation=0;
         }
     }
@@ -16,7 +16,7 @@ t_player mouvementPersonnageFleche(t_player *player){
         player->x += vitesse;
         player->position=1;
         player->animation++;
-        if (player->animation==30){
+        if (player->animation==40){
             player->animation=0;
         }
     }
@@ -24,7 +24,7 @@ t_player mouvementPersonnageFleche(t_player *player){
         player->y -= vitesse;
         player->position=0;
         player->animation++;
-        if (player->animation==30){
+        if (player->animation==40){
             player->animation=0;
         }
     }
@@ -32,7 +32,7 @@ t_player mouvementPersonnageFleche(t_player *player){
         player->y += vitesse;
         player->position=2;
         player->animation++;
-        if (player->animation==30){
+        if (player->animation==40){
             player->animation=0;
         }
     }
@@ -47,7 +47,7 @@ t_player mouvementPersonnageZQSD(t_player *player){
         player->x -= vitesse;
         player->position = 3;
         player->animation++;
-        if (player->animation==30){
+        if (player->animation==40){
             player->animation=0;
         }
     }
@@ -63,7 +63,7 @@ t_player mouvementPersonnageZQSD(t_player *player){
         player->y -= vitesse;
         player->position=0;
         player->animation++;
-        if (player->animation==30){
+        if (player->animation==40){
             player->animation=0;
         }
     }
@@ -71,11 +71,11 @@ t_player mouvementPersonnageZQSD(t_player *player){
         player->y += vitesse;
         player->position=2;
         player->animation++;
-        if (player->animation==30){
+        if (player->animation==40){
             player->animation=0;
         }
     }
-    if (!key[KEY_W] && !key[KEY_S] && !key[KEY_A] && !key[KEY_D]){
+    if (!key[KEY_W] && !key[KEY_A] && !key[KEY_S] && !key[KEY_D]){
         player->animation=0;
     }
     return *player;

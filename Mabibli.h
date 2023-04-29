@@ -14,8 +14,10 @@
 #include <time.h>
 #include "stdio.h"
 
-#define vitesse 1
-
+#define vitesse 2
+#define qtAnim 40
+#define avancAnim 1
+#define tailleTab 4
 typedef struct ballon{
     int x,y;
     int couleur;
@@ -26,10 +28,10 @@ typedef struct ballon{
 typedef struct player{
     int x,y,ticket,points;
     char* name;
-    BITMAP *haut[3];
-    BITMAP *bas[3];
-    BITMAP *droite[3];
-    BITMAP *gauche[3];
+    BITMAP *haut[4];
+    BITMAP *bas[4];
+    BITMAP *droite[4];
+    BITMAP *gauche[4];
     int position;
     int animation;
 }t_player;
@@ -40,5 +42,5 @@ void ballon(t_player *player, BITMAP *buffer);
 int collision(t_player *perso);
 t_player mouvementPersonnageFleche(t_player *player);
 t_player mouvementPersonnageZQSD(t_player *player);
-t_player creationPersonnage(t_player *player);
+t_player creationPersonnageGoku(t_player *player);
 void affichageVille(t_player player);

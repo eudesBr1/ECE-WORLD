@@ -21,18 +21,19 @@ void affichageVille(t_player player){
         //   mouvementPersonnageFleche(&goku);
         /// affiche personnage sur carte
         if (player.position==0){
-            draw_sprite(buffer,player.haut[player.animation/10],player.x,player.y);
+            draw_sprite(buffer,player.haut[player.animation/10 %qtAnim],player.x,player.y);
         }
         if (player.position==1){
-            draw_sprite(buffer,player.droite[player.animation/10],player.x,player.y);
+            draw_sprite(buffer,player.droite[player.animation/10 %qtAnim],player.x,player.y);
         }
         if (player.position==2){
-            draw_sprite(buffer,player.bas[player.animation/10],player.x,player.y);
+            draw_sprite(buffer,player.bas[player.animation/10 %qtAnim],player.x,player.y);
         }
         if (player.position==3){
-            draw_sprite(buffer,player.gauche[player.animation/10],player.x,player.y);
+            draw_sprite(buffer,player.gauche[player.animation/10 %qtAnim],player.x,player.y);
         }
-        rest(9);
+        printf("%d\n",player.animation %qtAnim);
+        rest(20);
         if (key[KEY_SPACE]) ballon(&player,buffer);
     }
 }

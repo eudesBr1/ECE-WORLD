@@ -3,7 +3,7 @@
 //
 #include "Mabibli.h"
 
-t_player creationPersonnage(t_player *player){
+t_player creationPersonnageGoku(t_player *player){
     BITMAP *GOKUTEMPLATE;
     GOKUTEMPLATE = load_bitmap("../images/gokuSprite.bmp",NULL);
     if (!GOKUTEMPLATE){
@@ -21,16 +21,16 @@ t_player creationPersonnage(t_player *player){
     // copie le sprite extrait dans  nouveau bitmap
     clear_bitmap(GOKU);
     blit(spriteTemplate, GOKU, 0, 0, 0, 0, spriteTemplate->w, spriteTemplate->h);
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < tailleTab; ++i) {
         player->haut[i] = create_sub_bitmap(GOKUTEMPLATE,32*i,149,32,48);
     }
-    for (int i = 0; i < 3; ++i) {
-        player->gauche[i] = create_sub_bitmap(GOKUTEMPLATE,32*i,46,32,48);
+    for (int i = 0; i < tailleTab; ++i) {
+        player->gauche[i] = create_sub_bitmap(GOKUTEMPLATE,32*i,46,32,50);
     }
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < tailleTab; ++i) {
         player->droite[i] = create_sub_bitmap(GOKUTEMPLATE,32*i,96,32,48);
     }
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < tailleTab; ++i) {
         player->bas[i] = create_sub_bitmap(GOKUTEMPLATE,32*i,0,32,48);
     }
     player->animation=0;

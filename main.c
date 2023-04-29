@@ -9,7 +9,7 @@ int main(){
     install_mouse();
     srand(time(NULL));
     /// crée personnage de ville
-    creationPersonnage(&goku);
+    creationPersonnageGoku(&goku);
     //TODO mettre break pour jeu ballon
     /// affiche ville menu
     affichageVille(goku);
