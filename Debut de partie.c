@@ -16,26 +16,26 @@ void gameInit(t_player *players){
     buffer = create_bitmap(screen->w,screen->h);
     for (i = 0; i < 4; i++) {
         rectfill(buffer, 0, 0, screen->w, screen->h, makecol(0, 0, 0));
-        textout_ex(buffer, font, "Chargement du jeux .", 50, 50, blanc, -1);
+        textout_ex(buffer, font, "Chargement du jeu .", 50, 50, blanc, -1);
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         clear(buffer);
         rest(400);
         rectfill(buffer, 0, 0, screen->w, screen->h, makecol(0, 0, 0));
-        textout_ex(buffer, font, "Chargement du jeux ..", 50, 50, blanc, -1);
+        textout_ex(buffer, font, "Chargement du jeu ..", 50, 50, blanc, -1);
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         clear(buffer);
         rest(400);
         rectfill(buffer, 0, 0, screen->w, screen->h, makecol(0, 0, 0));
-        textout_ex(buffer, font, "Chargement du jeux ...", 50, 50, blanc, -1);
+        textout_ex(buffer, font, "Chargement du jeu ...", 50, 50, blanc, -1);
         if (i==3)
-            textout_right_ex(buffer,font,"press enter to continue",screen->w,screen->h-50,blanc,-1);
+            textout_right_ex(buffer,font,"Press ENTER to continue",screen->w,screen->h-50,blanc,-1);
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         clear(buffer);
         fflush(stdin);
     }
 
     do {
-        textout_centre_ex(buffer, font, "combien de joueur voulez vous jouer ?", screen->w / 2, screen->h / 2 - 100,blanc, -1);
+        textout_centre_ex(buffer, font, "Indiquez le nombre de jouers ?", screen->w / 2, screen->h / 2 - 100,blanc, -1);
         textout_centre_ex(buffer, font, "(entre 1 et 4 joueurs)", screen->w/2, screen->h / 2 - 60,blanc, -1);
         fflush(stdin);
         charac = readkey();
@@ -43,7 +43,7 @@ void gameInit(t_player *players){
         textprintf_centre_ex(buffer, font, screen->w / 2, screen->h / 2, blanc, -1, "%c", charac);
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         clear(buffer);
-        printf("%d/%c\n", charac,charac);
+        // printf("%d/%c\n", charac,charac);
         if ((charac<= 52 && charac >= 49)){
             if (charac == 49)
                 nbJoueur = 1;
@@ -63,8 +63,8 @@ void gameInit(t_player *players){
         players[i].points = 0;
         players[i].ticket = NBticketStart;
         for (j = 0; j < 16;) {
-            textprintf_centre_ex(buffer, font, screen->w / 2, screen->h / 2 - 100, blanc, -1,"Joueur %d choisis ton nom", i+1);
-            textout_centre_ex(buffer, font, "(maximum 16 characteres)", screen->w/2, screen->h / 2 - 60, blanc, -1);
+            textprintf_centre_ex(buffer, font, screen->w / 2, screen->h / 2 - 100, blanc, -1,"Joueur %d écris ton pseudo", i+1);
+            textout_centre_ex(buffer, font, "(maximum 16 caractères)", screen->w/2, screen->h / 2 - 60, blanc, -1);
             fflush(stdin);
             charac = readkey();
             fflush(stdin);
