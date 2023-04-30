@@ -20,6 +20,7 @@
 #define tailleTab 4
 typedef struct ballon{
     int x,y;
+    BITMAP *img;
     int couleur;
     int speed;
     int alive;

@@ -44,7 +44,48 @@ void ballon(t_player *player, BITMAP *buffer){
         tabBall[i].x = rand()%560+120;
         tabBall[i].y = rand()%360+170;
         tabBall[i].alive = 1;
-        tabBall[i].couleur = makeacol(rand()%50,rand()%150+100,rand()%50,0);
+        tabBall[i].couleur = rand()%4;
+        if (tabBall[i].couleur == 0)
+        {
+            tabBall[i].img = load_bitmap("../images/Ballon_Bleu.bmp",NULL);
+            if (!tabBall[i].img){
+                allegro_message("Pb de l'image ballon Bleu");
+                allegro_exit();
+                exit(EXIT_FAILURE);
+            }
+
+        }
+        if (tabBall[i].couleur == 1)
+        {
+            tabBall[i].img = load_bitmap("../images/ballon_Jaune.bmp",NULL);
+            if (!tabBall[i].img){
+                allegro_message("Pb de l'image ballon Jaune");
+                allegro_exit();
+                exit(EXIT_FAILURE);
+            }
+
+        }
+        if (tabBall[i].couleur == 2)
+        {
+            tabBall[i].img = load_bitmap("../images/Ballon_Rouge.bmp",NULL);
+            if (!tabBall[i].img){
+                allegro_message("Pb de l'image ballon rouge");
+                allegro_exit();
+                exit(EXIT_FAILURE);
+            }
+
+        }
+        if (tabBall[i].couleur == 3)
+        {
+            tabBall[i].img = load_bitmap("../images/Ballon_Vert.bmp",NULL);
+            if (!tabBall[i].img){
+                allegro_message("Pb de l'image ballon Vert");
+                allegro_exit();
+                exit(EXIT_FAILURE);
+            }
+
+        }
+
         tabBall[i].speed = rand()%5+6;
     }
 
@@ -65,8 +106,8 @@ void ballon(t_player *player, BITMAP *buffer){
         if (condition == 2)
             break;
         clear(buffer);
-        rectfill(buffer,0,0,buffer->w,buffer->h, makeacol(255,30,30,0));
-        rectfill(buffer,100,150,buffer->w-100,buffer->h-50, makeacol(0,0,0,0));
+        rectfill(buffer,0,0,buffer->w,buffer->h, makeacol(127,0,55,0));
+        rectfill(buffer,100,150,buffer->w-100,buffer->h-50, makeacol(127,89,63,0));
         textout_ex(buffer,font,"Jeux des ballons",300,70, makeacol(255,255,255,0),-1);
         char message[50];
 
@@ -100,8 +141,9 @@ void ballon(t_player *player, BITMAP *buffer){
         ///dessin des 10 ballons
         for (int j = 0; j < 10; j++) {
             if (tabBall[j].alive){
-                circlefill(buffer,tabBall[j].x,tabBall[j].y,20,tabBall[j].couleur);
                 tabBall[j].x += tabBall[j].speed*(rand()%3-1);
+                stretch_sprite(buffer,tabBall[j].img,tabBall[j].x,tabBall[j].y,32,32);
+                //stretch_blit(tabBall[j].img,buffer,0,0,tabBall[j].img->w,tabBall[j].img->h,tabBall[j].x,tabBall[j].y,32,32);
                 if (tabBall[j].x<=120)
                     tabBall[j].x = 120;
                 if (tabBall[j].x>=680)
@@ -112,7 +154,7 @@ void ballon(t_player *player, BITMAP *buffer){
                     tabBall[j].y= 530;
 
                 tabBall[j].y += tabBall[j].speed*(rand()%3-1);
-                if (mouse_b==1&&(mouse_x>=tabBall[j].x-20&&mouse_x<=tabBall[j].x+20)&&(mouse_y>=tabBall[j].y-20&&mouse_y<=tabBall[j].y+20)) {
+                if (mouse_b==1&&(mouse_x>=tabBall[j].x&&mouse_x<=tabBall[j].x+32)&&(mouse_y>=tabBall[j].y&&mouse_y<=tabBall[j].y+32)) {
                     tabBall[j].alive = 0;
                     score++;
                 }
