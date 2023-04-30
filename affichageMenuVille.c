@@ -34,6 +34,6 @@ void affichageVille(t_player player){
         }
         printf("%d\n",player.animation %qtAnim);
         rest(20);
-        if (key[KEY_SPACE]) ballon(&player,buffer);
+        if (key[KEY_SPACE]) game_GUITARE(&player);
     }
 }

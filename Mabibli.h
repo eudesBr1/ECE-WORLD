@@ -47,6 +47,7 @@ void initEcran();
 void gameInit(t_player *players);
 void ballon(t_player *player, BITMAP *buffer);
 int collision(t_player *perso);
+void game_GUITARE(t_player *players);
 t_player mouvementPersonnageFleche(t_player *player);
 t_player mouvementPersonnageZQSD(t_player *player);
 t_player creationPersonnageGoku(t_player *player);
