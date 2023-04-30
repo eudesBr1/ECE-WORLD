@@ -14,6 +14,8 @@
 #include <time.h>
 #include "stdio.h"
 
+
+#define NBticketStart 5
 #define vitesse 2
 #define qtAnim 40
 #define TailleBalx 32
@@ -41,6 +43,7 @@ typedef struct player{
 
 
 void initEcran();
+void gameInit(t_player *players);
 void ballon(t_player *player, BITMAP *buffer);
 int collision(t_player *perso);
 t_player mouvementPersonnageFleche(t_player *player);
