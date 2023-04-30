@@ -16,6 +16,8 @@
 
 #define vitesse 2
 #define qtAnim 40
+#define TailleBalx 32
+#define TailleBaly 96
 #define avancAnim 1
 #define tailleTab 4
 typedef struct ballon{

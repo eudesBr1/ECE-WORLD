@@ -142,7 +142,7 @@ void ballon(t_player *player, BITMAP *buffer){
         for (int j = 0; j < 10; j++) {
             if (tabBall[j].alive){
                 tabBall[j].x += tabBall[j].speed*(rand()%3-1);
-                stretch_sprite(buffer,tabBall[j].img,tabBall[j].x,tabBall[j].y,32,32);
+                stretch_sprite(buffer,tabBall[j].img,tabBall[j].x,tabBall[j].y,TailleBalx,TailleBaly);
                 //stretch_blit(tabBall[j].img,buffer,0,0,tabBall[j].img->w,tabBall[j].img->h,tabBall[j].x,tabBall[j].y,32,32);
                 if (tabBall[j].x<=120)
                     tabBall[j].x = 120;
@@ -154,7 +154,7 @@ void ballon(t_player *player, BITMAP *buffer){
                     tabBall[j].y= 530;
 
                 tabBall[j].y += tabBall[j].speed*(rand()%3-1);
-                if (mouse_b==1&&(mouse_x>=tabBall[j].x&&mouse_x<=tabBall[j].x+32)&&(mouse_y>=tabBall[j].y&&mouse_y<=tabBall[j].y+32)) {
+                if (mouse_b==1&&(mouse_x>=tabBall[j].x&&mouse_x<=tabBall[j].x+TailleBalx)&&(mouse_y>=tabBall[j].y&&mouse_y<=tabBall[j].y+TailleBaly)) {
                     tabBall[j].alive = 0;
                     score++;
                 }
