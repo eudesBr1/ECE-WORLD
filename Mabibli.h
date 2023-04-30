@@ -23,11 +23,12 @@
 #define avancAnim 1
 #define tailleTab 4
 typedef struct ballon{
-    int x,y;
-    BITMAP *img;
-    int couleur;
-    int speed;
-    int alive;
+    int x,y;            ///coordonées propre a chaque ballon
+    BITMAP *img;        ///image du ballon en fonction de la couleur donnée
+    int couleur;        ///couleur aléatoire pour chaque ballon
+    int speed;          ///vitesse de chaque ballon aléatoire
+    int countAnim;      /// animation pour l'explosion du ballon
+    int alive;          /// 0 mort et 1 vivant
 }t_ballon;
 
 typedef struct player{

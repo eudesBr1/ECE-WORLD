@@ -5,6 +5,9 @@
 #include "Mabibli.h"
 
 void ballon(t_player *player, BITMAP *buffer){
+    int bleu = makecol(0,162,232);
+    int noir = makecol(0,0,0);
+    int blanc = makeacol(255, 255, 255, 0);
     BITMAP *acceuil_base;
     acceuil_base = load_bitmap("../images/tir_ballon.bmp",NULL);
     if (!acceuil_base){
@@ -19,6 +22,23 @@ void ballon(t_player *player, BITMAP *buffer){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+
+
+    BITMAP *bmpEXPLOSION;
+    bmpEXPLOSION = load_bitmap("../images/sprite_explosion.bmp",NULL);
+    if (!bmpEXPLOSION){
+        allegro_message("Pb de l'image sprite_explosion");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+
+    /// découpage de la sprite explosion
+    BITMAP *explosion[4];
+    for (int i = 0; i <= 4; i++) {
+        explosion[i] = create_sub_bitmap(bmpEXPLOSION,bmpEXPLOSION->w*i/5,0,bmpEXPLOSION->w/5,bmpEXPLOSION->h);
+    }
+
     show_mouse(screen);
     int condition = 0;
     do {
@@ -45,6 +65,7 @@ void ballon(t_player *player, BITMAP *buffer){
         tabBall[i].y = rand()%360+170;
         tabBall[i].alive = 1;
         tabBall[i].couleur = rand()%4;
+        tabBall[i].countAnim = 0;
         if (tabBall[i].couleur == 0)
         {
             tabBall[i].img = load_bitmap("../images/Ballon_Bleu.bmp",NULL);
@@ -106,34 +127,34 @@ void ballon(t_player *player, BITMAP *buffer){
         if (condition == 2)
             break;
         clear(buffer);
-        rectfill(buffer,0,0,buffer->w,buffer->h, makeacol(127,0,55,0));
-        rectfill(buffer,100,150,buffer->w-100,buffer->h-50, makeacol(127,89,63,0));
-        textout_ex(buffer,font,"Jeux des ballons",300,70, makeacol(255,255,255,0),-1);
+        rectfill(buffer,0,0,buffer->w,buffer->h, bleu);
+        rectfill(buffer,100,150,buffer->w-100,buffer->h-50, noir);
+        textout_ex(buffer, font, "Jeux des ballons", 300, 70, blanc, -1);
         char message[50];
 
         char pos_x[5];
         sprintf(pos_x,"%d",mouse_x);
         strcpy(message,"x = ");
         strcat(message,pos_x);
-        textout_ex(buffer,font,message,10,10, makeacol(255,255,255,0),-1);
+        textout_ex(buffer, font, message, 10, 10, blanc, -1);
 
         char pos_y[5];
         sprintf(pos_y,"%d",mouse_y);
         strcpy(message,"y = ");
         strcat(message,pos_y);
-        textout_ex(buffer,font,message,10,25, makeacol(255,255,255,0),-1);
+        textout_ex(buffer, font, message, 10, 25, blanc, -1);
 
         char points[5];
         sprintf(points,"%d",score);
         strcpy(message,"SCORE = ");
         strcat(message,points);
-        textout_ex(buffer,font,message,screen->w/2,120, makeacol(255,255,255,0),-1);
+        textout_ex(buffer, font, message,screen->w/2, 120, blanc, -1);
 
         char temps[5];
         sprintf(temps,"%f",timer);
         strcpy(message,"temps = ");
         strcat(message,temps);
-        textout_ex(buffer,font,message,screen->w-100,300, makeacol(255,255,255,0),-1);
+        textout_ex(buffer, font, message,screen->w-100, 300, blanc, -1);
 
         if ((mouse_x>=100&&mouse_x<=700)&&(mouse_y<=550&&mouse_y>=150)){
             draw_sprite(buffer,spriteViseur,mouse_x-25,mouse_y-25);
@@ -158,6 +179,26 @@ void ballon(t_player *player, BITMAP *buffer){
                     tabBall[j].alive = 0;
                     score++;
                 }
+            }
+            else if (tabBall[j].countAnim < 10){
+                stretch_sprite(buffer,explosion[0],tabBall[j].x,tabBall[j].y,64,64);
+                tabBall[j].countAnim++;
+            }
+            else if (tabBall[j].countAnim < 20){
+                stretch_sprite(buffer,explosion[1],tabBall[j].x,tabBall[j].y,64,64);
+                tabBall[j].countAnim++;
+            }
+            else if (tabBall[j].countAnim < 30){
+                stretch_sprite(buffer,explosion[2],tabBall[j].x,tabBall[j].y,64,64);
+                tabBall[j].countAnim++;
+            }
+            else if (tabBall[j].countAnim < 40){
+                stretch_sprite(buffer,explosion[3],tabBall[j].x,tabBall[j].y,64,64);
+                tabBall[j].countAnim++;
+            }
+            else if (tabBall[j].countAnim < 50){
+                stretch_sprite(buffer,explosion[4],tabBall[j].x,tabBall[j].y,64,64);
+                tabBall[j].countAnim++;
             }
         }
         blit(buffer,screen,0,0,0,0,buffer->w,buffer->h);
