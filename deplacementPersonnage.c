@@ -43,7 +43,7 @@ t_player mouvementPersonnageFleche(t_player *player){
 }
 
 t_player mouvementPersonnageZQSD(t_player *player){
-    if(key[KEY_A]){
+    if(key[KEY_A] && (collision(player))%11 == 0){
         player->x -= vitesse;
         player->position = 3;
         player->animation++;
@@ -51,7 +51,7 @@ t_player mouvementPersonnageZQSD(t_player *player){
             player->animation=0;
         }
     }
-    if(key[KEY_D]){
+    if(key[KEY_D] && (collision(player))%5 == 0){
         player->x += vitesse;
         player->position=1;
         player->animation++;
@@ -59,7 +59,7 @@ t_player mouvementPersonnageZQSD(t_player *player){
             player->animation=0;
         }
     }
-    if(key[KEY_W]) {
+    if(key[KEY_W] && (collision(player))%3 == 0) {
         player->y -= vitesse;
         player->position=0;
         player->animation++;
@@ -67,7 +67,7 @@ t_player mouvementPersonnageZQSD(t_player *player){
             player->animation=0;
         }
     }
-    if(key[KEY_S]){
+    if(key[KEY_S] && (collision(player))%7 == 0){
         player->y += vitesse;
         player->position=2;
         player->animation++;
