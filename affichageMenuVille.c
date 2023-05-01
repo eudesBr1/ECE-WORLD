@@ -35,5 +35,6 @@ void affichageVille(t_player player){
         printf("%d\n",player.animation %qtAnim);
         rest(20);
         if (key[KEY_SPACE]) game_GUITARE(&player);
+        if (key[KEY_H]) courseHippique(&player);
     }
 }
