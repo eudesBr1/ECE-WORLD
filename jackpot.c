@@ -28,8 +28,7 @@ int main()
     while(!key[KEY_ESC])
     {
         // Si la touche espace est appuyée, on active la manivelle
-        if(key[KEY_SPACE] && !manivelle_active)
-        {
+        if(key[KEY_SPACE] && !manivelle_active) {
             manivelle_active = 1;
 
             // Tirage aléatoire des symboles
@@ -42,48 +41,34 @@ int main()
             draw_sprite(screen, background, 0, 0);
 
             // Affichage des symboles
-            if(symbole_1_tire == 1)
-            {
+            if (symbole_1_tire == 1) {
                 draw_sprite(screen, symbole_1, 50, 200);
-            }
-            else if(symbole_1_tire == 2)
-            {
+            } else if (symbole_1_tire == 2) {
                 draw_sprite(screen, symbole_2, 50, 200);
-            }
-            else if(symbole_1_tire == 3)
-            {
+            } else if (symbole_1_tire == 3) {
                 draw_sprite(screen, symbole_3, 50, 200);
             }
 
-            if(symbole_2_tire == 1)
-            {
+            if (symbole_2_tire == 1) {
                 draw_sprite(screen, symbole_1, 200, 200);
-            }
-            else if(symbole_2_tire == 2)
-            {
+            } else if (symbole_2_tire == 2) {
                 draw_sprite(screen, symbole_2, 200, 200);
-            }
-            else if(symbole_2_tire == 3)
-            {
+            } else if (symbole_2_tire == 3) {
                 draw_sprite(screen, symbole_3, 200, 200);
             }
 
-            if(symbole_3_tire == 1)
-            {
+            if (symbole_3_tire == 1) {
                 draw_sprite(screen, symbole_1, 350, 200);
-            }
-            else if(symbole_3_tire == 2)
-            {
+            } else if (symbole_3_tire == 2) {
                 draw_sprite(screen, symbole_2, 350, 200);
-            }
-            else if(symbole_3_tire == 3)
-            {
+            } else if (symbole_3_tire == 3) {
                 draw_sprite(screen, symbole_3, 350, 200);
             }
 
             // Vérification du jackpot
-            if(symbole_1_tire == symbole_2_tire && symbole_1_tire == symbole_3_tire)
-            {
-                jackpot_gagne = 1;//
+            if (symbole_1_tire == symbole_2_tire && symbole_1_tire == symbole_3_tire) {
+                jackpot_gagne = 1;
+            }
+        }//
 // Created by malik on 29/04/2023.
 //
