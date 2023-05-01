@@ -1,8 +1,7 @@
 #include <allegro.h>
 #include <time.h>
 
-int main()
-{
+void jackpot_game(){
     allegro_init(); // Initialisation d'Allegro
     install_keyboard(); // Installation du clavier
 
@@ -25,10 +24,9 @@ int main()
     int jackpot_gagne = 0;
 
     // Boucle principale du jeu
-    while(!key[KEY_ESC])
-    {
+    while (!key[KEY_ESC]) {
         // Si la touche espace est appuyée, on active la manivelle
-        if(key[KEY_SPACE] && !manivelle_active) {
+        if (key[KEY_SPACE] && !manivelle_active) {
             manivelle_active = 1;
 
             // Tirage aléatoire des symboles
@@ -69,6 +67,8 @@ int main()
             if (symbole_1_tire == symbole_2_tire && symbole_1_tire == symbole_3_tire) {
                 jackpot_gagne = 1;
             }
-        }//
+        }
+    }
+}//
 // Created by malik on 29/04/2023.
 //
