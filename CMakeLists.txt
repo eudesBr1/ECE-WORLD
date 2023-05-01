@@ -3,6 +3,6 @@ project(ECE-WORLD C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(ECE-WORLD main.c GameBallon.c init_ecran.c deplacementPersonnage.c creationPersonnage.c affichageMenuVille.c affichageMenuVille.c Collision.c "Debut de partie.c" guitare_hero.c )
+add_executable(ECE-WORLD main.c GameBallon.c init_ecran.c deplacementPersonnage.c creationPersonnage.c affichageMenuVille.c Collision.c "Debut de partie.c" Guitare_Hero.c courseHippique.c)
 
 target_link_libraries(ECE-WORLD -lmingw32 -lalleg44)

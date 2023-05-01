@@ -12,6 +12,7 @@ int main(){
     //gameInit(players);
     /// crée personnage de ville
     creationPersonnageGoku(&goku);
+    courseHippique(goku);
     //TODO mettre break pour jeu ballon
     /// affiche ville menu
     affichageVille(goku);
