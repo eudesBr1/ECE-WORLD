@@ -52,3 +52,4 @@ t_player mouvementPersonnageFleche(t_player *player);
 t_player mouvementPersonnageZQSD(t_player *player);
 t_player creationPersonnageGoku(t_player *player);
 void affichageVille(t_player player);
+void courseHippique(t_player *player);
