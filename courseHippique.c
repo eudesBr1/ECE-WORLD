@@ -30,6 +30,17 @@ void courseHippique(t_player *player){
     for (int i = 0; i < 4; ++i) {
         cheval2[i] = create_sub_bitmap(templateCheval,31*i,54,28,28);
     }
+    BITMAP *menuCourseHippique;
+    menuCourseHippique = load_bitmap("../images/courseHippiqueFond.bmp",NULL);
+    stretch_blit(menuCourseHippique,buffer,0,0,menuCourseHippique->w,menuCourseHippique->h,0,0,screen->w,screen->h);
+    BITMAP *templateBouton;
+    BITMAP *boutonQuitter;
+    templateBouton = load_bitmap("../images/quit_boutton.bmp",NULL);
+    stretch_sprite(buffer, templateBouton, 30, screen->h - 100, 200, 85);
+    while (!key[KEY_ESC] && !key[KEY_H]){
+        show_mouse(buffer);
+        blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+    }
     int i=0;
     int k = 2;
     int avanceeCheval1=10;
