@@ -37,4 +37,12 @@ void affichageVille(t_player player){
         if (key[KEY_SPACE]) game_GUITARE(&player);
         if (key[KEY_H]) courseHippique(&player);
     }
+    destroy_bitmap(buffer);
+    destroy_bitmap(carte);
+    for (int i = 0; i < 4; ++i) {
+        destroy_bitmap(player.droite[i]);
+        destroy_bitmap(player.gauche[i]);
+        destroy_bitmap(player.haut[i]);
+        destroy_bitmap(player.bas[i]);
+    }
 }
