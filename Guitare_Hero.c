@@ -121,6 +121,50 @@ void game_GUITARE(t_player *players)
         clear(buffer);
     }
     ///une fois l'animation passer on va lancer le jeu
+    ///on commence par charger les images des touches
+    BITMAP *touche[6];
+    touche[0] = load_bitmap("../images/TOUCHE_BLEU.bmp",NULL);
+    if (!touche[0]){
+        allegro_message("Pb de l'image TOUCHE_BLEU.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    touche[1] = load_bitmap("../images/TOUCHE_JAUNE.bmp",NULL);
+    if (!touche[1]){
+        allegro_message("Pb de l'image TOUCHE_JAUNE.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    touche[2] = load_bitmap("../images/TOUCHE_ROUGE.bmp",NULL);
+    if (!touche[2]){
+        allegro_message("Pb de l'image TOUCHE_ROUGE.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    touche[3] = load_bitmap("../images/TOUCHE_VERT.bmp",NULL);
+    if (!touche[3]){
+        allegro_message("Pb de l'image TOUCHE_VERT.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    touche[4] = load_bitmap("../images/TOUCHE_VIDE1.bmp",NULL);
+    if (!touche[4]){
+        allegro_message("Pb de l'image TOUCHE_VIDE1.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    touche[5] = load_bitmap("../images/TOUCHE_VIDE2.bmp",NULL);
+    if (!touche[5]){
+        allegro_message("Pb de l'image TOUCHE_VIDE2.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    touche[6] = load_bitmap("../images/TOUCHE_VIDE3.bmp",NULL);
+    if (!touche[6]){
+        allegro_message("Pb de l'image TOUCHE_VIDE3.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
 
     rest(500);
