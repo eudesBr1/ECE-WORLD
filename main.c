@@ -12,9 +12,10 @@ int main(){
     gameInit(players);
     /// crée personnage de ville
     creationPersonnageGoku(&goku);
+    creationPersonnageNaruto(&naruto);
     //TODO mettre break pour jeu ballon
     /// affiche ville menu
-    affichageVille(goku);
+    affichageVille(&goku,&naruto);
 
  //   allegro_exit();
     return 1;

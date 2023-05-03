@@ -55,5 +55,7 @@ void game_GUITARE(t_player *players);
 t_player mouvementPersonnageFleche(t_player *player);
 t_player mouvementPersonnageZQSD(t_player *player);
 t_player creationPersonnageGoku(t_player *player);
-void affichageVille(t_player player);
+void affichageVille(t_player *player,t_player *player2);
 void courseHippique(t_player *player);
+void debutCourse(t_player *player);
+t_player creationPersonnageNaruto(t_player *player);
