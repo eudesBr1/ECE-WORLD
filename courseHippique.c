@@ -2,7 +2,6 @@
 // Created by eudes on 01/05/2023.
 //
 #include "Mabibli.h"
-void debutCourse(t_player *player);
 void courseHippique(t_player *player){
     ///charge image menu et boutons
     BITMAP *buffer;
