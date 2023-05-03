@@ -16,6 +16,7 @@
 
 
 #define NBticketStart 5
+#define w_tuile screen->w/6
 #define vitesse 2
 #define qtAnim 40
 #define TailleBalx 32
