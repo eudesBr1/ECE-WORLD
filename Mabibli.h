@@ -20,6 +20,7 @@
 #define qtAnim 40
 #define TailleBalx 32
 #define TailleBaly 96
+#define h_tuile 100
 #define avancAnim 1
 #define tailleTab 4
 typedef struct ballon{
@@ -42,7 +43,10 @@ typedef struct player{
     int animation;
 }t_player;
 
-
+typedef struct tuiles{
+    BITMAP *tuiles[4][8];
+    int couleur[4][8];
+}t_tuiles;
 void initEcran();
 void gameInit(t_player *players);
 void ballon(t_player *player, BITMAP *buffer);
