@@ -32,6 +32,7 @@ void gameInit(t_player *players){
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         clear(buffer);
         fflush(stdin);
+        rest(100);
     }
 
     do {
@@ -54,20 +55,18 @@ void gameInit(t_player *players){
             else if (charac == 52)
                 nbJoueur = 4;
             players = (t_player*) malloc(sizeof (t_player)*nbJoueur);
+            rest(100);
             break;
         }
     } while (1);
     ///on initialise alors chaque joueur avec leurs noms et leur personnages
-
     for (i = 0; i < nbJoueur; i++) {
         players[i].points = 0;
         players[i].ticket = NBticketStart;
         for (j = 0; j < 16;) {
             textprintf_centre_ex(buffer, font, screen->w / 2, screen->h / 2 - 100, blanc, -1,"Joueur %d écris ton pseudo", i+1);
             textout_centre_ex(buffer, font, "(maximum 16 caractères)", screen->w/2, screen->h / 2 - 60, blanc, -1);
-            fflush(stdin);
             charac = readkey();
-            fflush(stdin);
             if (charac == 8 && j>=1){
                 buuffname[j-1] = 0;
                 j--;
@@ -80,7 +79,7 @@ void gameInit(t_player *players){
             //printf("%s/%d\t%d\n",buuffname,j,charac);
             blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);clear(buffer);
             clear(buffer);
-            if (key[KEY_ENTER])
+            if (key[KEY_ENTER] && j>1)
                 j = 16;
         }
         players[i].name = malloc(sizeof(buuffname));
