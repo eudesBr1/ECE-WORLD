@@ -6,13 +6,15 @@
 
 /// au début de la partie on cherche a savoir le nombre de joueur présent
 
-void gameInit(t_player *players){
+t_player *gameInit(){
+    t_player *players;
     BITMAP *buffer;
+    int test;
     int nbJoueur = 0;
     int compteur = 0;
     int i,j,k;
     int sortie_boucle = 0;
-    int choix_personnage[2][3][2];
+    int choix_personnage[3][4][3];
     char charac;
     char buuffname[16] = {0} ;
     int blanc = makecol(255,255,255);
@@ -57,15 +59,20 @@ void gameInit(t_player *players){
                 nbJoueur = 3;
             else if (charac == 52)
                 nbJoueur = 4;
-            players = (t_player*) malloc(sizeof (t_player)*nbJoueur);
+            //players = (t_player*) malloc(sizeof (t_player)*nbJoueur);
             rest(100);
             break;
         }
     } while (1);
+    players = (t_player*) malloc(sizeof(t_player)*nbJoueur);
     ///on initialise alors chaque joueur avec leurs noms et leur personnages
     for (i = 0; i < nbJoueur; i++) {
         players[i].points = 0;
+        players[i].nbJoueurs = nbJoueur;
         players[i].ticket = NBticketStart;
+        players[i].animation = 0;
+        players[i].x = 150;
+        players[i].y = 300;
         for (j = 0; j < 16;) {
             textprintf_centre_ex(buffer, font, screen->w / 2, screen->h / 2 - 100, blanc, -1,"Joueur %d écris ton pseudo", i+1);
             textout_centre_ex(buffer, font, "(maximum 16 caractères)", screen->w/2, screen->h / 2 - 60, blanc, -1);
@@ -79,7 +86,7 @@ void gameInit(t_player *players){
                 j++;
             }
             textprintf_centre_ex(buffer, font, screen->w / 2, screen->h / 2, blanc, -1, "%s",buuffname);
-            printf("%s/%d\t%d\n",buuffname,j,charac);
+            //printf("%s/%d\t%d\n",buuffname,j,charac);
             blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);clear(buffer);
             clear(buffer);
             if (key[KEY_ENTER] && j>1) {
@@ -128,19 +135,28 @@ void gameInit(t_player *players){
             }
         }
     }
+
+    for (i = 0; i <= 2 ; i++) {
+        for (j = 0; j <= 3 ; j++) {
+            for (k = 0; k < 2; k++) {
+                choix_personnage[i][j][k]= 0;
+            }
+        }
+    }
+
     show_mouse(screen);
     for (int l = 0; l < nbJoueur; l++) {
+        sortie_boucle = 0;
         while (!sortie_boucle) {
             clear(buffer);
             textprintf_centre_ex(buffer, font, screen->w / 2, 150, blanc, -1,"%s, cliques pour choisir ton personnage",players[l].name);
             //printf("%s",players[l].name);
-            sortie_boucle = 0;
             ///affichage de toutes les personnages
 
             for (i = 0; i <= 2 ; i++) {
                 for (j = 0; j <= 3 ; j++) {
                     for (k = 0; k <2 ; k++) {
-                        if (mouse_x>(64*j+280*i)&&mouse_x<(64*j+280*i+64)&&(mouse_y>(300+70*k)&&mouse_y<(300+70*k+64))) {
+                        if (mouse_x>(64*j+280*i)&&mouse_x<(64*j+280*i+64)&&(mouse_y>(300+70*k)&&mouse_y<(300+70*k+64))&&!choix_personnage[i][j][k]) {
                             rectfill(buffer, 64 * j + 280 * i, 300 + 70 * k, 64 * j + 280 * i + 64, 300 + 70 * k + 64,
                                      makecol(150, 150, 150));
                             if (mouse_b==1){
@@ -162,20 +178,24 @@ void gameInit(t_player *players){
             for (j = 0; j <= 3 ; j++) {
                 for (k = 0; k < 2; k++) {
                     if (choix_personnage[i][j][k]!= 0){
-                        for (int m = 0; m < 4; ++m) {
-                            players[l].bas[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*j)/12,(spriteRPG[i]->h*k)/8,spriteRPG[i]->w/12,
+                        for (int m = 0; m < 3; m++) {
+                            printf("%d\t%d\t%d\t%d\t%d\n",i,j,k,m,choix_personnage[i][j][k]);
+                            players[l].bas[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j))/12,(spriteRPG[i]->h*k)/8,spriteRPG[i]->w/12,
                                                                   spriteRPG[i]->h/8);
-                            players[l].gauche[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*j)/12,(spriteRPG[i]->h*(k+1))/8,spriteRPG[i]->w/12,
-                                                                     spriteRPG[i]->h/8);;
-                            players[l].droite[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*j)/12,(spriteRPG[i]->h*(k+2))/8,spriteRPG[i]->w/12,
-                                                                     spriteRPG[i]->h/8);;
-                            players[l].haut[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*j)/12,(spriteRPG[i]->h*(k+3))/8,spriteRPG[i]->w/12,
-                                                                   spriteRPG[i]->h/8);;
+                            players[l].gauche[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j))/12,(spriteRPG[i]->h*(k+1))/8,spriteRPG[i]->w/12,
+                                                                     spriteRPG[i]->h/8);
+                            players[l].droite[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j))/12,(spriteRPG[i]->h*(k+2))/8,spriteRPG[i]->w/12,
+                                                                     spriteRPG[i]->h/8);
+                            players[l].haut[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j))/12,(spriteRPG[i]->h*(k+3))/8,spriteRPG[i]->w/12,
+                                                                   spriteRPG[i]->h/8);
                         }
+
+
                     }
 
                 }
             }
         }
     }
+    return players;
 }
