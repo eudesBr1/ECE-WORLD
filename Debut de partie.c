@@ -9,7 +9,7 @@
 void gameInit(t_player *players){
     BITMAP *buffer;
     int nbJoueur = 0;
-    int test = 0;
+    int compteur = 0;
     int i,j,k;
     int sortie_boucle = 0;
     int choix_personnage[2][3][2];
@@ -79,16 +79,18 @@ void gameInit(t_player *players){
                 j++;
             }
             textprintf_centre_ex(buffer, font, screen->w / 2, screen->h / 2, blanc, -1, "%s",buuffname);
-            //printf("%s/%d\t%d\n",buuffname,j,charac);
+            printf("%s/%d\t%d\n",buuffname,j,charac);
             blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);clear(buffer);
             clear(buffer);
-            if (key[KEY_ENTER] && j>1)
+            if (key[KEY_ENTER] && j>1) {
+                buuffname[j-1] = 0;
                 j = 16;
+            }
         }
-        players[i].name = malloc(sizeof(char)* strlen(buuffname));
-        players[i].name = buuffname;
+        ///on recopie le nom saisie au clavier dans le nom du joueur
 
         for (j = 0; j < 16; j++) {
+            players[i].name[j] = buuffname[j];
             buuffname[j] = 0;
         }
 
@@ -126,31 +128,54 @@ void gameInit(t_player *players){
             }
         }
     }
-
-    clear(buffer);
-    for (i = 0; i < nbJoueur; i++) {
+    show_mouse(screen);
+    for (int l = 0; l < nbJoueur; l++) {
         while (!sortie_boucle) {
             clear(buffer);
-            textprintf_centre_ex(buffer, font, screen->w / 2, 150, blanc, -1,"%s, quel pesonnage choisis-tu ?",players[i].name);
+            textprintf_centre_ex(buffer, font, screen->w / 2, 150, blanc, -1,"%s, cliques pour choisir ton personnage",players[l].name);
+            //printf("%s",players[l].name);
+            sortie_boucle = 0;
             ///affichage de toutes les personnages
 
             for (i = 0; i <= 2 ; i++) {
                 for (j = 0; j <= 3 ; j++) {
                     for (k = 0; k <2 ; k++) {
-                        stretch_sprite(buffer,personnages_front[i][j][k],50*j+200*i,200+70*k,48,48);
+                        if (mouse_x>(64*j+280*i)&&mouse_x<(64*j+280*i+64)&&(mouse_y>(300+70*k)&&mouse_y<(300+70*k+64))) {
+                            rectfill(buffer, 64 * j + 280 * i, 300 + 70 * k, 64 * j + 280 * i + 64, 300 + 70 * k + 64,
+                                     makecol(150, 150, 150));
+                            if (mouse_b==1){
+                                choix_personnage[i][j][k] = l + 1;
+                                sortie_boucle=1;
+                            }
+                        }
+                        else
+                            rectfill(buffer,64*j+280*i,300+70*k,64*j+280*i+64,300+70*k+64, makecol(65,65,65));
+                        stretch_sprite(buffer,personnages_front[i][j][k],64*j+280*i,300+70*k,64,64);
 
                     }
                 }
             }
-            test++;
-            printf("%d",test);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-            rest(5000);
-
-
         }
+        ///on regarde quel personnage le joueur a choisis puis on charge l'image
+        for (i = 0; i <= 2 ; i++) {
+            for (j = 0; j <= 3 ; j++) {
+                for (k = 0; k < 2; k++) {
+                    if (choix_personnage[i][j][k]!= 0){
+                        for (int m = 0; m < 4; ++m) {
+                            players[l].bas[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*j)/12,(spriteRPG[i]->h*k)/8,spriteRPG[i]->w/12,
+                                                                  spriteRPG[i]->h/8);
+                            players[l].gauche[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*j)/12,(spriteRPG[i]->h*(k+1))/8,spriteRPG[i]->w/12,
+                                                                     spriteRPG[i]->h/8);;
+                            players[l].droite[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*j)/12,(spriteRPG[i]->h*(k+2))/8,spriteRPG[i]->w/12,
+                                                                     spriteRPG[i]->h/8);;
+                            players[l].haut[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*j)/12,(spriteRPG[i]->h*(k+3))/8,spriteRPG[i]->w/12,
+                                                                   spriteRPG[i]->h/8);;
+                        }
+                    }
 
+                }
+            }
+        }
     }
-
-
 }

@@ -35,7 +35,7 @@ typedef struct ballon{
 
 typedef struct player{
     int x,y,ticket,points;
-    char* name;
+    char name[16];
     BITMAP *haut[4];
     BITMAP *bas[4];
     BITMAP *droite[4];
