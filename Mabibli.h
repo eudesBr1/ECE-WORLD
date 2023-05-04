@@ -34,7 +34,7 @@ typedef struct ballon{
 }t_ballon;
 
 typedef struct player{
-    int x,y,ticket,points;
+    int x,y,ticket,points,nbJoueurs;
     char name[16];
     BITMAP *haut[4];
     BITMAP *bas[4];
@@ -49,14 +49,14 @@ typedef struct tuiles{
     int couleur[4][8];
 }t_tuiles;
 void initEcran();
-void gameInit(t_player *players);
+t_player *gameInit();
 void ballon(t_player *player, BITMAP *buffer);
 int collision(t_player *perso);
 void game_GUITARE(t_player *players);
 t_player mouvementPersonnageFleche(t_player *player);
 t_player mouvementPersonnageZQSD(t_player *player);
 t_player creationPersonnageGoku(t_player *player);
-void affichageVille(t_player *player,t_player *player2);
+void affichageVille(t_player *players);
 void courseHippique(t_player *player);
 void debutCourse(t_player *player);
 t_player creationPersonnageNaruto(t_player *player);
