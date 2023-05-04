@@ -13,6 +13,7 @@ int main(){
     /// crée personnage de ville
     creationPersonnageGoku(&goku);
     creationPersonnageNaruto(&naruto);
+    coinFlip(&goku,&naruto);
     //TODO mettre break pour jeu ballon
     /// affiche ville menu
     affichageVille(&goku,&naruto);
