@@ -16,10 +16,12 @@
 
 
 #define NBticketStart 5
+#define w_tuile screen->w/6
 #define vitesse 2
 #define qtAnim 40
 #define TailleBalx 32
 #define TailleBaly 96
+#define h_tuile 100
 #define avancAnim 1
 #define tailleTab 4
 typedef struct ballon{
@@ -33,7 +35,7 @@ typedef struct ballon{
 
 typedef struct player{
     int x,y,ticket,points;
-    char* name;
+    char name[16];
     BITMAP *haut[4];
     BITMAP *bas[4];
     BITMAP *droite[4];
@@ -42,7 +44,10 @@ typedef struct player{
     int animation;
 }t_player;
 
-
+typedef struct tuiles{
+    BITMAP *tuiles[4][8];
+    int couleur[4][8];
+}t_tuiles;
 void initEcran();
 void gameInit(t_player *players);
 void ballon(t_player *player, BITMAP *buffer);

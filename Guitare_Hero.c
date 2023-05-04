@@ -4,9 +4,108 @@
 
 #include <math.h>
 #include "Mabibli.h"
+int calcul_speed(int iteration){
+    int speed_base = 1;
+    int acceleration = 1;
+    int speed =  speed_base + iteration / 500 * acceleration;
+    return speed;
+}
 
+int check_tile_and_update_score(int column,t_tuiles *tuiles, int *score, int offset,BITMAP *tuilePLEINE[4]) {
+    int numLigne;
+    printf("%d",offset);
+    if (offset<70){
+        numLigne = 1;
+    } else{
+        numLigne = 0;
+    }
+    if (offset>70)
+        numLigne = 2;
+    printf("\t%d",numLigne);
+    printf("\t %d:%d\n",numLigne,tuiles->couleur[column][numLigne]);
+    if (tuiles->couleur[column][numLigne] < 4) {
+        (*score)++;
+        tuiles->tuiles[column][numLigne] = tuilePLEINE[column];
+        tuiles->couleur[column][numLigne] = 9;
+
+        // deRemplacer l'image par une image ou les  blancs adjacents par du gris foncé
+
+        return 1;
+    } else if (tuiles->couleur[column][numLigne] == 9){
+        return 1;
+    }
+    else
+        return 0;
+}
+
+int scroll_background(BITMAP *buffer, BITMAP *background[7], int game_iteration, int *offset,t_tuiles *tuiles) {
+    int erreur_return = 0;
+    int speed = calcul_speed(game_iteration);
+    //printf("test 1\n");
+    *offset = (*offset + speed);
+    //printf("test 2\n");
+
+    if (*offset >= h_tuile) {
+        printf("%d\t",erreur_return);
+        for (int j = 0; j < 4; ++j) {
+                if (tuiles->couleur[j][1] <= 3) {
+                    erreur_return++;
+                }
+        }
+        printf("%d\n",erreur_return);
+
+        //printf("scroll_background %d\n", speed);
+        for (int i = 0; i <= 7; i++) {
+            for (int j = 0; j < 4; ++j) {
+                if (i == 0) {
+                    }
+                    tuiles->tuiles[j][i] = tuiles->tuiles[j][i + 1];
+                    tuiles->couleur[j][i] = tuiles->couleur[j][i + 1];
+                    // printf("test col %d\n",j);
+                    if (i == 7) {
+                        tuiles->couleur[j][i] = 10;
+                    }
+                }
+
+                //printf("test ligne %d\n",i);
+
+            }
+
+        }
+        *offset = *offset % h_tuile;
+        int dessin;
+        for (int lignes = 0; lignes <= 7; lignes++) {
+            for (int colonnes = 0; colonnes < 4; colonnes++) {
+                dessin = rand() % 4;
+                //printf("%d %d\t%d/%d\n",tuiles->couleur[colonnes][lignes],dessin,colonnes,lignes);
+                if (!dessin && tuiles->couleur[colonnes][lignes] == 10) {
+                    tuiles->couleur[colonnes][lignes] = colonnes;
+                    //printf("test\n");
+                    tuiles->tuiles[colonnes][lignes] = background[tuiles->couleur[colonnes][lignes]];
+                    //printf("test\n");
+                    //printf("test\n");
+                } else if (tuiles->couleur[colonnes][lignes] == 10) {
+                    tuiles->couleur[colonnes][lignes] = 3 + dessin;
+                    tuiles->tuiles[colonnes][lignes] = background[tuiles->couleur[colonnes][lignes]];
+                }
+                stretch_blit(tuiles->tuiles[colonnes][lignes], buffer, 0, 0, tuiles->tuiles[colonnes][lignes]->w,
+                             tuiles->tuiles[colonnes][lignes]->h,
+                             (screen->w + colonnes * screen->w) / 6, screen->h - h_tuile * lignes + *offset,
+                             screen->w / 6,
+                             h_tuile);
+                //  printf("%d\t%d/%d\n",tuiles->couleur[colonnes][lignes],colonnes,lignes);
+
+            }
+        }
+    return erreur_return;
+    }
 void game_GUITARE(t_player *players)
 {
+    int game_iteration = 0;
+    t_tuiles tuiles;
+    int score = 0; /// Nombre de touches touchées par le joueur
+    int offset = 0; /// Valeur de décalage du terrain sur l'écran
+
     BITMAP *buffer;
     buffer = create_bitmap(screen->w,screen->h);
     int condition = 0;
@@ -52,12 +151,11 @@ void game_GUITARE(t_player *players)
     show_mouse(screen);
     do {
         ///affichage si la souris est sur le boutton jouer
-        if (mouse_x<=(screen->w/2+100)&&mouse_x>=(screen->w / 2 - 100)&&mouse_y>=(screen->h/2-38)&&mouse_y<=(screen->h / 2 + 38)){
+        if (mouse_x<=(screen->w/2 + h_tuile) && mouse_x >= (screen->w / 2 - h_tuile) && mouse_y >= (screen->h / 2 - 38) && mouse_y <= (screen->h / 2 + 38)){
             stretch_blit(loadingscreen, buffer, 0, 0, loadingscreen->w, loadingscreen->h, 0, 0, screen->w, screen->h);
             stretch_sprite(buffer, play_boutton, screen->w / 2 - 150, screen->h / 2 - 38, 300, 75);
             stretch_sprite(buffer, settings_button, screen->w -80, screen->h - 80, 80, 80);
             stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
-            blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
             if (mouse_b == 1){
                 printf("debut du jeu\n");
                 condition = 1;
@@ -66,10 +164,9 @@ void game_GUITARE(t_player *players)
         ///affichage si la souris est sur le boutton parametre
         else if (mouse_x<=(screen->w)&&mouse_x>=(screen->w - 80)&&mouse_y>=(screen->h-80)&&mouse_y<=(screen->h)){
             stretch_blit(loadingscreen, buffer, 0, 0, loadingscreen->w, loadingscreen->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - 100, screen->h / 2 - 25, 200, 50);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - h_tuile, screen->h / 2 - 25, 200, 50);
             stretch_sprite(buffer, settings_button, screen->w -110, screen->h - 110, 130, 130);
             stretch_sprite(buffer, quit_button, 0, screen->h  - 80, 150, 60);
-            blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
             if (mouse_b == 1){
                 printf("parametres ouverts\n");
             }
@@ -77,9 +174,8 @@ void game_GUITARE(t_player *players)
         ///affichage si le boutton quit est au niveau de la souris
         else if (mouse_x<=(150)&&mouse_x>=(0)&&mouse_y>=(screen->h-80)&&mouse_y<=(screen->h)){
             stretch_blit(loadingscreen, buffer, 0, 0, loadingscreen->w, loadingscreen->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - 100, screen->h / 2 - 25, 200, 50);            stretch_sprite(buffer, settings_button, screen->w -80, screen->h - 80, 80, 80);
-            stretch_sprite(buffer, quit_button, 0, screen->h - 100, 200, 90);
-            blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - h_tuile, screen->h / 2 - 25, 200, 50);            stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
+            stretch_sprite(buffer, quit_button, 0, screen->h - h_tuile, 200, 90);
             if (mouse_b==1){
                 destroy_bitmap(buffer);
                 destroy_bitmap(play_boutton);
@@ -93,17 +189,16 @@ void game_GUITARE(t_player *players)
         ///affichage normal
         else {
             stretch_blit(loadingscreen, buffer, 0, 0, loadingscreen->w, loadingscreen->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - 100, screen->h / 2 - 25, 200, 50);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - h_tuile, screen->h / 2 - 25, 200, 50);
             stretch_sprite(buffer, quit_button, 0, screen->h  - 80, 150, 60);
             stretch_sprite(buffer, settings_button, screen->w -80, screen->h - 80, 80, 80);
-            blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         }
+        blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
     }   while (!condition);
-    condition = 0;
     clear(buffer);
     ///on commence par faire une animation pour commencer le jeu
-    int x = 0;
-    int y = 0;
+    int x ;
+    int y ;
     float agrandissement = 1;
     float angle = 0;
     int rayon = buffer->w/2;
@@ -112,17 +207,21 @@ void game_GUITARE(t_player *players)
         x = rayon* cos(angle);
         y = rayon* sin(angle);
         stretch_blit(photo_guitare,buffer,10,10,38,38,x,y,photo_guitare->w*agrandissement,photo_guitare->h*agrandissement);
-        textprintf_centre_ex(buffer,font,screen->w/2,100, makecol(255,255,255),0,"azer pour les colonnes de 1 a 4");
+        textprintf_centre_ex(buffer, font,screen->w/2, h_tuile, makecol(255, 255, 255), 0, "azer pour les colonnes de 1 a 4");
         angle+=0.02;
         agrandissement+= 0.2;
-        printf("%d\n",i);
+        //printf("%d\n",i);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-        rest(10);
+        rest(5);
         clear(buffer);
     }
     ///une fois l'animation passer on va lancer le jeu
+
+    int offsetX = screen->w/6;
+    int erreurs = 0;
+
     ///on commence par charger les images des touches
-    BITMAP *touche[6];
+    BITMAP *touche[7];
     touche[0] = load_bitmap("../images/TOUCHE_BLEU.bmp",NULL);
     if (!touche[0]){
         allegro_message("Pb de l'image TOUCHE_BLEU.bmp");
@@ -165,8 +264,110 @@ void game_GUITARE(t_player *players)
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+    BITMAP *touchePLEINE[4];
+    touchePLEINE[0] = load_bitmap("../images/TOUCHE_BLEU_PLEINE.bmp",NULL);
+    if (!touchePLEINE[0]){
+        allegro_message("Pb de l'image TOUCHE_BLEU_PLEINE.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    touchePLEINE[1] = load_bitmap("../images/TOUCHE_JAUNE_PLEINE.bmp",NULL);
+    if (!touchePLEINE[1]){
+        allegro_message("Pb de l'image TOUCHE_JAUNE_PLEINE.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    touchePLEINE[2] = load_bitmap("../images/TOUCHE_ROUGE_PLEINE.bmp",NULL);
+    if (!touchePLEINE[2]){
+        allegro_message("Pb de l'image TOUCHE_ROUGE_PLEINE.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    touchePLEINE[3] = load_bitmap("../images/TOUCHE_VERT_PLEINE.bmp",NULL);
+    if (!touchePLEINE[3]){
+        allegro_message("Pb de l'image TOUCHE_VERT_PLEINE.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
 
+    for (int i = 0; i <= 7; i++) {
+        for (int j = 0; j < 4; j++) {
+            tuiles.tuiles[j][i] = create_bitmap(860,860);
+            tuiles.couleur[j][i] = 10;
+        }
+    }
+    srand(time(NULL));
+    ///on dessine le score sur le buffer
+    while (!key[KEY_ESC]){
+        clear_to_color(buffer, makecol(0, 0, 0)); // Clear du buffer
+        erreurs+=scroll_background(buffer,touche,game_iteration,&offset,&tuiles);
+        calcul_speed(game_iteration);
+        // Gérer les entrées de l'utilisateur et le score
+        int column = -1;
+        if (key[KEY_Q]) {
+            column = 0;
+        } else if (key[KEY_W]) {
+            column = 1;
+        } else if (key[KEY_E]) {
+            column = 2;
+        } else if (key[KEY_R]) {
+            column = 3;
+        }
+        /// Si une touche a été enfoncée, on appelle la fonction qui gère le score et modifie la couleur de la tuile
+        if (column != -1) {
+            /// Si le retour de cette fonction vaut "0", alors c'est que le joueur a tenté de toucher une tuile inexistante => défaite
+            if (!check_tile_and_update_score(column, &tuiles, &score, offset,touchePLEINE)) {
+                 //Le joueur a fait une erreur
+                erreurs++;
+                allegro_message("vous avez fait une erreur encore %d avant la fin du jeux",5-erreurs);
+            }
+            /// On affiche le cercle rouge correspondant à l'endroit où le joueur est en train d'appuyer
+            circlefill(buffer, offsetX + column * w_tuile + w_tuile/2, screen->h - 2 - 50, 5,
+                       makecol(255, 0, 0));
+        }
+
+
+        // Dessiner une ligne en bas de l'écran, 50 pixels plus haut
+        hline(buffer, 0, screen->h - 1 - 50, screen->w - 1, makecol(255, 0, 0));
+
+        // Afficher le score
+        textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "Score: %d", score);
+        textprintf_ex(buffer, font, 10, 25, makecol(255, 255, 255), -1, "Erreurs: %d", erreurs);
+
+
+        // Copier le buffer sur l'écran
+        blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
+        if (erreurs >= 5){
+            allegro_message("fin du jeux vouas avez fait un score de %d",score);
+            if (score<10){
+                allegro_message("pas de chance ... vous pouvez réessayer");
+                return;
+            } else if (score<20){
+                allegro_message("pas mal continuez de vous entrainez vous remportez un points");
+                players->points++;
+                return;
+            }else if (score<30){
+                allegro_message("vous etes fort vous remportez un point et un ticket");
+                players->points++;
+                players->ticket++;
+                return;
+            } else if (score < 50){
+                allegro_message("un sur homme vous gagnez 2 points et un ticket");
+                players->points+=2;
+                players->ticket++;
+                return;
+            } else {
+                allegro_message("etes vous humains ? vous remportez 3 points et 2 tickets ");
+                players->points+=3;
+                players->ticket+=2;
+                return;
+            }
+        }
+
+        rest(20);
+        game_iteration++;
+    }
     rest(500);
 
 
