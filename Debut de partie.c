@@ -9,7 +9,10 @@
 void gameInit(t_player *players){
     BITMAP *buffer;
     int nbJoueur = 0;
-    int i,j;
+    int test = 0;
+    int i,j,k;
+    int sortie_boucle = 0;
+    int choix_personnage[2][3][2];
     char charac;
     char buuffname[16] = {0} ;
     int blanc = makecol(255,255,255);
@@ -82,11 +85,69 @@ void gameInit(t_player *players){
             if (key[KEY_ENTER] && j>1)
                 j = 16;
         }
-        players[i].name = malloc(sizeof(buuffname));
+        players[i].name = malloc(sizeof(char)* strlen(buuffname));
         players[i].name = buuffname;
 
         for (j = 0; j < 16; j++) {
             buuffname[j] = 0;
+        }
+
+    }
+
+    ///on charge les sprite de rpg afin de donner un apercu a l'utilisateur du personnage qu'il peut utiliser
+    BITMAP *spriteRPG[2];
+    spriteRPG[0] = load_bitmap("../images/Sprite_rpg1.bmp",NULL);
+    if (!spriteRPG[0]){
+        allegro_message("Pb de l'image Sprite_rpg1.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    spriteRPG[1] = load_bitmap("../images/Sprite_RPG2.bmp",NULL);
+    if (!spriteRPG[1]){
+        allegro_message("Pb de l'image Sprite_RPG2.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    spriteRPG[2] = load_bitmap("../images/Sprite_RPG_Duck.bmp",NULL);
+    if (!spriteRPG[2]){
+        allegro_message("Pb de l'image Sprite_RPG_Duck.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    BITMAP *personnages_front[3][4][2];
+    for (i = 0; i <= 2 ; i++) {
+        for (j = 0; j <= 3 ; j++) {
+            for (k = 0; k <2 ; k++) {
+                personnages_front[i][j][k] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*3*j)/12,(spriteRPG[i]->h*4*k)/8,spriteRPG[i]->w/12,
+                                                               spriteRPG[i]->h/8);
+            }
+        }
+    }
+
+    clear(buffer);
+    for (i = 0; i < nbJoueur; i++) {
+        while (!sortie_boucle) {
+            clear(buffer);
+            textprintf_centre_ex(buffer, font, screen->w / 2, 150, blanc, -1,"%s, quel pesonnage choisis-tu ?",players[i].name);
+            ///affichage de toutes les personnages
+
+            for (i = 0; i <= 2 ; i++) {
+                for (j = 0; j <= 3 ; j++) {
+                    for (k = 0; k <2 ; k++) {
+                        stretch_sprite(buffer,personnages_front[i][j][k],50*j+200*i,200+70*k,48,48);
+
+                    }
+                }
+            }
+            test++;
+            printf("%d",test);
+            blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+            rest(5000);
+
+
         }
 
     }
