@@ -60,3 +60,4 @@ void affichageVille(t_player *players);
 void courseHippique(t_player *player);
 void debutCourse(t_player *player);
 t_player creationPersonnageNaruto(t_player *player);
+void coinFlip(t_player *player,t_player *player2);
