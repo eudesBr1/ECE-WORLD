@@ -4,7 +4,7 @@
 #include "Mabibli.h"
 
 
-int collision(t_player *perso){
+int collision(t_player perso){
     BITMAP *fond;
     fond = load_bitmap("../images/map_collision.bmp",NULL);
     if (!fond){
@@ -12,8 +12,8 @@ int collision(t_player *perso){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-    int x = (perso->x*1024/500);
-    int y = (perso->y*1024/500);
+    int x = (perso.x*1024/500);
+    int y = (perso.y*1024/500);
 
     int h = getpixel(fond,x+10,y-3);
     int d = getpixel(fond,x+20,y+20);
@@ -21,7 +21,7 @@ int collision(t_player *perso){
     int g = getpixel(fond,x,y+20);
     int noir = makecol(0,0,0);
     int renvoie = 1;
-    printf("%d/%d\t %d/%d\n",perso->x,perso->y,x,y);
+    printf("%d/%d\t %d/%d\n",perso.x,perso.y,x,y);
     //multiple de 3 si le personnage peut monter
     //multiple de 5 si le personnage peut aller a droite
     //multiple de 7 si le personnage peut descendre

@@ -6,8 +6,7 @@
 
 /// au début de la partie on cherche a savoir le nombre de joueur présent
 
-t_player *gameInit(){
-    t_player *players;
+void gameInit(t_player players[4]){
     BITMAP *buffer;
     int test;
     int nbJoueur = 0;
@@ -64,7 +63,7 @@ t_player *gameInit(){
             break;
         }
     } while (1);
-    players = (t_player*) malloc(sizeof(t_player)*nbJoueur);
+    //players = (t_player*) malloc(sizeof(t_player)*nbJoueur);
     ///on initialise alors chaque joueur avec leurs noms et leur personnages
     for (i = 0; i < nbJoueur; i++) {
         players[i].points = 0;
@@ -177,16 +176,16 @@ t_player *gameInit(){
         for (i = 0; i <= 2 ; i++) {
             for (j = 0; j <= 3 ; j++) {
                 for (k = 0; k < 2; k++) {
-                    if (choix_personnage[i][j][k]!= 0){
+                    if (choix_personnage[i][j][k] == l + 1){
                         for (int m = 0; m < 3; m++) {
                             printf("%d\t%d\t%d\t%d\t%d\n",i,j,k,m,choix_personnage[i][j][k]);
-                            players[l].bas[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j))/12,(spriteRPG[i]->h*k)/8,spriteRPG[i]->w/12,
+                            players[l].bas[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j*3))/12,(spriteRPG[i]->h*k*4)/8,spriteRPG[i]->w/12,
                                                                   spriteRPG[i]->h/8);
-                            players[l].gauche[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j))/12,(spriteRPG[i]->h*(k+1))/8,spriteRPG[i]->w/12,
+                            players[l].gauche[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j*3))/12,(spriteRPG[i]->h*(k*4+1))/8,spriteRPG[i]->w/12,
                                                                      spriteRPG[i]->h/8);
-                            players[l].droite[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j))/12,(spriteRPG[i]->h*(k+2))/8,spriteRPG[i]->w/12,
+                            players[l].droite[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j*3))/12,(spriteRPG[i]->h*(k*4+2))/8,spriteRPG[i]->w/12,
                                                                      spriteRPG[i]->h/8);
-                            players[l].haut[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j))/12,(spriteRPG[i]->h*(k+3))/8,spriteRPG[i]->w/12,
+                            players[l].haut[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j*3))/12,(spriteRPG[i]->h*(k*4+3))/8,spriteRPG[i]->w/12,
                                                                    spriteRPG[i]->h/8);
                         }
 
@@ -197,5 +196,7 @@ t_player *gameInit(){
             }
         }
     }
+
+
     return players;
 }

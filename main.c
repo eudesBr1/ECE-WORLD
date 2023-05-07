@@ -2,7 +2,7 @@
 
 int main(){
     allegro_init();
-    t_player *players;
+    t_player players[4];
     //t_player goku;
     //t_player naruto;
     initEcran();

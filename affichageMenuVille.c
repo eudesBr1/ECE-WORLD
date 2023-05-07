@@ -11,29 +11,29 @@ void affichageVille(t_player *players){
     clear(buffer);
     BITMAP *carte;
     /// charge carte ville
-    printf("test\n");
+    //printf("test\n");
     carte = load_bitmap("../images/map_pokemon.bmp",NULL);
     if (!carte){
         allegro_message("Pb de l'image chargee");
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-    printf("test\n");
-    stretch_sprite(screen,players[1].haut[players[1].animation/10 %qtAnim],players[1].x,players[1].y,largeurPersonnage2,hauteurPersonnage2);
-    printf("test\n");
+    //printf("test\n");
+    //stretch_sprite(screen,players[0].haut[players[1].animation/10 %qtAnim],players[1].x,players[1].y,largeurPersonnage2,hauteurPersonnage2);
+    //printf("test\n");
     while (!key[KEY_ESC]){
-        printf("test\n");
+        //printf("test\n");
         blit(buffer,screen,0,0,0,0,screen->w, screen->h);
-        blit(carte,buffer,players[0].x,players[0].y,0,0,screen->w,screen->h);
-        printf("test\n");
+        blit(carte,buffer,100,300,0,0,screen->w,screen->h);
+        //printf("test\n");
         mouvementPersonnageZQSD(&players[0]);
-        printf("test\n");
+        //printf("test\n");
         mouvementPersonnageFleche(&players[1]);
-        printf("test\n");
+        //printf("test\n");
 
         // affiche personnage sur carte
         for (int i = 0; i < players[0].nbJoueurs; i++) {
-            printf("test\n");
+            //printf("test\n");
             if (players[i].position == 0) {
                 stretch_sprite(buffer, players[i].haut[players[i].animation / 10 % qtAnim], players[i].x, players[i].y,
                                largeurPersonnage2, hauteurPersonnage2);

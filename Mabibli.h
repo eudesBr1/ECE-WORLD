@@ -49,9 +49,9 @@ typedef struct tuiles{
     int couleur[4][8];
 }t_tuiles;
 void initEcran();
-t_player *gameInit();
+void zgameInit(t_player players[4]);
 void ballon(t_player *player, BITMAP *buffer);
-int collision(t_player *perso);
+int collision(t_player perso);
 void game_GUITARE(t_player *players);
 t_player mouvementPersonnageFleche(t_player *player);
 t_player mouvementPersonnageZQSD(t_player *player);
