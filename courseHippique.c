@@ -2,6 +2,7 @@
 // Created by eudes on 01/05/2023.
 //
 #include "Mabibli.h"
+#define tailleCheval 120
 void courseHippique(t_player *player){
     ///charge image menu et boutons
     BITMAP *buffer;
@@ -30,7 +31,60 @@ void courseHippique(t_player *player){
             stretch_sprite(buffer, boutonQuitter, 20, screen->h - 60, 180, 50);
             stretch_sprite(buffer,boutonStart,screen->w/2-80,screen->h/2+15,160,100);
             if (mouse_b == 1){
-                debutCourse(player);
+                if (coinFlip()==1){
+                    while (1){
+                        while (1){
+                            clear(buffer);
+                            BITMAP *pancarte = load_bitmap("../images/pancarteJoueur1CourseHippique.bmp",NULL);
+                            if (!pancarte){
+                                allegro_message("Pb de l'image courseHippique.bmp");
+                                allegro_exit();
+                                exit(EXIT_FAILURE);
+                            }
+                            BITMAP *templateCheval;
+                            templateCheval = load_bitmap("../images/spriteChevaux.bmp",NULL);
+                            if (!templateCheval){
+                                allegro_message("Pb de l'image courseHippique.bmp");
+                                allegro_exit();
+                                exit(EXIT_FAILURE);
+                            }
+                            BITMAP *cheval1;
+                            cheval1 = create_sub_bitmap(templateCheval,0,0,31,28);
+                            BITMAP *cheval2;
+                            cheval2 = create_sub_bitmap(templateCheval,0,54,28,28);
+                            stretch_blit(menuCourseHippique,buffer,0,0,menuCourseHippique->w,menuCourseHippique->h,0,0,screen->w,screen->h);
+                            stretch_sprite(buffer,pancarte,screen->w/2-500/2,screen->h/2-300,500,80);
+                            stretch_sprite(buffer,cheval1,50,screen->h/2,tailleCheval,tailleCheval);
+                            stretch_sprite(buffer,cheval2,screen->w-tailleCheval-50,screen->h/2,tailleCheval,tailleCheval);
+                            blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+                            show_mouse(screen);
+                            rest(2);
+                            if (mouse_b == 1){
+                                debutCourse(player);
+                                break;
+                            }
+                        }
+                    }
+                }else{
+                    while (1){
+                        clear(buffer);
+                        BITMAP *pancarte = load_bitmap("../images/pancarteJoueur1CourseHippique.bmp",NULL);
+                        if (!pancarte){
+                            allegro_message("Pb de l'image courseHippique.bmp");
+                            allegro_exit();
+                            exit(EXIT_FAILURE);
+                        }
+                        stretch_blit(menuCourseHippique,buffer,0,0,menuCourseHippique->w,menuCourseHippique->h,0,0,screen->w,screen->h);
+                        stretch_sprite(buffer,pancarte,screen->w/2-300/2,screen->h/2-100,300,60);
+                        blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+                        show_mouse(screen);
+                        rest(2);
+                        if (mouse_b == 1){
+                            debutCourse(player);
+                            break;
+                        }
+                    }
+                }
             }
         }
         else{
@@ -45,7 +99,6 @@ void courseHippique(t_player *player){
     rest(50);
 }
 void debutCourse(t_player *player){
-    #define tailleCheval 120
     int coordonneesPiste=0;
     BITMAP *buffer;
     buffer = create_bitmap(screen->w,screen->h);

@@ -2,7 +2,7 @@
 // Created by eudes on 03/05/2023.
 //
 #include "Mabibli.h"
-int coinFlip(t_player *player,t_player *player2){
+int coinFlip(){
     BITMAP *buffer;
     buffer = create_bitmap(screen->w,screen->h);
     clear(buffer);
@@ -55,14 +55,13 @@ int coinFlip(t_player *player,t_player *player2){
         BITMAP *gagnant = load_bitmap("../images/fondCoinflipJ1.bmp",NULL);
         stretch_blit(gagnant,buffer,0,0,fondCoinflip->w,fondCoinflip->h,0,0,screen->w,screen->h);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-        rest(2);
+        rest(2000);
         destroy_bitmap(buffer);
         destroy_bitmap(gagnant);
         destroy_bitmap(fondCoinflip);
         destroy_bitmap(templateCoin);
         for (int j = 0; j < 17; ++j) {
             destroy_bitmap(coin[j]);
-
         }
         return 1;
     }
@@ -71,7 +70,7 @@ int coinFlip(t_player *player,t_player *player2){
         BITMAP *gagnant = load_bitmap("../images/fondCoinflipJ2.bmp",NULL);
         stretch_blit(gagnant,buffer,0,0,fondCoinflip->w,fondCoinflip->h,0,0,screen->w,screen->h);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-        rest(2);
+        rest(2000);
         destroy_bitmap(buffer);
         destroy_bitmap(gagnant);
         destroy_bitmap(fondCoinflip);
