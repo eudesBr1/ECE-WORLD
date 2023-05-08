@@ -9,7 +9,8 @@ int main(){
     install_keyboard();
     install_mouse();
     srand(time(NULL));
-    gameInit(players);
+    coinFlip(players,players);
+    players =  gameInit();
     /// crée personnage de ville
     //creationPersonnageGoku(&goku);
     //creationPersonnageNaruto(&naruto);
