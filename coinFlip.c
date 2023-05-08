@@ -31,28 +31,42 @@ void coinFlip(t_player *player,t_player *player2){
 
     int i=0;
     int n=0;
-    int nombreDeToursPiece = rand()%8+6;
+    int nombreDeToursPiece = rand()%4+2;
     printf("%d",nombreDeToursPiece);
     #define vitesseAnimationPiece 8
-    while (!key[KEY_ESC] && n<=nombreDeToursPiece){
-        while (!key[KEY_ESC] && i<72){
-            stretch_blit(fondCoinflip,buffer,0,0,fondCoinflip->w,fondCoinflip->h,0,0,screen->w,screen->h);
-            draw_sprite(buffer,coin[(i/vitesseAnimationPiece)%18],screen->w/2-coin[0]->w/2,screen->h/2-coin[0]->h/2+90);
-            blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-            rest(2);
-            clear(buffer);
-            i++;
+    while (nombreDeToursPiece>=2){
+        while (!key[KEY_ESC] && n<=nombreDeToursPiece){
+            while (!key[KEY_ESC] && i<72){
+                stretch_blit(fondCoinflip,buffer,0,0,fondCoinflip->w,fondCoinflip->h,0,0,screen->w,screen->h);
+                draw_sprite(buffer,coin[(i/vitesseAnimationPiece)%18],screen->w/2-coin[0]->w/2,screen->h/2-coin[0]->h/2+90);
+                blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+                rest(2);
+                clear(buffer);
+                i++;
+            }
+            printf("pile\n");
+            while (!key[KEY_ESC] && i<72*2){
+                stretch_blit(fondCoinflip,buffer,0,0,fondCoinflip->w,fondCoinflip->h,0,0,screen->w,screen->h);
+                draw_sprite(buffer,coin[(i/vitesseAnimationPiece)%18],screen->w/2-coin[0]->w/2,screen->h/2-coin[0]->h/2+90);
+                blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+                rest(2);
+                clear(buffer);
+                i++;
+            }
+            printf("face\n");
+            i=0;
+            nombreDeToursPiece-=2;
         }
-        printf("pile\n");
-        while (!key[KEY_ESC] && i<72*2){
-            stretch_blit(fondCoinflip,buffer,0,0,fondCoinflip->w,fondCoinflip->h,0,0,screen->w,screen->h);
-            draw_sprite(buffer,coin[(i/vitesseAnimationPiece)%18],screen->w/2-coin[0]->w/2,screen->h/2-coin[0]->h/2+90);
-            blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-            rest(2);
-            clear(buffer);
-            i++;
+        if (nombreDeToursPiece == 1){
+            while (!key[KEY_ESC] && i<72){
+                stretch_blit(fondCoinflip,buffer,0,0,fondCoinflip->w,fondCoinflip->h,0,0,screen->w,screen->h);
+                draw_sprite(buffer,coin[(i/vitesseAnimationPiece)%18],screen->w/2-coin[0]->w/2,screen->h/2-coin[0]->h/2+90);
+                blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+                rest(2);
+                clear(buffer);
+                i++;
+            }
+          //  allegro_message("Pile");
         }
-        printf("face\n");
-        i=0;
     }
 }
