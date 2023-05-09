@@ -42,6 +42,7 @@ typedef struct player{
     BITMAP *gauche[4];
     int position;
     int animation;
+    int cheval;
 }t_player;
 
 

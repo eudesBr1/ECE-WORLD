@@ -1,18 +1,37 @@
-#include <allegro.h>
-#include <time.h>
+#include "Mabibli.h"
 
 void jackpot_game(){
-    allegro_init();
-    install_keyboard();
+    BITMAP *background ;
+    background = load_bitmap("../images/background.bmp", NULL);
+    if (!background){
+        allegro_message("Pb de l'image background");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
-    set_color_depth(16);
-    set_gfx_mode(GFX_AUTODETECT_WINDOWED, 640, 480, 0, 0);
+    BITMAP *symbole_1;
+    symbole_1 = load_bitmap("../images/symbole_1.bmp", NULL);
+    if (!symbole_1){
+        allegro_message("Pb de l'image symbole");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
+    BITMAP *symbole_2;
+    symbole_2= load_bitmap("../images/symbole_2.bmp", NULL);
+    if (!symbole_2){
+        allegro_message("Pb de l'image symbole 2");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    BITMAP *symbole_3;
+    symbole_3= load_bitmap("../images/symbole_3.bmp", NULL);
+    if (!symbole_3){
+        allegro_message("Pb de l'image symbole 3");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
-    BITMAP *background = load_bitmap("background.bmp", NULL);
-    BITMAP *symbole_1 = load_bitmap("../images/symbole_1.bmp", NULL);
-    BITMAP *symbole_2 = load_bitmap("../images/symbole_2.bmp", NULL);
-    BITMAP *symbole_3 = load_bitmap("../images/symbole_3.bmp", NULL);
 
 
     int manivelle_active = 0;
@@ -21,8 +40,10 @@ void jackpot_game(){
     int symbole_3_tire = 0;
     int jackpot_gagne = 0;
 
-
     while (!key[KEY_ESC]) {
+        stretch_blit(background,screen,0,0,background->w,background->h,0,0,screen->w,screen->h);
+
+
 
         if (key[KEY_SPACE] && !manivelle_active) {
             manivelle_active = 1;
@@ -34,38 +55,50 @@ void jackpot_game(){
             symbole_3_tire = rand() % 3 + 1;
 
 
-            draw_sprite(screen, background, 0, 0);
-
 
             if (symbole_1_tire == 1) {
-                draw_sprite(screen, symbole_1, 50, 200);
+                draw_sprite(screen, symbole_1, 560, 450);
+                rest(10);
             } else if (symbole_1_tire == 2) {
-                draw_sprite(screen, symbole_2, 50, 200);
+                draw_sprite(screen, symbole_2, 560, 450);
+                rest(10);
             } else if (symbole_1_tire == 3) {
-                draw_sprite(screen, symbole_3, 50, 200);
+                draw_sprite(screen, symbole_3, 560, 450);
+                rest(10);
             }
 
             if (symbole_2_tire == 1) {
-                draw_sprite(screen, symbole_1, 200, 200);
+                draw_sprite(screen, symbole_1, 885, 450);
+                rest(10);
             } else if (symbole_2_tire == 2) {
-                draw_sprite(screen, symbole_2, 200, 200);
+                draw_sprite(screen, symbole_2, 885, 450);
+                rest(10);
             } else if (symbole_2_tire == 3) {
-                draw_sprite(screen, symbole_3, 200, 200);
+                draw_sprite(screen, symbole_3, 885, 450);
+                rest(10);
             }
 
             if (symbole_3_tire == 1) {
-                draw_sprite(screen, symbole_1, 350, 200);
+                draw_sprite(screen, symbole_1, 1200, 450);
+                rest(10);
             } else if (symbole_3_tire == 2) {
-                draw_sprite(screen, symbole_2, 350, 200);
+                draw_sprite(screen, symbole_2, 1200, 450);
+                rest(10);
             } else if (symbole_3_tire == 3) {
-                draw_sprite(screen, symbole_3, 350, 200);
+                draw_sprite(screen, symbole_3, 1200, 450);
+
             }
+            rest(10000);
 
             // Vérification du jackpot
             if (symbole_1_tire == symbole_2_tire && symbole_1_tire == symbole_3_tire) {
                 jackpot_gagne = 1;
             }
         }
+        if(jackpot_gagne==1){
+            allegro_message("BRAVO vous avez gagné! ");
+        }
+
 
         vsync();
     }

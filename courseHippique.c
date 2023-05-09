@@ -2,6 +2,7 @@
 // Created by eudes on 01/05/2023.
 //
 #include "Mabibli.h"
+#include "string.h"
 #define tailleCheval 120
 void courseHippique(t_player *player){
     ///charge image menu et boutons
@@ -32,8 +33,8 @@ void courseHippique(t_player *player){
             stretch_sprite(buffer, boutonQuitter, 20, screen->h - 60, 180, 50);
             stretch_sprite(buffer,boutonStart,screen->w/2-80,screen->h/2+15,160,100);
             if (mouse_b == 1){
+                rest(200);
                 if (1==1){
-                    while (1){
                         while (1){
                             clear(buffer);
                             BITMAP *pancarte = load_bitmap("../images/pancarteJoueur1CourseHippique.bmp",NULL);
@@ -49,22 +50,62 @@ void courseHippique(t_player *player){
                                 allegro_exit();
                                 exit(EXIT_FAILURE);
                             }
-                            BITMAP *cheval1;
-                            cheval1 = create_sub_bitmap(templateCheval,0,0,31,28);
-                            BITMAP *cheval2;
-                            cheval2 = create_sub_bitmap(templateCheval,0,54,28,28);
-                            stretch_blit(menuCourseHippique,buffer,0,0,menuCourseHippique->w,menuCourseHippique->h,0,0,screen->w,screen->h);
-                            stretch_sprite(buffer,pancarte,screen->w/2-500/2,screen->h/2-300,500,80);
-                            stretch_sprite(buffer,cheval1,100,screen->h/2,tailleCheval*3,tailleCheval*3);
-                            stretch_sprite(buffer,cheval2,screen->w-tailleCheval*3-100,screen->h/2,tailleCheval*3,tailleCheval*3);
-                            blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-                            show_mouse(screen);
-                            rest(2);
-                            if (mouse_b == 1){
-                                debutCourse(player);
-                                break;
+                            for (int i = 0; i < player[0].nbJoueurs; ++i) {
+                                player[i].cheval=0;
                             }
-                        }
+                            for (int i = 0; i < player[0].nbJoueurs; ++i) {
+                                do {
+                                    BITMAP *cheval1;
+                                    cheval1 = create_sub_bitmap(templateCheval,0,0,31,28);
+                                    BITMAP *cheval3;
+                                    BITMAP *cheval2;
+                                    cheval2 = create_sub_bitmap(templateCheval,0,54,28,28);
+                                    cheval3 = create_sub_bitmap(templateCheval,28,163,35,25);
+                                    stretch_blit(menuCourseHippique,buffer,0,0,menuCourseHippique->w,menuCourseHippique->h,0,0,screen->w,screen->h);
+                                    stretch_sprite(buffer,pancarte,screen->w/2-500/2,screen->h/2-300,500,80);
+                                    stretch_sprite(buffer,cheval1,100,screen->h/2,tailleCheval*3,tailleCheval*3);
+                                    stretch_sprite(buffer,cheval2,screen->w-tailleCheval*3-100,screen->h/2,tailleCheval*3,tailleCheval*3);
+                                    stretch_sprite(buffer,cheval3,screen->w/2-tailleCheval*1.5,screen->h/2,tailleCheval*3,tailleCheval*3);
+
+                                    for (int j = 0; j < player[0].nbJoueurs; ++j) {
+                                        if (player[j].cheval==3) textprintf_right_ex(buffer,font,screen->w-tailleCheval*3,screen->h-100, makecol(255,255,255),-1,"%s  choix Cheval 3\n",player[i].name);
+                                    }
+                                    for (int j = 0; j < player[0].nbJoueurs; ++j) {
+                                        if (player[j].cheval==2) textprintf_right_ex(buffer,font,screen->w/2-tailleCheval*1.5,screen->h-100, makecol(255,255,255),-1,"%s choix Cheval 2\n",player[i].name);
+                                    }
+                                    for (int j = 0; j < player[0].nbJoueurs; ++j) {
+                                        if (player[j].cheval==1) textprintf_right_ex(buffer,font,100,screen->h-100, makecol(255,255,255),-1,"%s choix Cheval 1\n",player[i].name);
+
+                                    }
+
+
+                                    blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+                                    show_mouse(screen);
+                                    rest(2);
+                                    if ( mouse_x>100 && mouse_x< 100+tailleCheval*3 && mouse_y>screen->h/2 && mouse_y< screen->h/2+tailleCheval*3){
+                                        if (mouse_b == 1){
+                                            printf("Joueur %d choix Cheval 1\n",player[0].nbJoueurs);
+                                            player[i].cheval=1;
+                                            break;
+                                        }
+                                    }
+                                    if ( mouse_x>screen->w/2-tailleCheval*1.5 && mouse_x< screen->w/2-tailleCheval*1.5+tailleCheval*3 && mouse_y>screen->h/2 && mouse_y< screen->h/2+tailleCheval*3){
+                                        if (mouse_b == 1){
+                                            printf("Joueur %d choix Cheval 2\n",player[0].nbJoueurs);
+                                            player[i].cheval=2;
+                                            break;
+                                        }
+                                    }
+                                    if ( mouse_x>screen->w-tailleCheval*3-100 && mouse_x< screen->w-tailleCheval*3-100+tailleCheval*3 && mouse_y>screen->h/2 && mouse_y< screen->h/2+tailleCheval*3){
+                                        if (mouse_b == 1){
+                                            printf("Joueur %d choix Cheval 3\n",player[0].nbJoueurs);
+                                            player[i].cheval=3;
+                                            break;
+                                        }
+                                    }
+
+                                }while (player[i].cheval==0);
+                            }
                     }
                 }else{
                     while (1){
