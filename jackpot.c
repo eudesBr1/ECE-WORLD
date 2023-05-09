@@ -54,34 +54,45 @@ void jackpot_game(){
 
 
             if (symbole_1_tire == 1) {
-                draw_sprite(screen, symbole_1, 50, 200);
+                draw_sprite(screen, symbole_1, 700, 400);
+                rest(10);
             } else if (symbole_1_tire == 2) {
-                draw_sprite(screen, symbole_2, 50, 200);
+                draw_sprite(screen, symbole_2, 700, 400);
+                rest(10);
             } else if (symbole_1_tire == 3) {
-                draw_sprite(screen, symbole_3, 50, 200);
+                draw_sprite(screen, symbole_3, 700, 400);
+                rest(10);
             }
 
             if (symbole_2_tire == 1) {
-                draw_sprite(screen, symbole_1, 200, 200);
+                draw_sprite(screen, symbole_1, 900, 400);
+                rest(10);
             } else if (symbole_2_tire == 2) {
-                draw_sprite(screen, symbole_2, 200, 200);
+                draw_sprite(screen, symbole_2, 900, 400);
+                rest(10);
             } else if (symbole_2_tire == 3) {
-                draw_sprite(screen, symbole_3, 200, 200);
+                draw_sprite(screen, symbole_3, 900, 400);
+                rest(10);
             }
 
             if (symbole_3_tire == 1) {
-                draw_sprite(screen, symbole_1, 350, 200);
+                draw_sprite(screen, symbole_1, 1100, 400);
+                rest(10);
             } else if (symbole_3_tire == 2) {
-                draw_sprite(screen, symbole_2, 350, 200);
+                draw_sprite(screen, symbole_2, 1100, 400);
+                rest(10);
             } else if (symbole_3_tire == 3) {
-                draw_sprite(screen, symbole_3, 350, 200);
+                draw_sprite(screen, symbole_3, 1100, 400);
+
             }
+            rest(10000);
 
             // Vérification du jackpot
             if (symbole_1_tire == symbole_2_tire && symbole_1_tire == symbole_3_tire) {
                 jackpot_gagne = 1;
             }
         }
+
 
         vsync();
     }
