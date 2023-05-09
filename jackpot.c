@@ -4,7 +4,7 @@ void jackpot_game(){
     BITMAP *background ;
     background = load_bitmap("../images/background.bmp", NULL);
     if (!background){
-        allegro_message("Pb de l'image guitar_hero.bmp");
+        allegro_message("Pb de l'image background");
         allegro_exit();
         exit(EXIT_FAILURE);
     }
@@ -12,7 +12,7 @@ void jackpot_game(){
     BITMAP *symbole_1;
     symbole_1 = load_bitmap("../images/symbole_1.bmp", NULL);
     if (!symbole_1){
-        allegro_message("Pb de l'image guitar_hero.bmp");
+        allegro_message("Pb de l'image symbole");
         allegro_exit();
         exit(EXIT_FAILURE);
     }
@@ -20,14 +20,14 @@ void jackpot_game(){
     BITMAP *symbole_2;
     symbole_2= load_bitmap("../images/symbole_2.bmp", NULL);
     if (!symbole_2){
-        allegro_message("Pb de l'image guitar_hero.bmp");
+        allegro_message("Pb de l'image symbole 2");
         allegro_exit();
         exit(EXIT_FAILURE);
     }
     BITMAP *symbole_3;
     symbole_3= load_bitmap("../images/symbole_3.bmp", NULL);
     if (!symbole_3){
-        allegro_message("Pb de l'image guitar_hero.bmp");
+        allegro_message("Pb de l'image symbole 3");
         allegro_exit();
         exit(EXIT_FAILURE);
     }
@@ -42,6 +42,9 @@ void jackpot_game(){
 
     while (!key[KEY_ESC]) {
         stretch_blit(background,screen,0,0,background->w,background->h,0,0,screen->w,screen->h);
+
+
+
         if (key[KEY_SPACE] && !manivelle_active) {
             manivelle_active = 1;
 
@@ -54,35 +57,35 @@ void jackpot_game(){
 
 
             if (symbole_1_tire == 1) {
-                draw_sprite(screen, symbole_1, 700, 400);
+                draw_sprite(screen, symbole_1, 560, 450);
                 rest(10);
             } else if (symbole_1_tire == 2) {
-                draw_sprite(screen, symbole_2, 700, 400);
+                draw_sprite(screen, symbole_2, 560, 450);
                 rest(10);
             } else if (symbole_1_tire == 3) {
-                draw_sprite(screen, symbole_3, 700, 400);
+                draw_sprite(screen, symbole_3, 560, 450);
                 rest(10);
             }
 
             if (symbole_2_tire == 1) {
-                draw_sprite(screen, symbole_1, 900, 400);
+                draw_sprite(screen, symbole_1, 885, 450);
                 rest(10);
             } else if (symbole_2_tire == 2) {
-                draw_sprite(screen, symbole_2, 900, 400);
+                draw_sprite(screen, symbole_2, 885, 450);
                 rest(10);
             } else if (symbole_2_tire == 3) {
-                draw_sprite(screen, symbole_3, 900, 400);
+                draw_sprite(screen, symbole_3, 885, 450);
                 rest(10);
             }
 
             if (symbole_3_tire == 1) {
-                draw_sprite(screen, symbole_1, 1100, 400);
+                draw_sprite(screen, symbole_1, 1200, 450);
                 rest(10);
             } else if (symbole_3_tire == 2) {
-                draw_sprite(screen, symbole_2, 1100, 400);
+                draw_sprite(screen, symbole_2, 1200, 450);
                 rest(10);
             } else if (symbole_3_tire == 3) {
-                draw_sprite(screen, symbole_3, 1100, 400);
+                draw_sprite(screen, symbole_3, 1200, 450);
 
             }
             rest(10000);
@@ -91,6 +94,9 @@ void jackpot_game(){
             if (symbole_1_tire == symbole_2_tire && symbole_1_tire == symbole_3_tire) {
                 jackpot_gagne = 1;
             }
+        }
+        if(jackpot_gagne==1){
+            allegro_message("BRAVO vous avez gagné! ");
         }
 
 
