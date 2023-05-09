@@ -16,6 +16,7 @@ void ballon(t_player *player){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+
     BITMAP *acceuil_zoom;
     acceuil_zoom = load_bitmap("../images/tir_ballon1.bmp",NULL);
     if (!acceuil_zoom){
