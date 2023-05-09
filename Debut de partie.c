@@ -18,17 +18,18 @@ void gameInit(t_player players[4]){
     char buuffname[16] = {0} ;
     int blanc = makecol(255,255,255);
     buffer = create_bitmap(screen->w,screen->h);
+
     for (i = 0; i < 4; i++) {
         rectfill(buffer, 0, 0, screen->w, screen->h, makecol(0, 0, 0));
         textout_ex(buffer, font, "Chargement du jeu .", 50, 50, blanc, -1);
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         clear(buffer);
-        rest(400);
+        rest(1);
         rectfill(buffer, 0, 0, screen->w, screen->h, makecol(0, 0, 0));
         textout_ex(buffer, font, "Chargement du jeu ..", 50, 50, blanc, -1);
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         clear(buffer);
-        rest(400);
+        rest(1);
         rectfill(buffer, 0, 0, screen->w, screen->h, makecol(0, 0, 0));
         textout_ex(buffer, font, "Chargement du jeu ...", 50, 50, blanc, -1);
         if (i==3)
@@ -36,7 +37,7 @@ void gameInit(t_player players[4]){
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         clear(buffer);
         fflush(stdin);
-        rest(100);
+        rest(1);
     }
 
     do {
@@ -143,7 +144,7 @@ void gameInit(t_player players[4]){
         }
     }
 
-    show_mouse(screen);
+
     for (int l = 0; l < nbJoueur; l++) {
         sortie_boucle = 0;
         while (!sortie_boucle) {
@@ -170,6 +171,7 @@ void gameInit(t_player players[4]){
                     }
                 }
             }
+            show_mouse(buffer);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
         }
         ///on regarde quel personnage le joueur a choisis puis on charge l'image

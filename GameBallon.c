@@ -4,7 +4,8 @@
 
 #include "Mabibli.h"
 
-void ballon(t_player *player, BITMAP *buffer){
+void ballon(t_player *player){
+    BITMAP *buffer = create_bitmap(screen->w,screen->h);
     int bleu = makecol(0,162,232);
     int noir = makecol(0,0,0);
     int blanc = makeacol(255, 255, 255, 0);

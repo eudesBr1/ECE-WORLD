@@ -50,7 +50,7 @@ typedef struct tuiles{
 }t_tuiles;
 void initEcran();
 void gameInit(t_player players[4]);
-void ballon(t_player *player, BITMAP *buffer);
+void ballon(t_player *player);
 int collision(t_player perso);
 void game_GUITARE(t_player *players);
 t_player mouvementPersonnageFleche(t_player *player);
@@ -60,5 +60,4 @@ void affichageVille(t_player *players);
 void courseHippique(t_player *player);
 void debutCourse(t_player *player);
 void game_PONG(t_player player[4],int numJoueur);
-t_player creationPersonnageNaruto(t_player *player);
 int coinFlip();
