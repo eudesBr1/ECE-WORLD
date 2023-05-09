@@ -11,6 +11,7 @@ int main(){
     srand(time(NULL));
     //coinFlip(players,players);
     gameInit(players);
+    //ballon(players);
     game_PONG(players,1);
     /// crée personnage de ville
     //creationPersonnageGoku(&goku);

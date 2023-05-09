@@ -4,12 +4,85 @@
 
 #include <math.h>
 #include "Mabibli.h"
-int calcul_speed(int iteration){
-    int speed_base = 1;
-    int acceleration = 1;
-    int speed =  speed_base + iteration / 500 * acceleration;
-    return speed;
+int calcul_speed(int iteration,int speed_base,int acceleration){
+    return speed_base + iteration / 500 * acceleration;
 }
+
+
+void settings(int *speed,int *acceleration,BITMAP *buffer)
+{
+    int width = text_length(font, "PARAMETRES");
+    int height = text_height(font);
+    int condition = 0;
+    BITMAP *para = create_bitmap(width,height);
+    rectfill(para,0,0,para->w,para->h, makecol(255,0,255));
+
+    BITMAP *retour;
+    retour = load_bitmap("../images/boutton_retour.bmp",NULL);
+    if (!retour){
+        allegro_message("Pb de l'image boutton_retour.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    int blanc = makecol(255, 255, 255);
+    int noir = makecol(0,0,0);
+    int beige = makecol(127,255,197);
+    int saumon = makecol(255, 178, 127);
+    do {
+        clear(buffer);
+        rectfill(buffer, 0, 0, buffer->w, buffer->h / 9, blanc);
+        rectfill(buffer, 0, buffer->h/9, buffer->w, buffer->h/9+50, saumon);
+        textout_ex(para,font,"PARAMETRES",0,0, noir,-1);
+        stretch_sprite(buffer,para,buffer->w/2-220,9,440,buffer->h/9+60);
+        textout_centre_ex(buffer, font, "VITESSE_BASE", 45, 3*screen->h/9, blanc, -1);
+        textout_centre_ex(buffer,font,"ACCELERATION ; ",45,6*screen->h/9, makecol(255,50,50),-1);
+        if (mouse_x <= (100) && mouse_x >= (0) && mouse_y >= (screen->h - 100) && mouse_y <= (screen->h)) {
+            stretch_sprite(buffer, retour, 0, buffer->h - 130, 150, 150);
+            if (mouse_b == 1){
+                condition=1;
+            }
+        }
+        else
+            stretch_sprite(buffer, retour, 0, buffer->h - 100, 100, 100);
+        rectfill(buffer,2*screen->w/9,3*screen->h/9-10,7*screen->w/9,3*screen->h/9+10,blanc);
+        for (int i = 0; i < 6; i++) {
+            if ((mouse_x > ((screen->w*(i+2)))/9 && mouse_x < ((screen->w*(i+2.5))/9) && (mouse_y > (3*screen->h/9-50) && mouse_y < (3*screen->h/9+50)))||*speed == i + 1) {
+                rectfill(buffer, (screen->w*(i+2))/9, (3*screen->h/9-50), ((screen->w*(i+2.5))/9), (3*screen->h/9+50), beige);
+                textprintf_centre_ex(buffer, font, (screen->w*(i+2.25))/9, (3*screen->h/9+65), beige, -1, "%d", i + 1);
+                if (mouse_b == 1){
+                    *speed = i+1;
+                }
+
+            }
+            else {
+                rectfill(buffer, (screen->w*(i+2))/9, (3*screen->h/9-50), ((screen->w*(i+2.5))/9), (3*screen->h/9+50), blanc);
+                textprintf_centre_ex(buffer, font, (screen->w*(i+2.25))/9, (3*screen->h/9+65), blanc, -1, "%d", i + 1);
+            }
+        }
+        rectfill(buffer,2*screen->w/9,6*screen->h/9-10,7*screen->w/9,6*screen->h/9+10,blanc);
+        for (int i = 0; i < 6; i++) {
+            if ((mouse_x > ((screen->w*(i+2)))/9 && mouse_x < ((screen->w*(i+2.5))/9) && (mouse_y > (6*screen->h/9-50) && mouse_y < (6*screen->h/9+50)))||*acceleration == i + 1) {
+                rectfill(buffer, (screen->w*(i+2))/9, (6*screen->h/9-50), ((screen->w*(i+2.5))/9), (6*screen->h/9+50), beige);
+                textprintf_centre_ex(buffer, font, (screen->w*(i+2.25))/9, (6*screen->h/9+65), beige, -1, "%d", i + 1);
+                if (mouse_b == 1){
+                    *acceleration = i+1;
+                }
+
+            }
+            else {
+                rectfill(buffer, (screen->w*(i+2))/9, (6*screen->h/9-50), ((screen->w*(i+2.5))/9), (6*screen->h/9+50), blanc);
+                textprintf_centre_ex(buffer, font, (screen->w*(i+2.25))/9, (6*screen->h/9+65), blanc, -1, "%d", i + 1);
+            }
+
+        }
+
+        stretch_sprite(buffer,mouse_sprite,mouse_x,mouse_y,mouse_sprite->w*4,mouse_sprite->h*4);
+        blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+    } while (!condition);
+    rest(200);
+}
+
+
 
 int check_tile_and_update_score(int column,t_tuiles *tuiles, int *score, int offset,BITMAP *tuilePLEINE[4]) {
     int numLigne;
@@ -38,9 +111,9 @@ int check_tile_and_update_score(int column,t_tuiles *tuiles, int *score, int off
         return 0;
 }
 
-int scroll_background(BITMAP *buffer, BITMAP *background[7], int game_iteration, int *offset,t_tuiles *tuiles) {
+int scroll_background(BITMAP *buffer, BITMAP *background[10], int game_iteration, int *offset,t_tuiles *tuiles,int speed_base,int acceleration) {
     int erreur_return = 0;
-    int speed = calcul_speed(game_iteration);
+    int speed = calcul_speed(game_iteration,speed_base,acceleration);
     //printf("test 1\n");
     *offset = (*offset + speed);
     //printf("test 2\n");
@@ -101,6 +174,8 @@ int scroll_background(BITMAP *buffer, BITMAP *background[7], int game_iteration,
     }
 void game_GUITARE(t_player *players)
 {
+    int speed = 1;
+    int acceleration = 1;
     int game_iteration = 0;
     t_tuiles tuiles;
     int score = 0; /// Nombre de touches touchées par le joueur
@@ -168,6 +243,7 @@ void game_GUITARE(t_player *players)
             stretch_sprite(buffer, settings_button, screen->w -110, screen->h - 110, 130, 130);
             stretch_sprite(buffer, quit_button, 0, screen->h  - 80, 150, 60);
             if (mouse_b == 1){
+                settings(&speed,&acceleration,buffer);
                 printf("parametres ouverts\n");
             }
         }
@@ -301,17 +377,17 @@ void game_GUITARE(t_player *players)
     ///on dessine le score sur le buffer
     while (!key[KEY_ESC]){
         clear_to_color(buffer, makecol(0, 0, 0)); // Clear du buffer
-        erreurs+=scroll_background(buffer,touche,game_iteration,&offset,&tuiles);
-        calcul_speed(game_iteration);
+        erreurs+=scroll_background(buffer,touche,game_iteration,&offset,&tuiles,speed,acceleration);
+        calcul_speed(game_iteration,speed,acceleration);
         // Gérer les entrées de l'utilisateur et le score
         int column = -1;
         if (key[KEY_Q]) {
             column = 0;
-        } else if (key[KEY_W]) {
+        } if (key[KEY_W]) {
             column = 1;
-        } else if (key[KEY_E]) {
+        } if (key[KEY_E]) {
             column = 2;
-        } else if (key[KEY_R]) {
+        } if (key[KEY_R]) {
             column = 3;
         }
         /// Si une touche a été enfoncée, on appelle la fonction qui gère le score et modifie la couleur de la tuile
@@ -320,7 +396,7 @@ void game_GUITARE(t_player *players)
             if (!check_tile_and_update_score(column, &tuiles, &score, offset,touchePLEINE)) {
                  //Le joueur a fait une erreur
                 erreurs++;
-                allegro_message("vous avez fait une erreur encore %d avant la fin du jeux",5-erreurs);
+                //allegro_message("vous avez fait une erreur encore %d avant la fin du jeux",5-erreurs);
             }
             /// On affiche le cercle rouge correspondant à l'endroit où le joueur est en train d'appuyer
             circlefill(buffer, offsetX + column * w_tuile + w_tuile/2, screen->h - 2 - 50, 5,
