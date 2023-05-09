@@ -7,6 +7,7 @@ void parametres(int *speed,int *opposant,BITMAP *buffer,t_player player[4],int n
 {
     int width = text_length(font, "PARAMETRES");
     int height = text_height(font);
+    int condition = 0;
     BITMAP *para = create_bitmap(width,height);
     rectfill(para,0,0,para->w,para->h, makecol(255,0,255));
 
@@ -23,48 +24,41 @@ void parametres(int *speed,int *opposant,BITMAP *buffer,t_player player[4],int n
     int saumon = makecol(255, 178, 127);
     do {
         clear(buffer);
-        rectfill(buffer,0,0,buffer->w,buffer->h/10,blanc);
-        rectfill(buffer, 0, buffer->h/10, buffer->w, buffer->h/10+50, saumon);
+        rectfill(buffer, 0, 0, buffer->w, buffer->h / 9, blanc);
+        rectfill(buffer, 0, buffer->h/9, buffer->w, buffer->h/9+50, saumon);
         textout_ex(para,font,"PARAMETRES",0,0, noir,-1);
-        stretch_sprite(buffer,para,buffer->w/2-220,10,440,buffer->h/10+60);
-        textout_centre_ex(buffer, font, "VITESSE", 45, 3*screen->h/10, blanc, -1);
+        stretch_sprite(buffer,para,buffer->w/2-220,9,440,buffer->h/9+60);
+        textout_centre_ex(buffer, font, "VITESSE", 45, 3*screen->h/9, blanc, -1);
         textout_centre_ex(buffer,font,"OPPOSANT ; ",45,2*screen->h/3, makecol(255,50,50),-1);
         if (mouse_x <= (100) && mouse_x >= (0) && mouse_y >= (screen->h - 100) && mouse_y <= (screen->h)) {
             stretch_sprite(buffer, retour, 0, buffer->h - 130, 150, 150);
             if (mouse_b == 1){
-                return;
+                condition=1;
             }
         }
         else
             stretch_sprite(buffer, retour, 0, buffer->h - 100, 100, 100);
-        //test commit and push
-        rectfill(buffer,screen->w/10,3*screen->h/10-10,7*screen->w,3*screen->h/10-10,blanc);
+        rectfill(buffer,2*screen->w/9,3*screen->h/9-10,7*screen->w/9,3*screen->h/9+10,blanc);
         for (int i = 0; i < 6; i++) {
-            if (mouse_x > ((screen->w*(i+1))) && mouse_x < ((screen->w*(i+1.5))) && (mouse_y > (3*screen->h/10-50) && mouse_y < (3*screen->h/10+50))) {
-                    rectfill(buffer, (screen->w*(i+1))/10, (3*screen->h/10-50), ((screen->w*(i+1.5))/10), (3*screen->h/10+50), beige);
-                    textprintf_centre_ex(buffer, font, (screen->w*(i+1))/10 + 100 * i, (3*screen->h/10+65), beige, -1, "%d", i + 1);
+            if ((mouse_x > ((screen->w*(i+2)))/9 && mouse_x < ((screen->w*(i+2.5))/9) && (mouse_y > (3*screen->h/9-50) && mouse_y < (3*screen->h/9+50)))||*speed == i + 1) {
+                    rectfill(buffer, (screen->w*(i+2))/9, (3*screen->h/9-50), ((screen->w*(i+2.5))/9), (3*screen->h/9+50), beige);
+                    textprintf_centre_ex(buffer, font, (screen->w*(i+2.25))/9, (3*screen->h/9+65), beige, -1, "%d", i + 1);
                 if (mouse_b == 1){
-                    *speed = i;
+                    *speed = i+1;
                 }
 
             }
             else {
-                if (*speed == i + 1) {
-                    rectfill(buffer, (screen->w*(i+1))/10, (3*screen->h/10-50), ((screen->w*(i+1.5))/10), (3*screen->h/10+50), beige);
-                    textprintf_centre_ex(buffer, font, (screen->w*(i+1))/10 + 100 * i, (3*screen->h/10+65), beige, -1, "%d", i + 1);
-                }
-            else {
-                    rectfill(buffer, (screen->w*(i+1))/10, (3*screen->h/10-50), ((screen->w*(i+1.5))/10), (3*screen->h/10+50), blanc);
-                    textprintf_centre_ex(buffer, font, (screen->w*(i+1))/10 + 100 * i, (3*screen->h/10+65), blanc, -1, "%d", i + 1);
+                    rectfill(buffer, (screen->w*(i+2))/9, (3*screen->h/9-50), ((screen->w*(i+2.5))/9), (3*screen->h/9+50), blanc);
+                    textprintf_centre_ex(buffer, font, (screen->w*(i+2.25))/9, (3*screen->h/9+65), blanc, -1, "%d", i + 1);
             }
-            }
+
         }
         for (int j = 0; j < player[0].nbJoueurs; j++) {
             if ((mouse_x > ((screen->w*(j+1))/6) && mouse_x < ((screen->w*(j+2))/6) && (mouse_y > (2*screen->h/4) && mouse_y < (3.5*screen->h/4))&& numJoueur != j)||*opposant == j) {
                 rectfill(buffer,((screen->w*(j+1))/6),(2*screen->h/4),(screen->w*(j+2)/6),(3.5*screen->h/4),saumon);
                 stretch_sprite(buffer,player[j].bas[1],((screen->w*(j+1))/6),(2*screen->h/4),screen->w/6,1.5*screen->h/4);
-                textprintf_centre_ex(buffer, font, ((screen->w*(j+1.5))/6) + (3.7*screen->h/4) * j, 220, blanc, -1, "%s", player[j].name + 1);
-
+                textprintf_centre_ex(buffer, font, ((screen->w*(j+1.5))/6), (3.7*screen->h/4), blanc, -1, "%s", player[j].name + 1);
                 if (mouse_b == 1){
                     *opposant = j;
                 }
@@ -72,12 +66,13 @@ void parametres(int *speed,int *opposant,BITMAP *buffer,t_player player[4],int n
             else if (numJoueur != j){
                 rectfill(buffer,((screen->w*(j+1))/6),(2*screen->h/4),(screen->w*(j+2)/6),(3.5*screen->h/4),beige);
                 stretch_sprite(buffer,player[j].bas[1],((screen->w*(j+1))/6),(2*screen->h/4),screen->w/6,1.5*screen->h/4);
+                textprintf_centre_ex(buffer, font, ((screen->w*(j+1.5))/6), (3.7*screen->h/4), blanc, -1, "%s", player[j].name + 1);
             }
         }
         stretch_sprite(buffer,mouse_sprite,mouse_x,mouse_y,mouse_sprite->w*4,mouse_sprite->h*4);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-    } while (!key[KEY_ESC]);
-
+    } while (!condition);
+    rest(200);
 }
 
 void game_PONG(t_player player[4],int numJoueur){
