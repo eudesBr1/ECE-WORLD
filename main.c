@@ -10,6 +10,7 @@ int main(){
     install_mouse();
     srand(time(NULL));
     //coinFlip(players,players);
+    jackpot_game();
     gameInit(players);
     game_PONG(players,1);
     /// crée personnage de ville
