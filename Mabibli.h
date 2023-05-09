@@ -44,6 +44,7 @@ typedef struct player{
     int animation;
 }t_player;
 
+
 typedef struct tuiles{
     BITMAP *tuiles[4][8];
     int couleur[4][8];

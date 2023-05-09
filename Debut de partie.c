@@ -183,7 +183,7 @@ void gameInit(t_player players[4]){
                     }
                 }
             }
-            stretch_sprite(buffer,mouse_sprite,mouse_x,mouse_y,mouse_sprite->w*5,mouse_sprite->h*5);
+            stretch_sprite(buffer,mouse_sprite,mouse_x,mouse_y,mouse_sprite->w*4,mouse_sprite->h*4);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
         }
         ///on regarde quel personnage le joueur a choisis puis on charge l'image
