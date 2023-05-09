@@ -1,18 +1,37 @@
-#include <allegro.h>
-#include <time.h>
+#include "Mabibli.h"
 
 void jackpot_game(){
-    allegro_init();
-    install_keyboard();
+    BITMAP *background ;
+    background = load_bitmap("../images/background.bmp", NULL);
+    if (!background){
+        allegro_message("Pb de l'image guitar_hero.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
-    set_color_depth(16);
-    set_gfx_mode(GFX_AUTODETECT_WINDOWED, 640, 480, 0, 0);
+    BITMAP *symbole_1;
+    symbole_1 = load_bitmap("../images/symbole_1.bmp", NULL);
+    if (!symbole_1){
+        allegro_message("Pb de l'image guitar_hero.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
+    BITMAP *symbole_2;
+    symbole_2= load_bitmap("../images/symbole_2.bmp", NULL);
+    if (!symbole_2){
+        allegro_message("Pb de l'image guitar_hero.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    BITMAP *symbole_3;
+    symbole_3= load_bitmap("../images/symbole_3.bmp", NULL);
+    if (!symbole_3){
+        allegro_message("Pb de l'image guitar_hero.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
-    BITMAP *background = load_bitmap("background.bmp", NULL);
-    BITMAP *symbole_1 = load_bitmap("../images/symbole_1.bmp", NULL);
-    BITMAP *symbole_2 = load_bitmap("../images/symbole_2.bmp", NULL);
-    BITMAP *symbole_3 = load_bitmap("../images/symbole_3.bmp", NULL);
 
 
     int manivelle_active = 0;
@@ -21,9 +40,8 @@ void jackpot_game(){
     int symbole_3_tire = 0;
     int jackpot_gagne = 0;
 
-
     while (!key[KEY_ESC]) {
-
+        stretch_blit(background,screen,0,0,background->w,background->h,0,0,screen->w,screen->h);
         if (key[KEY_SPACE] && !manivelle_active) {
             manivelle_active = 1;
 
@@ -33,8 +51,6 @@ void jackpot_game(){
             symbole_2_tire = rand() % 3 + 1;
             symbole_3_tire = rand() % 3 + 1;
 
-
-            draw_sprite(screen, background, 0, 0);
 
 
             if (symbole_1_tire == 1) {
