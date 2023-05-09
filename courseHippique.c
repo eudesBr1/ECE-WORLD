@@ -54,8 +54,8 @@ void courseHippique(t_player *player){
                             cheval2 = create_sub_bitmap(templateCheval,0,54,28,28);
                             stretch_blit(menuCourseHippique,buffer,0,0,menuCourseHippique->w,menuCourseHippique->h,0,0,screen->w,screen->h);
                             stretch_sprite(buffer,pancarte,screen->w/2-500/2,screen->h/2-300,500,80);
-                            stretch_sprite(buffer,cheval1,50,screen->h/2,tailleCheval,tailleCheval);
-                            stretch_sprite(buffer,cheval2,screen->w-tailleCheval-50,screen->h/2,tailleCheval,tailleCheval);
+                            stretch_sprite(buffer,cheval1,100,screen->h/2,tailleCheval*3,tailleCheval*3);
+                            stretch_sprite(buffer,cheval2,screen->w-tailleCheval*3-100,screen->h/2,tailleCheval*3,tailleCheval*3);
                             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
                             show_mouse(screen);
                             rest(2);
