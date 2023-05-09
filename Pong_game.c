@@ -37,7 +37,7 @@ void parametres(int *speed,int *opposant,BITMAP *buffer,t_player player[4],int n
         }
         else
             stretch_sprite(buffer, retour, 0, buffer->h - 100, 100, 100);
-
+        //test commit and push
         rectfill(buffer,screen->w/10,3*screen->h/10-10,7*screen->w,3*screen->h/10-10,blanc);
         for (int i = 0; i < 6; i++) {
             if (mouse_x > ((screen->w*(i+1))) && mouse_x < ((screen->w*(i+1.5))) && (mouse_y > (3*screen->h/10-50) && mouse_y < (3*screen->h/10+50))) {
