@@ -32,7 +32,7 @@ void gameInit(t_player players[4]){
         rectfill(buffer, 0, 0, screen->w, screen->h, makecol(0, 0, 0));
         textout_ex(buffer, font, "Chargement du jeu ...", 50, 50, blanc, -1);
         if (i==3)
-            textout_right_ex(buffer,font,"Press ENTER to continue",screen->w,screen->h-50,blanc,-1);
+            textout_right_ex(buffer,font,"Press ENTER to continue",screen->w/2,screen->h/2,blanc,-1);
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         clear(buffer);
         fflush(stdin);
@@ -196,7 +196,4 @@ void gameInit(t_player players[4]){
             }
         }
     }
-
-
-    return players;
 }

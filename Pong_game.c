@@ -22,7 +22,7 @@ void parametres(int *speed,int *opposant,BITMAP *buffer,t_player player[4],int n
         rectfill(buffer, 0, 100, buffer->w, 110, saumon);
         textout_centre_ex(buffer, font, "PARAMETRES", buffer->w / 2, 50, noir, -1);
         textout_centre_ex(buffer, font, "VITESSE", 30, 200, blanc, -1);
-        textout_centre_ex(buffer,font,"OPPOSANT ; ",30,300, makecol(255,50,50),-1);
+        textout_centre_ex(buffer,font,"OPPOSANT ; ",35,310, makecol(255,50,50),-1);
         if (mouse_x <= (100) && mouse_x >= (0) && mouse_y >= (screen->h - 100) && mouse_y <= (screen->h)) {
             stretch_sprite(buffer, retour, 0, buffer->h - 130, 150, 150);
             if (mouse_b == 1){
@@ -34,7 +34,15 @@ void parametres(int *speed,int *opposant,BITMAP *buffer,t_player player[4],int n
 
         rectfill(buffer,100,198,600,202,blanc);
         for (int i = 0; i < 6; i++) {
-            if (mouse_x > (100 + 100 * i) && mouse_x < (120 + 100 * i) && (mouse_y > (190) && mouse_y < (210))){
+            if (mouse_x > (100 + 100 * i) && mouse_x < (120 + 100 * i) && (mouse_y > (190) && mouse_y < (210))) {
+                    rectfill(buffer, 100 + 100 * i, 190, 120 + 100 * i, 210, beige);
+                    textprintf_centre_ex(buffer, font, 110 + 100 * i, 220, beige, -1, "%d", i + 1);
+                if (mouse_b == 1){
+                    *speed = i;
+                }
+
+            }
+            else {
                 if (*speed == i + 1) {
                     rectfill(buffer, 100 + 100 * i, 190, 120 + 100 * i, 210, beige);
                     textprintf_centre_ex(buffer, font, 110 + 100 * i, 220, beige, -1, "%d", i + 1);
@@ -44,13 +52,15 @@ void parametres(int *speed,int *opposant,BITMAP *buffer,t_player player[4],int n
                 rectfill(buffer, 100 + 100 * i, 190, 120 + 100 * i, 210, blanc);
                 textprintf_centre_ex(buffer, font, 110 + 100 * i, 220, blanc, -1, "%d", i + 1);
             }
-        }
+            }
         }
         for (int j = 0; j < player[0].nbJoueurs; j++) {
             if ((mouse_x>(100+100*j)&&mouse_x<(170+100*j)&&(mouse_y>(300)&&mouse_y<(370))&& numJoueur != j)||*opposant == j)
             {
                 rectfill(buffer,100+100*j,300,170+100*j,370,saumon);
                 stretch_sprite(buffer,player[j].bas[1],102+100*j,302,64,64);
+                textprintf_centre_ex(buffer, font, 110 + 100 * j, 220, blanc, -1, "%s", player[j].name + 1);
+
                 if (mouse_b == 1){
                     *opposant = j;
                 }
