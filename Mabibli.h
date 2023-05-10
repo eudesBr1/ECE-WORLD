@@ -45,6 +45,13 @@ typedef struct player{
     int cheval;
 }t_player;
 
+typedef struct ballonFootball{
+    BITMAP *effet[6];
+    float positionX;
+    float positionY;
+    int animation;
+    int tailleBallon;
+}t_ballonFoot;
 
 typedef struct tuiles{
     BITMAP *tuiles[4][8];
