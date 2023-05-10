@@ -63,3 +63,4 @@ void courseHippique(t_player *player);
 void debutCourse(t_player *player);
 void game_PONG(t_player player[4],int numJoueur);
 int coinFlip();
+void penalty(t_player *player);
