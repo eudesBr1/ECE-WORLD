@@ -45,6 +45,22 @@ typedef struct player{
     int cheval;
 }t_player;
 
+typedef struct ballonFootball{
+    BITMAP *effet[6];
+    float positionX;
+    float positionY;
+    int animation;
+    int tailleBallon;
+}t_ballonFoot;
+
+typedef struct gardienBut{
+    BITMAP *position[10];
+    float positionX;
+    float positionY;
+    int animation;
+    int hauteur;
+    int largeur;
+}t_gardien;
 
 typedef struct tuiles{
     BITMAP *tuiles[4][8];
@@ -63,3 +79,4 @@ void courseHippique(t_player *player);
 void debutCourse(t_player *player);
 void game_PONG(t_player player[4],int numJoueur);
 int coinFlip();
+void penalty(t_player *player);

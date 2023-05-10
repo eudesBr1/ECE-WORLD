@@ -86,6 +86,7 @@ void courseHippique(t_player *player){
                                         if (mouse_b == 1){
                                             printf("Joueur %d choix Cheval 1\n",player[0].nbJoueurs);
                                             player[i].cheval=1;
+                                            debutCourse(player);
                                             break;
                                         }
                                     }
