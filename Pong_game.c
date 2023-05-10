@@ -78,6 +78,7 @@ void parametres(int *speed,int *opposant,BITMAP *buffer,t_player player[4],int n
 void game_PONG(t_player player[4],int numJoueur){
     int nb_Joueur = player[0].nbJoueurs;
     int speed = 1;
+    int grossissement = 0;
     int choixOpposant;
     int condition = 0;
     BITMAP *buffer = create_bitmap(screen->w,screen->h);
@@ -159,7 +160,12 @@ void game_PONG(t_player player[4],int numJoueur){
         stretch_sprite(buffer,mouse_sprite,mouse_x,mouse_y,mouse_sprite->w*4,mouse_sprite->h*4);
         //blit(mouse_sprite,buffer,0,0,mouse_x,mouse_y,mouse_sprite->w,mouse_sprite->h);
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
-
+    }
+    for (int i = 0; i < 200; i++)
+    {
+        grossissement +=i;
+        stretch_blit(pong,buffer,0,0,pong->w,pong->h,0-grossissement,0-grossissement,pong->w+grossissement,pong->h+grossissement);
+        blit(buffer,screen,0,0,0,0,screen->w,screen->h);
     }
 
     if (nb_Joueur>1)
