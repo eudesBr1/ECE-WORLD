@@ -285,10 +285,7 @@ void debutCourse(t_player *player){
         stretch_sprite(buffer,cheval1[i/4],avanceeCheval1,350,tailleCheval,tailleCheval);
         stretch_sprite(buffer,cheval2[k/4],avanceeCheval2,700,tailleCheval,tailleCheval);
         stretch_sprite(buffer,cheval3[j/4],avanceeCheval3,525,tailleCheval,tailleCheval);
-        stretch_sprite(buffer,confettis[h%13],screen->w/2,250,tailleConfetis,tailleConfetis);
-        stretch_sprite(buffer,confettis[h%13],screen->w/2,screen->h/2+50,tailleConfetis,tailleConfetis);
-        stretch_sprite(buffer,confettis[h%13],screen->w/2,screen->h-100,tailleConfetis,tailleConfetis);
-        blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+
         h++;
         //   srand(time(NULL));
         avanceeCheval2 += rand()%8+7;
