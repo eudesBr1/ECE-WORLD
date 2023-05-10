@@ -10,7 +10,7 @@ int main(){
     install_mouse();
     srand(time(NULL));
     //coinFlip(players,players);
-    jackpot_game();
+    //jackpot_game();
     gameInit(players);
     ballon(players);
     //game_PONG(players,1);

@@ -79,7 +79,7 @@ void settings(int *speed,int *acceleration,BITMAP *buffer)
         stretch_sprite(buffer,mouse_sprite,mouse_x,mouse_y,mouse_sprite->w*4,mouse_sprite->h*4);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
     } while (!condition);
-    rest(200);
+    rest(300);
 }
 
 
@@ -223,7 +223,6 @@ void game_GUITARE(t_player *players)
     photo_guitare = create_bitmap(48,48);
     stretch_sprite(photo_guitare,photo_guitare_grande,0,0,48,48);
 
-    show_mouse(screen);
     do {
         ///affichage si la souris est sur le boutton jouer
         if (mouse_x<=(screen->w/2 + h_tuile) && mouse_x >= (screen->w / 2 - h_tuile) && mouse_y >= (screen->h / 2 - 38) && mouse_y <= (screen->h / 2 + 38)){
@@ -269,6 +268,7 @@ void game_GUITARE(t_player *players)
             stretch_sprite(buffer, quit_button, 0, screen->h  - 80, 150, 60);
             stretch_sprite(buffer, settings_button, screen->w -80, screen->h - 80, 80, 80);
         }
+        show_mouse(buffer);
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
     }   while (!condition);
     clear(buffer);
