@@ -375,6 +375,18 @@ void ballon(t_player *player) {
             blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
             rest(5);
             timer[k] = (0.015 * i);
+            if (score==9){
+                printf("test\n");
+                for (int j = 0; j < 10; j++) {
+                    tabBall[i].x = rand() % (screen->w - 250) + 125;
+                    tabBall[i].y = rand() % (screen->h - 350) + 175;
+                    tabBall[i].alive = 1;
+                    tabBall[i].couleur = rand() % 4;
+                    tabBall[i].countAnim = 0;
+                }
+                printf("test\n");
+                i = 10000000;
+            }
 
         }
     }
