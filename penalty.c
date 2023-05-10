@@ -37,22 +37,21 @@ void penalty(t_player *player){
         ballon.effet[i] = create_sub_bitmap(templateBallon,500*i+30,670,500,500);
     }
     int b=0;
-    int coin;
-    BITMAP *gardien[10];
-    int hauteurGardien = 210;
-    int largeurGardien = 115;
+    t_gardien gardien;
+    gardien.hauteur = 210;
+    gardien.largeur = 115;
     for (int i = 0; i <= 2; ++i) {
-        gardien[i] = create_sub_bitmap(templateGardien,350*i+40,40,350,470);
+        gardien.position[i] = create_sub_bitmap(templateGardien,350*i+40,40,350,470);
     }
     for (int i = 3; i <= 5; ++i) {
-        gardien[i] = create_sub_bitmap(templateGardien,350*i+40,40,350,470);
+        gardien.position[i] = create_sub_bitmap(templateGardien,350*i+40,40,350,470);
     }
     ///commence le duel rien ne se passe
     while (!key[KEY_ESC] && !key[KEY_E]){
         clear(buffer);
         stretch_blit(fondStade,buffer,0,0,fondStade->w,fondStade->h,0,0,screen->w,screen->h);
         stretch_sprite(buffer,ballon.effet[0],ballon.positionX,ballon.positionY,ballon.tailleBallon,ballon.tailleBallon);
-        stretch_sprite(buffer,gardien[(b/30)%3],screen->w/2-largeurGardien/2,screen->h/2-50,largeurGardien,hauteurGardien);
+        stretch_sprite(buffer,gardien.position[(b/30)%3],screen->w/2-gardien.largeur/2,screen->h/2-50,gardien.largeur,gardien.hauteur);
         show_mouse(buffer);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
         rest(1);
@@ -64,7 +63,7 @@ void penalty(t_player *player){
                while (!key[KEY_ESC]){
                    clear(buffer);
                    stretch_blit(fondStade,buffer,0,0,fondStade->w,fondStade->h,0,0,screen->w,screen->h);
-                   stretch_sprite(buffer,gardien[(b/30)%3],screen->w/2-largeurGardien/2,screen->h/2,largeurGardien,hauteurGardien);
+                   stretch_sprite(buffer,gardien.position[(b/30)%3],screen->w/2-gardien.largeur/2,screen->h/2,gardien.largeur,gardien.hauteur);
                    stretch_sprite(buffer,ballon.effet[(b/10)%3],screen->w/2-ballon.tailleBallon/2,screen->h-200-b,ballon.tailleBallon-b/30,ballon.tailleBallon-b/30);
                    blit(buffer,screen,0,0,0,0,screen->w,screen->h);
                    rest(1);

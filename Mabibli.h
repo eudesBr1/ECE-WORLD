@@ -53,6 +53,15 @@ typedef struct ballonFootball{
     int tailleBallon;
 }t_ballonFoot;
 
+typedef struct gardienBut{
+    BITMAP *position[10];
+    float positionX;
+    float positionY;
+    int animation;
+    int hauteur;
+    int largeur;
+}t_gardien;
+
 typedef struct tuiles{
     BITMAP *tuiles[4][8];
     int couleur[4][8];
