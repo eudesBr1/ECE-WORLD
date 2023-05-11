@@ -56,7 +56,7 @@ void initpong(t_pong pongeurs[2],int speed){
         pongeurs[i].y = screen->h/2-25;
         pongeurs[i].x = 150+(screen->w-300)*i;
         pongeurs[i].dx = rand()%(10)+speed*3;
-        pongeurs[i].dy = rand()%(pongeurs[i].dx-5)+speed*3;
+        pongeurs[i].dy = rand()%(10)+speed*3;
         pongeurs[i].bx = screen->w/2;
         pongeurs[i].by = screen->h/2;
     }}
@@ -136,15 +136,15 @@ void parametres(int *speed,int *opposant,BITMAP *buffer,t_player player[4],int n
 void deplacement_p(t_pong pongeurs[2])
 {
     if (key[KEY_S]&& pongeurs[0].y<=screen->h-160)
-        pongeurs[0].y+=10;
+        pongeurs[0].y+=15;
     if (key[KEY_W]&& pongeurs[0].y>=110)
-        pongeurs[0].y-=10;
+        pongeurs[0].y-=15;
 
 
     if (key[KEY_UP]&& pongeurs[1].y>=110)
-        pongeurs[1].y-=10;
+        pongeurs[1].y-=15;
     if (key[KEY_DOWN]&&pongeurs[1].y<=screen->h-160)
-        pongeurs[1].y+=10;
+        pongeurs[1].y+=15;
 }
 
 
@@ -169,19 +169,12 @@ void deplacement_b(t_pong pongeurs[2],int speed)
         pongeurs[0].dy = -pongeurs[0].dy;
         pongeurs[0].by = screen->h-131;
     }
-    if (pongeurs[0].bx<=110){
-        pongeurs[1].point++;
-        initpong(pongeurs,speed);
-    }
-    if (pongeurs[0].bx>=screen->w-110){
-        pongeurs[1].point++;
-        initpong(pongeurs,speed);
-    }
+
 
     ///pour le coté gauche
     if ((pongeurs[0].bx-10<=pongeurs[0].x+10)&&(pongeurs[0].bx>=pongeurs[0].x+10)&&(pongeurs[0].by+10>=pongeurs[0].y && pongeurs[0].by-10<=pongeurs[0].y+50))
     {
-        pongeurs[0].dx--;
+        pongeurs[0].dx-=3;
         pongeurs[0].dx = -pongeurs[0].dx;
         pongeurs[0].bx = pongeurs[0].x+21;
     }
@@ -189,16 +182,29 @@ void deplacement_b(t_pong pongeurs[2],int speed)
     ///pour le coté droit
     if ((pongeurs[0].bx+10>=pongeurs[1].x)&&(pongeurs[0].bx<=pongeurs[1].x)&&(pongeurs[0].by+10>=pongeurs[1].y && pongeurs[0].by-10<=pongeurs[1].y+50))
     {
-        pongeurs[0].dx++;
+        pongeurs[0].dx+=3;
         pongeurs[0].dx = -pongeurs[0].dx;
         pongeurs[0].bx = pongeurs[1].x-11;
     }
 
 }
 
-void condition_victoire(t_pong pongeurs[2])
+int condition_victoire(t_pong pongeurs[2],int speed)
 {
-
+    for (int i = 0; i < 2; i++) {
+        if (pongeurs[i].point == POINTSpourGAGNER){
+            return i;
+        }
+    }
+    if (pongeurs[0].bx<=110){
+        pongeurs[1].point++;
+        initpong(pongeurs,speed);
+    }
+    if (pongeurs[0].bx>=screen->w-110){
+        pongeurs[0].point++;
+        initpong(pongeurs,speed);
+    }
+    return 0;
 }
 
 void game_PONG(t_player player[4],int numJoueur){
@@ -309,11 +315,13 @@ void game_PONG(t_player player[4],int numJoueur){
 
 
 
-    while (!key[KEY_ESC]){
+    while (!key[KEY_ESC] && !condition_victoire(pongeur,speed)){
         deplacement_p(pongeur);
         deplacement_b(pongeur,speed);
         draw_terrain(buffer,pongeur);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
     }
     destroy_bitmap(BEREADY);
+
+    
 }

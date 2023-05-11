@@ -19,6 +19,7 @@
 #define w_tuile screen->w/6
 #define vitesse 2
 #define qtAnim 40
+#define POINTSpourGAGNER 10
 #define TailleBalx 64
 #define TailleBaly 192
 #define h_tuile 200
