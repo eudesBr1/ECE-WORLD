@@ -75,6 +75,17 @@ void parametres(int *speed,int *opposant,BITMAP *buffer,t_player player[4],int n
     rest(200);
 }
 
+void jeux(t_player players[4])
+{
+    BITMAP *espace;
+    espace = load_bitmap("../images/espace.bmp",NULL);
+    if (!espace){
+        allegro_message("Pb de l'image espace.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+}
+
 void game_PONG(t_player player[4],int numJoueur){
     int nb_Joueur = player[0].nbJoueurs;
     int speed = 1;
@@ -164,7 +175,7 @@ void game_PONG(t_player player[4],int numJoueur){
     for (int i = 0; i < 200; i++)
     {
         grossissement +=i;
-        stretch_blit(pong,buffer,0,0,pong->w,pong->h,0-grossissement,0-grossissement,pong->w+grossissement,pong->h+grossissement);
+        stretch_blit(pong,buffer,0,0,pong->w,pong->h,0-grossissement,0-grossissement/2,pong->w+grossissement/2,pong->h+grossissement);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
     }
 
