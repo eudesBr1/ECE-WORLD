@@ -287,12 +287,6 @@ void game_PONG(t_player player[4],int numJoueur){
         //blit(mouse_sprite,buffer,0,0,mouse_x,mouse_y,mouse_sprite->w,mouse_sprite->h);
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
     }
-    for (int i = 0; i < 200; i++)
-    {
-        grossissement +=i;
-        stretch_blit(pong,buffer,0,0,pong->w,pong->h,0-grossissement,0-grossissement/2,pong->w+grossissement/2,pong->h+grossissement);
-        blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-    }
 
     t_pong pongeur[2];
     for (int i = 0; i < 2; i++) {
