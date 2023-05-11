@@ -45,6 +45,14 @@ typedef struct player{
     int cheval;
 }t_player;
 
+typedef struct pong{
+    int x,y;
+    int point;
+    int bx,by;
+    int dx,dy;
+    char *name;
+}t_pong;
+
 typedef struct ballonFootball{
     BITMAP *effet[6];
     float positionX;

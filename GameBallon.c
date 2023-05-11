@@ -409,7 +409,7 @@ void ballon(t_player *player) {
     stretch_blit(disney,buffer,0,0,disney->w,disney->h,0,0,buffer->w,buffer->h);
     for (int i = 0; i < player[0].nbJoueurs ; i++) {
         for (int j = 0; j < player[0].nbJoueurs; j++) {
-            if (timer[i]<timer[j])
+            if (timer[i]>timer[j])
                 compteur_apparition++;
         }
         rest(1500);
