@@ -25,6 +25,7 @@
 #define h_tuile 200
 #define H_BORDS 100
 #define W_BORDS 30
+#define SPEED_PONGISTES 15
 #define RAYON 20
 #define avancAnim 1
 #define tailleTab 4
