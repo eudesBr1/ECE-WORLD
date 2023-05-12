@@ -6,8 +6,6 @@ void jackpot_game(){
     BITMAP *buffer;
     buffer = create_bitmap(screen->w,screen->h);
     background = load_bitmap("../images/background.bmp", NULL);
-    MIDI *music;
-    music = load_midi("sounds/mainTheme.mid");
     if (!background){
         allegro_message("Pb de l'image background");
         allegro_exit();

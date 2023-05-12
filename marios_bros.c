@@ -1,13 +1,13 @@
 #include "allegro.h"
 
-//create some colors
+
 #define WHITE makecol(255,255,255)
 #define BLACK makecol(0,0,0)
 #define RED makecol(255,0,0)
 #define GREEN makecol(0,255,0)
 #define BLUE makecol(0,0,255)
 
-//variables
+
 int mousex, mousey, leftClick;
 int startScreenMode = 1;
 int mainMenuMode = 0;
@@ -18,12 +18,11 @@ int lifeline = 5;
 int gamePlayMode = 0;
 int points = 0;
 
-//bitmaps
+
 BITMAP *buffer;
 BITMAP* buffers;
 
 
-//functions
 void clearScreen()
 {
     rectfill(buffer, 0, 0, 640, 480, BLACK);
@@ -111,13 +110,7 @@ int pixel_perfect_colision(int x1, int y1, BITMAP * obj1, int x2, int y2, BITMAP
 
 
 
-//game reset
-void resetGame()
-{
-    startScreenMode = 0;
-    mainMenuMode = 0;
-    gamePlayMode = 1;
-}
+
 
 //local variable
 float teta = 0.0;
@@ -192,10 +185,6 @@ void game_marios() {
             blit(buffer, screen, 0, 0, 0, 0, 640, 480);
 
 
-
-
-
-            //Help Button and Mode Selection
             if (mainMenuMode == 1) {
                 textout_ex(sky, font, "MarioBros (ESC to quit)", 0, 1, BLACK, WHITE);
                 textout_ex(sky, font, "Press Ctrl+H for Help", 460, 1, BLACK, WHITE);
@@ -588,398 +577,25 @@ void game_marios() {
 
             }
 
+            set_mouse_sprite(NULL);
+            //MapFreeMem();
 
 
-            //night mode of the game
-            if (gamePlayMode == 2) {
-                clearScreens();
 
-                //set buffer
-                draw_sprite(buffers, night, 0, 0);
+            //destroy
+            destroy_bitmap(buffer);
+            destroy_bitmap(mario);
+            destroy_bitmap(sky);
+            destroy_bitmap(enemy1);
+            destroy_bitmap(enemy2);
+            destroy_bitmap(buffers);
+            destroy_bitmap(coin1);
 
 
-                //give animation to person ability to jump and move left/right
-                int x = 10, y = 10;
-                int velx, vely;
-                velx = vely = 0;
-                const int gravity = 1;
-                int groundheight = 350;
-                int screenScrollXPosition = 0;
-                int width = SCREEN_W;
-
-
-                while (gamePlayMode == 2) {
-
-                    //need to clear
-                    clearScreens();
-
-
-                    //aliens move around the planet (2-3) and player has to catch coins without crashing
-                    draw_sprite(buffers, night, screenScrollXPosition, 0);
-
-                    //randomly put coins everywhere
-                    teta += 0;
-
-                    //coins worth 1 point
-                    rotate_sprite(night, star, 50, 350, ftofix(teta));
-                    rotate_sprite(night, star, 100, 300, ftofix(teta));
-                    rotate_sprite(night, star, 150, 350, ftofix(teta));
-                    rotate_sprite(night, star, 200, 250, ftofix(teta));
-                    rotate_sprite(night, star, 250, 350, ftofix(teta));
-                    rotate_sprite(night, star, 300, 300, ftofix(teta));
-                    rotate_sprite(night, star, 350, 350, ftofix(teta));
-                    rotate_sprite(night, star, 400, 250, ftofix(teta));
-                    rotate_sprite(night, star, 450, 350, ftofix(teta));
-                    rotate_sprite(night, star, 500, 300, ftofix(teta));
-                    rotate_sprite(night, star, 550, 350, ftofix(teta));
-                    rotate_sprite(night, star, 600, 250, ftofix(teta));
-                    rotate_sprite(night, star, 650, 350, ftofix(teta));
-                    rotate_sprite(night, star, 700, 300, ftofix(teta));
-                    rotate_sprite(night, star, 750, 350, ftofix(teta));
-                    rotate_sprite(night, star, 800, 250, ftofix(teta));
-                    rotate_sprite(night, star, 850, 350, ftofix(teta));
-                    rotate_sprite(night, star, 900, 300, ftofix(teta));
-                    rotate_sprite(night, star, 950, 350, ftofix(teta));
-                    rotate_sprite(night, star, 1000, 250, ftofix(teta));
-
-                    rotate_sprite(night, star, 2000, 350, ftofix(teta));
-                    rotate_sprite(night, star, 2100, 300, ftofix(teta));
-                    rotate_sprite(night, star, 2200, 350, ftofix(teta));
-                    rotate_sprite(night, star, 2300, 250, ftofix(teta));
-                    rotate_sprite(night, star, 2400, 350, ftofix(teta));
-                    rotate_sprite(night, star, 2500, 300, ftofix(teta));
-                    rotate_sprite(night, star, 2600, 350, ftofix(teta));
-                    rotate_sprite(night, star, 2700, 250, ftofix(teta));
-                    rotate_sprite(night, star, 2800, 350, ftofix(teta));
-                    rotate_sprite(night, star, 2900, 300, ftofix(teta));
-                    rotate_sprite(night, star, 3000, 350, ftofix(teta));
-                    rotate_sprite(night, star, 4000, 250, ftofix(teta));
-                    rotate_sprite(night, star, 4100, 350, ftofix(teta));
-                    rotate_sprite(night, star, 4100, 300, ftofix(teta));
-                    rotate_sprite(night, star, 4200, 350, ftofix(teta));
-                    rotate_sprite(night, star, 4300, 250, ftofix(teta));
-                    rotate_sprite(night, star, 4400, 350, ftofix(teta));
-                    rotate_sprite(night, star, 4500, 300, ftofix(teta));
-                    rotate_sprite(night, star, 4800, 350, ftofix(teta));
-                    rotate_sprite(night, star, 4900, 250, ftofix(teta));
-
-
-
-                    //rotators enemy
-                    beta += 0.5;
-
-                    rotate_sprite(night, bridge, 400, 190, ftofix(beta));
-                    rotate_sprite(night, bridge, 800, 190, ftofix(beta));
-                    rotate_sprite(night, bridge, 1200, 190, ftofix(beta));
-                    rotate_sprite(night, bridge, 1800, 190, ftofix(beta));
-                    rotate_sprite(night, bridge, 2300, 190, ftofix(beta));
-                    rotate_sprite(night, bridge, 2900, 190, ftofix(beta));
-                    rotate_sprite(night, bridge, 3400, 190, ftofix(beta));
-                    rotate_sprite(night, bridge, 4100, 190, ftofix(beta));
-                    rotate_sprite(night, bridge, 4700, 190, ftofix(beta));
-
-
-                    //fire
-                    rotate_sprite(night, fireball1, 600, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 615, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 630, 380, ftofix(0));
-
-
-                    rotate_sprite(night, fireball1, 1000, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 1015, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 1030, 380, ftofix(0));
-
-
-                    rotate_sprite(night, fireball1, 1400, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 1415, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 1430, 380, ftofix(0));
-
-
-                    rotate_sprite(night, fireball1, 1600, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 1620, 380, ftofix(0));
-
-                    rotate_sprite(night, fireball1, 2400, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 2415, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 2430, 380, ftofix(0));
-
-                    //from here
-                    rotate_sprite(night, fireball1, 2800, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 2810, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 2825, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 2835, 380, ftofix(0));
-
-                    rotate_sprite(night, fireball1, 3200, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 3215, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 3230, 380, ftofix(0));
-
-                    rotate_sprite(night, fireball1, 3800, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 3815, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 3830, 380, ftofix(0));
-
-                    rotate_sprite(night, fireball1, 3800, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 3815, 380, ftofix(0));
-                    rotate_sprite(night, fireball1, 3830, 380, ftofix(0));
-
-                    //deal with winning crown
-                    //collision with the crown
-                    draw_sprite(night, crown, 4800, 350);
-
-
-                    if (key[KEY_ESC]) {
-                        break;
-                    }
-
-
-
-                    //enemies collision
-                    //deal with collisions for coins
-                    // dealing with collision with coins
-                    //add points and destroy the sprite
-                    if (pixel_perfect_colision(x, y, mario, 50 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 100 + screenScrollXPosition, 300, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 150 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 200 + screenScrollXPosition, 250, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 250 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 300 + screenScrollXPosition, 300, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 350 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 400 + screenScrollXPosition, 250, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 450 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 500 + screenScrollXPosition, 300, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 550 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 600 + screenScrollXPosition, 250, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 650 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 700 + screenScrollXPosition, 300, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 750 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 800 + screenScrollXPosition, 250, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 850 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 900 + screenScrollXPosition, 300, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 950 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 1000 + screenScrollXPosition, 250, coin1) == TRUE) {
-                        points = points + 1;
-
-
-                    }
-
-
-                    if (pixel_perfect_colision(x, y, mario, 2000 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2100 + screenScrollXPosition, 300, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2200 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2300 + screenScrollXPosition, 250, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2400 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2500 + screenScrollXPosition, 300, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2600 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2700 + screenScrollXPosition, 250, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2800 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2900 + screenScrollXPosition, 300, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 3000 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 4000 + screenScrollXPosition, 250, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 4100 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 4100 + screenScrollXPosition, 300, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 4200 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 4300 + screenScrollXPosition, 250, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 4400 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 4500 + screenScrollXPosition, 300, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 4800 + screenScrollXPosition, 350, coin1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 4900 + screenScrollXPosition, 250, coin1) == TRUE) {
-                        points = points + 1;
-
-                    }
-
-
-
-
-                    //getting the crown
-                    if (pixel_perfect_colision(x, y, mario, 400 + screenScrollXPosition, 150, bridge) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 800 + screenScrollXPosition, 150, bridge) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 1200 + screenScrollXPosition, 150, bridge) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 1800 + screenScrollXPosition, 150, bridge) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2300 + screenScrollXPosition, 150, bridge) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2900 + screenScrollXPosition, 150, bridge) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 3400 + screenScrollXPosition, 150, bridge) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 4100 + screenScrollXPosition, 150, bridge) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 4700 + screenScrollXPosition, 100, bridge) == TRUE) {
-                        lifeline = lifeline - 1;
-
-
-                        if (lifeline == 0) {
-                            textprintf_ex(night, font, x + 5, 15, BLACK, WHITE, " Health: %i", lifeline);
-                            textprintf_ex(night, font, x + 5, 30, BLACK, WHITE, " Points: %i", points);
-                            textout_ex(night, font, "You lost! Try again :) ", x + 5, 150, BLACK, WHITE);
-                            gamePlayMode = 0;
-                            break;
-                        }
-                    }
-
-
-                    if (pixel_perfect_colision(x, y, mario, 600 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 615 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 630 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 1000 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 1015 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 1030 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 1400 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 1415 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 1430 + screenScrollXPosition, 380, fireball1) == TRUE) {
-                        lifeline = lifeline - 1;
-
-
-                        if (lifeline == 0) {
-                            textprintf_ex(night, font, x + 5, 15, BLACK, WHITE, " Health: %i", lifeline);
-                            textprintf_ex(night, font, x + 5, 30, BLACK, WHITE, " Points: %i", points);
-                            textout_ex(night, font, "You lost! Try again :) ", x + 5, 150, BLACK, WHITE);
-                            gamePlayMode = 0;
-                            break;
-                        }
-                    }
-
-
-                    if (pixel_perfect_colision(x, y, mario, 1600 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 1620 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2400 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2415 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2430 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2800 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2810 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2825 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 2835 + screenScrollXPosition, 380, fireball1) == TRUE) {
-                        lifeline = lifeline - 1;
-
-
-                        if (lifeline == 0) {
-                            textprintf_ex(night, font, x + 5, 15, BLACK, WHITE, " Health: %i", lifeline);
-                            textprintf_ex(night, font, x + 5, 30, BLACK, WHITE, " Points: %i", points);
-                            textout_ex(night, font, "You lost! Try again :) ", x + 5, 150, BLACK, WHITE);
-                            gamePlayMode = 0;
-                            break;
-                        }
-                    }
-
-
-                    if (pixel_perfect_colision(x, y, mario, 3200 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 3215 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 3230 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 3800 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 3815 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 3830 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 3800 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 3815 + screenScrollXPosition, 380, fireball1) == TRUE ||
-                        pixel_perfect_colision(x, y, mario, 3830 + screenScrollXPosition, 380, fireball1) == TRUE) {
-                        lifeline = lifeline - 1;
-
-
-                        if (lifeline == 0) {
-                            textprintf_ex(night, font, x + 5, 15, BLACK, WHITE, " Health: %i", lifeline);
-                            textprintf_ex(night, font, x + 5, 30, BLACK, WHITE, " Points: %i", points);
-                            textout_ex(night, font, "You lost! Try again :) ", x + 5, 150, BLACK, WHITE);
-                            gamePlayMode = 0;
-                            break;
-
-
-                        }
-                    }
-
-
-
-
-                    // pressing right, left and jump
-
-                    if (key[KEY_LEFT]) {
-                        velx = -1;
-                        screenScrollXPosition = screenScrollXPosition + 5;
-                        width = width - 5;
-
-                        if (screenScrollXPosition > 0) {
-                            screenScrollXPosition = screenScrollXPosition - 5;
-                            width = width + 5;
-                            x = 10;
-                        }
-                    } else if (key[KEY_RIGHT]) {
-                        velx = 1;
-                        screenScrollXPosition = screenScrollXPosition - 10;
-                        width = width + 10;
-
-                        if (x > 480) {
-                            // game is over
-                            textprintf_ex(night, font, 4810, 15, BLACK, WHITE, " Health: %i", lifeline);
-                            textprintf_ex(night, font, 4810, 30, BLACK, WHITE, " Points: %i", points);
-                            textout_ex(night, font, "Nice work winner! MarioBros (ESC to quit)", 4810, 60, BLACK,
-                                       WHITE);
-
-
-                            screenScrollXPosition = screenScrollXPosition + 10;
-                            width = width - 10;
-                            x = 480;
-                        }
-                    } else {
-                        velx = 0;
-                    }
-
-                    if (key[KEY_UP] && y >= groundheight) {
-                        vely = -15;
-                        width = width + 30;
-                    }
-
-                    vely += gravity;
-                    x += velx;
-                    y += vely;
-
-
-                    if (y >= groundheight) {
-                        y = groundheight;
-                    }
-
-                    draw_sprite(buffers, mario, x, y);
-                    rest(40);
-
-
-                    draw_sprite(screen, buffers, 0, 0);
-
-
-
-
-
-                    //ESCAPE to quit
-                    textout_ex(night, font, "MarioBros (ESC to quit at anytime)", 10, 5, BLACK, WHITE);
-                    textprintf_ex(night, font, 10, 15, BLACK, WHITE, " Health: %i", lifeline);
-                    textprintf_ex(night, font, 10, 30, BLACK, WHITE, " Points: %i", points);
-
-
-
-
-                    //draw map with single layer
-                    //MapDrawBG(buffers, 0, 0, 0, 0, SCREEN_W - 1, SCREEN_H - 1);
-
-                    blit(buffers, screen, 0, 0, 0, 0, SCREEN_W - 1, SCREEN_H - 1);
-
-
-                }
-
-
-            }
+            allegro_exit();
         }
-
-
-        stop_midi();
-
-        remove_sound();
-        set_mouse_sprite(NULL);
-        //MapFreeMem();
-
-
-
-        //destroy
-        destroy_bitmap(buffer);
-        destroy_bitmap(mario);
-        destroy_bitmap(sky);
-        destroy_bitmap(enemy1);
-        destroy_bitmap(enemy2);
-        destroy_bitmap(buffers);
-        destroy_bitmap(coin1);
-
-
-        allegro_exit();
-    }
 //
 // Created by Abdelkader on 12/05/2023.
 //
+    }
 }
