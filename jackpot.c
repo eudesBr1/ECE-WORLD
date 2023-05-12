@@ -1,11 +1,13 @@
 #include "Mabibli.h"
 
+
 void jackpot_game(){
     BITMAP *background ;
     BITMAP *buffer;
     buffer = create_bitmap(screen->w,screen->h);
     background = load_bitmap("../images/background.bmp", NULL);
-
+    MIDI *music;
+    music = load_midi("sounds/mainTheme.mid");
     if (!background){
         allegro_message("Pb de l'image background");
         allegro_exit();
@@ -105,52 +107,49 @@ void jackpot_game(){
                 rest(0.01*i*i);
 
             }
-            for (int i = 0; i < 6; i++) {
-                clear(buffer);
-                if (i%2==0) {
-                    if (symbole_1_tire == 1) {
-                        draw_sprite(buffer, symbole_1, 560, 450);
-                        rest(10);
-                    } else if (symbole_1_tire == 2) {
-                        draw_sprite(buffer, symbole_2, 560, 450);
-                        rest(10);
-                    } else if (symbole_1_tire == 3) {
-                        draw_sprite(buffer, symbole_3, 560, 450);
-                        rest(10);
-                    }
-
-                    if (symbole_2_tire == 1) {
-                        draw_sprite(buffer, symbole_1, 885, 450);
-                        rest(10);
-                    } else if (symbole_2_tire == 2) {
-                        draw_sprite(buffer, symbole_2, 885, 450);
-                        rest(10);
-                    } else if (symbole_2_tire == 3) {
-                        draw_sprite(buffer, symbole_3, 885, 450);
-                        rest(10);
-                    }
-
-                    if (symbole_3_tire == 1) {
-                        draw_sprite(buffer, symbole_1, 1200, 450);
-                        rest(10);
-                    } else if (symbole_3_tire == 2) {
-                        draw_sprite(buffer, symbole_2, 1200, 450);
-                        rest(10);
-                    } else if (symbole_3_tire == 3) {
-                        draw_sprite(buffer, symbole_3, 1200, 450);
-
-                    }
-                    rest(10000);
+            int symb1=symbole_1_tire;
+            int symb2=symbole_2_tire;
+            int symb3=symbole_3_tire;
+            for (int i = 0; i < 3; ++i) {
+                if (symb1  == 1) {
+                    draw_sprite(buffer, symbole_1, 560, 450);
+                    rest(10);
+                } else if (symb1  == 2) {
+                    draw_sprite(buffer, symbole_2, 560, 450);
+                    rest(10);
+                } else if (symb1 == 3) {
+                    draw_sprite(buffer, symbole_3, 560, 450);
+                    rest(10);
                 }
-                stretch_blit(background,buffer,0,0,background->w,background->h,0,0,screen->w,screen->h);
 
+                if (symb2 == 1) {
+                    draw_sprite(buffer, symbole_1, 885, 450);
+                    rest(10);
+                } else if (symb2== 2) {
+                    draw_sprite(buffer, symbole_2, 885, 450);
+                    rest(10);
+                } else if (symb2 == 3) {
+                    draw_sprite(buffer, symbole_3, 885, 450);
+                    rest(10);
+                }
+
+                if (symb3 == 1) {
+                    draw_sprite(buffer, symbole_1, 1200, 450);
+                    rest(10);
+                } else if (symb3 == 2) {
+                    draw_sprite(buffer, symbole_2, 1200, 450);
+                    rest(10);
+                } else if (symb3== 3) {
+                    draw_sprite(buffer, symbole_3, 1200, 450);
+
+                }
                 blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-                clear(buffer);
-
+                rest(1000);
             }
+            manivelle_active = 0;
+
             // Vérification du jackpot
 
-            manivelle_active = 0;
         }
 
 

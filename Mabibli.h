@@ -61,5 +61,6 @@ t_player creationPersonnageGoku(t_player *player);
 void affichageVille(t_player *players);
 void courseHippique(t_player *player);
 void debutCourse(t_player *player);
+void jackpot_game();
 void game_PONG(t_player player[4],int numJoueur);
 int coinFlip();
