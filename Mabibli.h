@@ -22,6 +22,9 @@
 #define TailleBalx 64
 #define TailleBaly 192
 #define h_tuile 200
+#define H_BORDS 100
+#define W_BORDS 30
+#define RAYON 20
 #define avancAnim 1
 #define tailleTab 4
 typedef struct ballon{
@@ -74,6 +77,9 @@ typedef struct tuiles{
     BITMAP *tuiles[4][8];
     int couleur[4][8];
 }t_tuiles;
+
+
+
 void initEcran();
 void gameInit(t_player players[4]);
 void ballon(t_player *player);
