@@ -11,7 +11,7 @@ int main(){
     srand(time(NULL));
     //coinFlip(players,players);
     //jackpot_game();
-    //gameInit(players);
+    gameInit(players);
     //ballon(players);
     game_PONG(players,1);
     //game_GUITARE(players);

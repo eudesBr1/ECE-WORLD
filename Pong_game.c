@@ -220,9 +220,15 @@ int condition_victoire(t_pong pongeurs[2])
 }
 
 void game_PONG(t_player player[4],int numJoueur) {
-    int speed = 7;
+    int speed = 4;
     int tailleConfetis = 150;
     int choixOpposant;
+    if (numJoueur==0)
+    {
+        choixOpposant = 1;
+    }
+    else
+        choixOpposant = 0;
     int condition = 0;
     BITMAP *buffer = create_bitmap(screen->w, screen->h);
     BITMAP *pong;
@@ -338,7 +344,26 @@ void game_PONG(t_player player[4],int numJoueur) {
     rectfill(BEREADY, 0, 0, width, height, makecol(0, 0, 170));
     textout_ex(BEREADY, font, "BE READY", 0, 0, makecol(255, 255, 255), -1);
     stretch_blit(BEREADY, screen, 0, 0, BEREADY->w, BEREADY->h, 0, 75, screen->w, screen->h - 150);
+    clear(BEREADY);
     rest(2000);
+
+    width = text_length(font, "0000 a gauche");
+    height = text_height(font);
+    BEREADY = create_bitmap(width, height);
+    rectfill(BEREADY, 0, 0, width, height, makecol(0, 0, 170));
+    textprintf_ex(BEREADY, font, 0, 0, makecol(255,255,255), -1, "%s left", player[numJoueur].name);
+    stretch_blit(BEREADY, screen, 0, 0, BEREADY->w, BEREADY->h, 0, 75, screen->w, screen->h - 150);
+    clear(BEREADY);
+    rest(2000);
+    width = text_length(font, "0000 a gauche");
+    height = text_height(font);
+    BEREADY = create_bitmap(width, height);
+    rectfill(BEREADY, 0, 0, width, height, makecol(0, 0, 170));
+    textprintf_ex(BEREADY, font, 0, 0, makecol(255,255,255), -1, "%s right", player[choixOpposant].name);
+    stretch_blit(BEREADY, screen, 0, 0, BEREADY->w, BEREADY->h, 0, 75, screen->w, screen->h - 150);
+    clear(BEREADY);
+    rest(2000);
+
     destroy_bitmap(BEREADY);
     while (!condition_victoire(pongeur)) {
 
@@ -399,23 +424,33 @@ void game_PONG(t_player player[4],int numJoueur) {
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+    int gagnant = 0;
+    int perdant = 0;
+    if (condition_victoire(pongeur)==0){
+        gagnant = numJoueur;
+        perdant = choixOpposant;
+    }
+    else {
+        gagnant = choixOpposant;
+        perdant = choixOpposant;
+    }
     BITMAP *WINNER;
     width = text_length(font, "0000000000000000");
     height = text_height(font);
     WINNER = create_bitmap(width, height);
     rectfill(WINNER, 0, 0, screen->w, screen->h, makecol(255, 0, 255));
-    textprintf_centre_ex(WINNER, font, WINNER->w / 2, WINNER->h / 2, makecol(255, 30, 30), -1, "%s",pongeur[condition_victoire(pongeur) - 1].name);
-    for (int i = 0; i < 100; i++) {
+    textprintf_centre_ex(WINNER, font, WINNER->w / 2, WINNER->h / 2, makecol(255, 30, 30), -1, "%s",player[gagnant].name);
+    for (int i = 0; i < 95; i++) {
         clear(buffer);
         stretch_blit(fond_space,buffer,0,0,fond_space->w,fond_space->h,0,0,screen->w,screen->h);
-        stretch_sprite(buffer,player[condition_victoire(pongeur)].bas[1],screen->w/2-300,screen->w/2-300,600,600);
-        stretch_sprite(buffer,WINNER,screen->w/2-150,screen->w/2+150,300,300);
+        stretch_sprite(buffer,player[gagnant].bas[1],screen->w/2-300,screen->w/2-600,600,600);
+        stretch_sprite(buffer,WINNER,screen->w/2-150,screen->h/2+150,300,300);
         stretch_sprite(buffer,confettis[i%14],screen->w/2-300-tailleConfetis,screen->h/2-2*tailleConfetis,tailleConfetis,tailleConfetis);
         stretch_sprite(buffer,confettis[i%14],screen->w/2+300,screen->h/2-2*tailleConfetis,tailleConfetis,tailleConfetis);
         stretch_sprite(buffer,confettis[i%14],screen->w/2-300-tailleConfetis,screen->h/2+tailleConfetis,tailleConfetis,tailleConfetis);
         stretch_sprite(buffer,confettis[i%14],screen->w/2+300,screen->h/2+tailleConfetis,tailleConfetis,tailleConfetis);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-        rest(20);
+        rest(80);
     }
 
     destroy_bitmap(fond_space);
