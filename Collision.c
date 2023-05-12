@@ -12,8 +12,8 @@ int collision(t_player perso){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-    int x = (perso.x*1024/500);
-    int y = (perso.y*1024/500);
+    int x = perso.x;
+    int y = perso.y;
 
     int h = getpixel(fond,x+10,y-3);
     int d = getpixel(fond,x+20,y+20);
