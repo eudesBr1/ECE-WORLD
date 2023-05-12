@@ -15,10 +15,28 @@ int check_defaite(t_player players[4])
 }
 void tab_score(t_player players[4],BITMAP *buffer)
 {
+    clear(buffer);
+    BITMAP *SCORE;
+    int width = text_length(font, "SCORE");
+    int height = text_height(font);
+    SCORE = create_bitmap(width, height);
+    rectfill(buffer,0,0,wTABscore,screen->h, makecol(195,195,195));
+    rectfill(SCORE, 0, 0, width, height, makecol(0, 0, 170));
+    textout_ex(SCORE, font, "SCORE", 0, 0, makecol(255, 255, 255), -1);
+    stretch_blit(SCORE, buffer, 0, 0, SCORE->w, SCORE->h, 0, 0, wTABscore, screen->h/5);
+    for (int i = 0; i < players[0].nbJoueurs; i++)
+    {
+        stretch_sprite(buffer,players[i].bas[1],0,(i+1)*screen->h/5,wTABscore/3,(1)*screen->h/5);
+        textprintf_ex(buffer,font,0,(i+1)*screen->h/5, makecol(129,128,67),-1,"%s",players[i].name);
 
+    }
+
+    blit(buffer,screen,0,0,screen->w-wTABscore,0,wTABscore,screen->h);
+    destroy_bitmap(SCORE);
 }
 
 void affichageVille(t_player players[4]){
+
     int zoom_w = 400;
     int zoom_h = 300;
     int ecranx,ecrany;
@@ -86,6 +104,7 @@ void affichageVille(t_player players[4]){
                 }
             }
             stretch_blit(buffer,screen,ecranx,ecrany,zoom_w,zoom_h,0,0,screen->w-wTABscore,screen->h);
+            tab_score(players,buffer);
             rest(50);
             if (key[KEY_RIGHT])
             {

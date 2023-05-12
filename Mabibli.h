@@ -15,7 +15,7 @@
 #include "stdio.h"
 
 
-#define H_PERSO 64
+#define H_PERSO 32
 #define W_PERSO 32
 #define wTABscore 300
 
