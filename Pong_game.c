@@ -432,7 +432,7 @@ void game_PONG(t_player player[4],int numJoueur) {
     }
     else {
         gagnant = choixOpposant;
-        perdant = choixOpposant;
+        perdant = numJoueur;
     }
     BITMAP *WINNER;
     width = text_length(font, "0000000000000000");
@@ -452,11 +452,19 @@ void game_PONG(t_player player[4],int numJoueur) {
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
         rest(80);
     }
+    player[gagnant].points+=2;
+    player[perdant].ticket--;
+
 
     destroy_bitmap(fond_space);
     destroy_bitmap(WINNER);
+    for (int i = 0; i < 2; i++) {
+        destroy_bitmap(pausePlay[i]);
+    }
+    destroy_bitmap(pause_play);
     for (int i = 0; i <= 14; i++) {
         destroy_bitmap(confettis[i]);
-    }    destroy_bitmap(buffer);
-
+    }
+    destroy_bitmap(buffer);
+    destroy_bitmap(buffer);
 }
