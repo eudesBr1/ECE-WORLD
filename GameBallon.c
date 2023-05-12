@@ -79,6 +79,7 @@ void Parametres(int *vitesse_max,int *vitesse_min,BITMAP *buffer)
 
 
 void ballon(t_player *player) {
+    int tailleConfetis = 150;
     BITMAP *buffer = create_bitmap(screen->w, screen->h);
     int bleu = makecol(0, 162, 232);
     int compteur_apparition = 0;
@@ -86,6 +87,15 @@ void ballon(t_player *player) {
     int blanc = makeacol(255, 255, 255, 0);
     int vitesse_max = 8;
     int vitesse_min = 2;
+    BITMAP *podium_sprite;
+    podium_sprite = create_bitmap(screen->w,screen->h);
+    BITMAP *attention;
+    attention = load_bitmap("../images/panneau_attention.bmp", NULL);
+    if (!attention ) {
+        allegro_message("Pb de l'image panneau_attention.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
     BITMAP *acceuil_base;
     acceuil_base = load_bitmap("../images/tir_ballon.bmp", NULL);
     if (!acceuil_base) {
@@ -97,6 +107,13 @@ void ballon(t_player *player) {
     play_boutton = load_bitmap("../images/Boutton_jouer.bmp", NULL);
     if (!play_boutton) {
         allegro_message("Pb de l'image Boutton_jouer.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    BITMAP *disney;
+    disney = load_bitmap("../images/diney.bmp", NULL);
+    if (!disney) {
+        allegro_message("Pb de l'image diney.bmp");
         allegro_exit();
         exit(EXIT_FAILURE);
     }
@@ -146,6 +163,19 @@ void ballon(t_player *player) {
         confettis[2*i+1] = create_sub_bitmap(templateConfettis,290,289*i,270,270);
     }
 
+    BITMAP *minette[6];
+    BITMAP *templateMain = load_bitmap("../images/sprite_main.bmp",NULL);
+    if (!templateMain){
+        allegro_message("Pb de l'image templateMain.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < 2; ++i) {
+        minette[i] = create_sub_bitmap(templateMain,300*i,0,350,templateMain->h);
+    }
+    for (int i = 0; i < 3; ++i) {
+        minette[i+2] = create_sub_bitmap(templateMain,640+370*i,0,400,templateMain->h);
+    }
 
 
     /// découpage de la sprite explosion et apparition ballon
@@ -276,18 +306,18 @@ void ballon(t_player *player) {
     BITMAP *spriteViseur;
     spriteViseur = create_bitmap(50, 50);
     stretch_blit(viseur, spriteViseur, 0, 0, viseur->w, viseur->h, 0, 0, spriteViseur->w, spriteViseur->h);
-    char temps[5];
-    char message[50];
-    char pos_x[5];
-    char pos_y[5];
-    char points[5];
-
-
-
-
-
     for (int k = 0; k < player[0].nbJoueurs; k++) {
-        printf("iteration");
+
+        for (int i = 0; i < 5; i++) {
+            rectfill(buffer,0,0,screen->w,screen->h,blanc);
+            stretch_sprite(buffer,attention,0,0,buffer->w,buffer->h);
+            stretch_sprite(buffer, minette[4-i],50,50,250,250);
+            textprintf_centre_ex(buffer,font,screen->w/2,screen->h/2, makecol(255,50,50),-1,"TOUR DU JOUEUR %s",player[k].name);
+            blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+            clear(buffer);
+            rest(1000);
+        }
+        //printf("iteration");
         score = 0;
         compteur_apparition=0;
         for (int i = 0; i < 100000; ++i) {
@@ -295,29 +325,13 @@ void ballon(t_player *player) {
             rectfill(buffer, 0, 0, buffer->w, buffer->h, bleu);
             rectfill(buffer, 100, 150, buffer->w - 100, buffer->h - 150, noir);
             textprintf_centre_ex(buffer,font,screen->w/2,50, blanc,-1,"Jeux des ballons");
-            sprintf(pos_x, "%d", mouse_x);
-            strcpy(message, "x = ");
-            strcat(message, pos_x);
-            textout_ex(buffer, font, message, 10, 10, blanc, -1);
+
+            textprintf_centre_ex(buffer,font,screen->w/2,120,blanc,-1,"SCORE = %d",score);
 
 
-            sprintf(pos_y, "%d", mouse_y);
-            strcpy(message, "y = ");
-            strcat(message, pos_y);
-            textout_ex(buffer, font, message, 10, 25, blanc, -1);
-
-
-            sprintf(points, "%d", score);
-            strcpy(message, "SCORE = ");
-            strcat(message, points);
-            textout_ex(buffer, font, message, screen->w / 2, 120, blanc, -1);
-
-
-            sprintf(temps, "%f", timer[k]);
-            strcpy(message, "temps = ");
-            strcat(message, temps);
-            textout_ex(buffer, font, message, screen->w - 100, 300, blanc, -1);
-
+            for (int j = 0; j < player[0].nbJoueurs; j++) {
+                textprintf_right_ex(buffer,font,screen->w,screen->h/3+j*screen->h/18,blanc,-1,"temps %s = %f",player[j].name,timer[j]);
+            }
 
             while (compteur_apparition <= 69) {
                 for (int j = 0; j < 10; j++) {
@@ -375,14 +389,14 @@ void ballon(t_player *player) {
             blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
             rest(5);
             timer[k] = (0.015 * i);
-            if (score==9){
+            if (score==10){
                 printf("test\n");
                 for (int j = 0; j < 10; j++) {
-                    tabBall[i].x = rand() % (screen->w - 250) + 125;
-                    tabBall[i].y = rand() % (screen->h - 350) + 175;
-                    tabBall[i].alive = 1;
-                    tabBall[i].couleur = rand() % 4;
-                    tabBall[i].countAnim = 0;
+                    tabBall[j].x = rand() % (screen->w - 250) + 125;
+                    tabBall[j].y = rand() % (screen->h - 350) + 175;
+                    tabBall[j].alive = 1;
+                    tabBall[j].couleur = rand() % 4;
+                    tabBall[j].countAnim = 0;
                 }
                 printf("test\n");
                 i = 10000000;
@@ -391,21 +405,43 @@ void ballon(t_player *player) {
         }
     }
     clear(buffer);
-    stretch_sprite(buffer,podium,0,0,buffer->w,buffer->h);
     compteur_apparition = 0;
+    stretch_blit(disney,buffer,0,0,disney->w,disney->h,0,0,buffer->w,buffer->h);
     for (int i = 0; i < player[0].nbJoueurs ; i++) {
-        compteur_apparition = 0;
         for (int j = 0; j < player[0].nbJoueurs; j++) {
-            if (timer[i]<timer[j])
+            if (timer[i]>timer[j])
                 compteur_apparition++;
         }
-        if (compteur_apparition==0)
-            stretch_sprite(buffer,player[i].bas[1],750,50,380,380);
-        if (compteur_apparition==1)
+        rest(1500);
+        if (compteur_apparition==0) {
+            stretch_sprite(buffer, player[i].bas[1], 750, 100, 380, 380);
+            player[i].points+=2;
+            player[i].ticket++;
+        }
+        if (compteur_apparition==1){
             stretch_sprite(buffer,player[i].bas[1],1260,250,250,300);
-        if (compteur_apparition==2)
+            player[i].points++;
+            player[i].ticket++;
+        }
+        if (compteur_apparition==2){
             stretch_sprite(buffer,player[i].bas[1],500,300,220,270);
-        if (compteur_apparition==3)
+            player[i].ticket--;
+        }
+        if (compteur_apparition==3){
             stretch_sprite(buffer,player[i].haut[1],screen->w-200,screen->h-200,200,200);
+            player[i].ticket--;
+        }
+        stretch_sprite(buffer,podium,0,0,buffer->w,buffer->h);
+        blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+        compteur_apparition = 0;
+    }
+    for (int h = 0; h < 50 ; h++) {
+        blit(buffer,podium_sprite,0,0,0,0, screen->w,screen->h);
+        stretch_sprite(podium_sprite,confettis[h%14],650,200,tailleConfetis,tailleConfetis);
+        stretch_sprite(podium_sprite,confettis[h%14],850,20,tailleConfetis,tailleConfetis);
+        stretch_sprite(podium_sprite,confettis[h%14],1050,200,tailleConfetis,tailleConfetis);
+        blit(podium_sprite,screen,0,0,0,0,screen->w,screen->h);
+        clear(podium);
+        rest(75);
     }
 }

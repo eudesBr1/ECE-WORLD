@@ -19,9 +19,13 @@
 #define w_tuile screen->w/6
 #define vitesse 2
 #define qtAnim 40
+#define POINTSpourGAGNER 10
 #define TailleBalx 64
 #define TailleBaly 192
 #define h_tuile 200
+#define H_BORDS 100
+#define W_BORDS 30
+#define RAYON 20
 #define avancAnim 1
 #define tailleTab 4
 typedef struct ballon{
@@ -45,11 +49,38 @@ typedef struct player{
     int cheval;
 }t_player;
 
+typedef struct pong{
+    int x,y;
+    int point;
+    int bx,by;
+    int dx,dy;
+    char *name;
+}t_pong;
+
+typedef struct ballonFootball{
+    BITMAP *effet[6];
+    float positionX;
+    float positionY;
+    int animation;
+    int tailleBallon;
+}t_ballonFoot;
+
+typedef struct gardienBut{
+    BITMAP *position[10];
+    float positionX;
+    float positionY;
+    int animation;
+    int hauteur;
+    int largeur;
+}t_gardien;
 
 typedef struct tuiles{
     BITMAP *tuiles[4][8];
     int couleur[4][8];
 }t_tuiles;
+
+
+
 void initEcran();
 void gameInit(t_player players[4]);
 void ballon(t_player *player);
@@ -64,3 +95,4 @@ void debutCourse(t_player *player);
 void jackpot_game();
 void game_PONG(t_player player[4],int numJoueur);
 int coinFlip();
+void penalty(t_player *player);
