@@ -40,7 +40,8 @@ void loadBackgroundImage(char *filename)
         allegro_message("couldnt load bg");
         return;
     }
-    blit(background, buffer, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+    //blit(background, buffer, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+    stretch_blit(background,buffer,0,0,background->w,background->h,0,0,screen->w,screen->h);
     destroy_bitmap(background);
 }
 
@@ -124,7 +125,7 @@ void game_marios() {
 
     //create bitmaps
     BITMAP *sky = load_bitmap("../images/122.bmp", NULL);
-    BITMAP *mario = load_bitmap("../images/mario/mario.bmp", NULL);
+    BITMAP *mario = load_bitmap("../images/mario.bmp", NULL);
 
     //settings for intro page
     BITMAP *day = load_bitmap("../images/11.bmp", NULL);
@@ -174,7 +175,7 @@ void game_marios() {
                 textout_ex(sky, font, "MarioBros (ESC to quit)", 0, 1, BLACK, WHITE);
                 textout_ex(sky, font, "Press Ctrl+H for Help", 460, 1, BLACK, WHITE);
 
-                //help instruction s
+
                 if (key[KEY_LCONTROL] && key[KEY_H] || key[KEY_RCONTROL] && key[KEY_H]) {
                     textout_ex(sky, font, "Moving Your Sprites: ", 180, 35, BLACK, WHITE);
                     textout_ex(sky, font, " > to move right ", 180, 45, BLACK, WHITE);
@@ -211,13 +212,7 @@ void game_marios() {
                 }
 
 
-                    //if selected F2: Night Mode
-                else if (key[KEY_F2]) {
-                    mainMenuMode = 0;
-                    gamePlayMode = 2;
-                    clearScreens();
 
-                }
 
             }
 
