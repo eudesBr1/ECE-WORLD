@@ -237,13 +237,13 @@ void game_marios() {
 
 
 
-            //Day mode selection
+
             if (gamePlayMode == 1) {
-                //set buffer
+
                 draw_sprite(buffers, day, 0, 0);
 
 
-                //give animation to person ability to jump and move left/right
+
                 int x = 10, y = 10;
                 int velx, vely;
                 velx = vely = 0;
@@ -254,13 +254,13 @@ void game_marios() {
 
 
                 while (gamePlayMode == 1) {
-                    //need to clear
+
                     clearScreens();
 
-                    //aliens move around the planet (2-3) and player has to catch coins without crashing
+
                     draw_sprite(buffers, day, screenScrollXPosition, 0);
 
-                    //randomly put coins everywhere
+
                     teta += 2.5;
 
                     //coins worth 1 point
