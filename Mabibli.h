@@ -22,6 +22,7 @@
 #define NBticketStart 5
 #define w_tuile screen->w/6
 #define vitesse 2
+#define TAILLEMINICARTE 100
 #define qtAnim 40
 #define POINTSpourGAGNER 10
 #define TailleBalx 64
@@ -67,16 +68,21 @@ typedef struct ballonFootball{
     float positionX;
     float positionY;
     int animation;
-    int tailleBallon;
+    float tailleBallon;
+    float rapidite;
+    int coin;
 }t_ballonFoot;
 
 typedef struct gardienBut{
-    BITMAP *position[10];
+    BITMAP *position[14];
     float positionX;
     float positionY;
     int animation;
     int hauteur;
     int largeur;
+    float elan;
+    float dX;
+    float dY;
 }t_gardien;
 
 typedef struct tuiles{
@@ -101,3 +107,7 @@ void jackpot_game();
 void game_PONG(t_player player[4],int numJoueur);
 int coinFlip();
 void penalty(t_player *player);
+void bougerGardien(t_gardien *gardien);
+int choixAnimationGardien(t_gardien gardien,int b);
+void actionPenalty(t_player *player,t_gardien gardien, t_ballonFoot ballon,int b);
+void finPenalty(t_player *player,t_gardien gardien, t_ballonFoot ballon,int b);
