@@ -1,4 +1,4 @@
-#include "allegro.h"
+#include "Mabibli.h"
 
 
 #define WHITE makecol(255,255,255)
@@ -44,18 +44,7 @@ void loadBackgroundImage(char *filename)
     destroy_bitmap(background);
 }
 
-void loadBackgroundImages(char* filename)
-{
-    BITMAP* background;
-    background = load_bitmap(filename, NULL);
-    if (!background)
-    {
-        allegro_message("couldnt load bg");
-        return;
-    }
-    blit(background, buffers, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    destroy_bitmap(background);
-}
+
 
 int maxi(int a, int b)
 {
@@ -73,7 +62,6 @@ int mini(int a, int b)
     else
         return b;
 }
-
 
 
 //pixel perfect method for collision detection
@@ -117,7 +105,6 @@ float beta = 0.0;
 
 void game_marios() {
     allegro_init();
-    set_window_title("Return of the Mario Bros");
     set_color_depth(32);
     set_gfx_mode(GFX_AUTODETECT_WINDOWED, 640, 480, 0, 0);
     install_keyboard();
@@ -136,23 +123,23 @@ void game_marios() {
     //https://image.online-convert.com/convert-to-bmp
 
     //create bitmaps
-    BITMAP *sky = load_bitmap("images/122.bmp", NULL);
-    BITMAP *mario = load_bitmap("images/mario/mario.bmp", NULL);
+    BITMAP *sky = load_bitmap("../images/122.bmp", NULL);
+    BITMAP *mario = load_bitmap("../images/mario/mario.bmp", NULL);
 
     //settings for intro page
-    BITMAP *day = load_bitmap("images/11.bmp", NULL);
-    BITMAP *night = load_bitmap("images/12.bmp", NULL);
+    BITMAP *day = load_bitmap("../images/11.bmp", NULL);
+
 
     //background sprite
     //enemies
-    BITMAP *enemy1 = load_bitmap("images/ico2.bmp", NULL);
-    BITMAP *enemy2 = load_bitmap("images/beetle_1.bmp", NULL);
-    BITMAP *fireball1 = load_bitmap("images/firework1.bmp", NULL);
-    BITMAP *fireball2 = load_bitmap("images/firework2.bmp", NULL);
+    BITMAP *enemy1 = load_bitmap("../images/ico2.bmp", NULL);
+    BITMAP *enemy2 = load_bitmap("../images/beetle_1.bmp", NULL);
+    BITMAP *fireball1 = load_bitmap("../images/firework1.bmp", NULL);
+    BITMAP *fireball2 = load_bitmap("../images/firework2.bmp", NULL);
 
     //coins
-    BITMAP *coin1 = load_bitmap("images/coin_0.bmp", NULL);
-    BITMAP *bonus = load_bitmap("images/bonus.bmp", NULL);
+    BITMAP *coin1 = load_bitmap("../images/coin_0.bmp", NULL);
+    BITMAP *bonus = load_bitmap("../images/bonus.bmp", NULL);
 
     //flag
     BITMAP *crown = load_bitmap("images/crown.bmp", NULL);
@@ -172,7 +159,7 @@ void game_marios() {
 
         if (startScreenMode == 1) {
 
-            loadBackgroundImage("images/super_mario_bros.bmp");
+            loadBackgroundImage("../images/super_mario_bros.bmp");
 
             textout_centre_ex(buffer, font, "To turn off/on the music PRESS CTRL+M", 320, 400, WHITE, BLACK);
             textout_centre_ex(buffer, font, "Dodge enemies, collect coins and capture the flag to win.", 320, 420,
