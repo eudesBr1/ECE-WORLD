@@ -22,6 +22,7 @@
 #define NBticketStart 5
 #define w_tuile screen->w/6
 #define vitesse 2
+#define TAILLEMINICARTE 100
 #define qtAnim 40
 #define POINTSpourGAGNER 10
 #define TailleBalx 64

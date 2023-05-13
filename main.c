@@ -13,7 +13,7 @@ int main(){
     //jackpot_game();
     //game_marios();
     gameInit(players);
-    ballon(players);
+    //ballon(players);
     //game_PONG(players,1);
     /// crée personnage de ville
     //creationPersonnageGoku(&goku);

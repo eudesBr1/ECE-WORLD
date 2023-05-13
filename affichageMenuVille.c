@@ -13,6 +13,48 @@ int check_defaite(t_player players[4])
     }
     return 0;
 }
+
+void minicarte(BITMAP* buffer,t_player players[4], int numActif, int zoom_w,int zoom_h)
+{
+    int ecrany;
+    int ecranx;
+    BITMAP *contours;
+    contours = load_bitmap("../images/contours.bmp",NULL);
+    if (!contours){
+        allegro_message("Pb de l'image contours chargee");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    if (players[numActif].y + zoom_h/2 >= screen->h)
+    {
+        ecrany = screen->h-zoom_h;
+
+    } else if (players[numActif].y- zoom_h/2 <= 0)
+    {
+        ecrany = 0;
+
+    } else
+    {
+        ecrany = players[numActif].y-zoom_h/2;
+    }
+
+    if (players[numActif].x + zoom_w/2  >= screen->w)
+    {
+        ecranx = screen->w-zoom_w;
+
+    } else if (players[numActif].x - zoom_w / 2 <= 0)
+    {
+        ecranx = 0;
+
+    } else
+    {
+        ecranx = players[numActif].x-zoom_w/2;
+    }
+    rect(buffer,ecranx,ecrany,ecranx+zoom_w,ecrany+zoom_h,makecol(127,127,127));
+    stretch_sprite(buffer,contours,0,0,buffer->w,buffer->h);
+    stretch_blit(buffer,buffer,0,0,buffer->w,buffer->h,ecranx+zoom_w-TAILLEMINICARTE,ecrany+zoom_h-TAILLEMINICARTE,TAILLEMINICARTE,TAILLEMINICARTE);
+}
+
 void tab_score(t_player players[4],BITMAP *buffer)
 {
     clear(buffer);
@@ -36,7 +78,6 @@ void tab_score(t_player players[4],BITMAP *buffer)
 }
 
 void affichageVille(t_player players[4]){
-
     int zoom_w = 400;
     int zoom_h = 300;
     int ecranx,ecrany;
@@ -103,6 +144,7 @@ void affichageVille(t_player players[4]){
                     stretch_sprite(buffer, players[i].gauche[players[i].animation/10], players[i].x, players[i].y, W_PERSO, H_PERSO);
                 }
             }
+            minicarte(buffer,players,tour,zoom_w,zoom_h);
             stretch_blit(buffer,screen,ecranx,ecrany,zoom_w,zoom_h,0,0,screen->w-wTABscore,screen->h);
             tab_score(players,buffer);
             rest(50);
