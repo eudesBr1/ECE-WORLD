@@ -70,9 +70,10 @@ void gameInit(t_player players[4]){
         players[i].points = 0;
         players[i].nbJoueurs = nbJoueur;
         players[i].ticket = NBticketStart;
+        players[i].position = 1;
         players[i].animation = 0;
-        players[i].x = 150;
-        players[i].y = 300;
+        players[i].x = 950;
+        players[i].y = 1000;
         for (j = 0; j < 16;) {
             textprintf_centre_ex(buffer, font, screen->w / 2, screen->h / 2 - 100, blanc, -1,"Joueur %d écris ton pseudo", i+1);
             textout_centre_ex(buffer, font, "(maximum 16 caractères)", screen->w/2, screen->h / 2 - 60, blanc, -1);

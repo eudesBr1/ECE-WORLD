@@ -1,5 +1,5 @@
 #include "Mabibli.h"
-#include "marios_bros.c"
+
 int main(){
     allegro_init();
     t_player players[4];
@@ -11,10 +11,10 @@ int main(){
     srand(time(NULL));
     //coinFlip(players,players);
     //jackpot_game();
-    game_marios();
     gameInit(players);
-    ballon(players);
-    //game_PONG(players,1);
+    //ballon(players);
+    game_PONG(players,1);
+    //game_GUITARE(players);
     /// crée personnage de ville
     //creationPersonnageGoku(&goku);
     //creationPersonnageNaruto(&naruto);

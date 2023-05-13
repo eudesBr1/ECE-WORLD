@@ -15,6 +15,10 @@
 #include "stdio.h"
 
 
+#define H_PERSO 32
+#define W_PERSO 32
+#define wTABscore 300
+
 #define NBticketStart 5
 #define w_tuile screen->w/6
 #define vitesse 2
@@ -44,7 +48,7 @@ typedef struct player{
     BITMAP *bas[4];
     BITMAP *droite[4];
     BITMAP *gauche[4];
-    int position;
+    int position;       ///0 haut, 1 droite, 2 bas, 3 gauche
     int animation;
     int cheval;
 }t_player;
@@ -87,9 +91,9 @@ void ballon(t_player *player);
 int collision(t_player perso);
 void game_GUITARE(t_player *players);
 t_player mouvementPersonnageFleche(t_player *player);
-t_player mouvementPersonnageZQSD(t_player *player);
+t_player mouvementPersonnageZQSD(t_player *player,int numJoueur);
 t_player creationPersonnageGoku(t_player *player);
-void affichageVille(t_player *players);
+void affichageVille(t_player players[4]);
 void courseHippique(t_player *player);
 void debutCourse(t_player *player);
 void jackpot_game();
