@@ -3,9 +3,7 @@
 
 #define WHITE makecol(255,255,255)
 #define BLACK makecol(0,0,0)
-#define RED makecol(255,0,0)
-#define GREEN makecol(0,255,0)
-#define BLUE makecol(0,0,255)
+
 
 
 int mousex, mousey, leftClick;
@@ -356,8 +354,7 @@ void game_marios() {
                     draw_sprite(day, fireball2, 5005, 385);
 
 
-                    //deal with winning crown capture
-                    //collision with the crown and you win sign appears
+
                     draw_sprite(day, crown, 6250, 350);
 
 
