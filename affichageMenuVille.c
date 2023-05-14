@@ -13,6 +13,26 @@ int check_defaite(t_player players[4])
     }
     return 0;
 }
+
+void minicarte(BITMAP* buffer, int zoom_w,int zoom_h,int ecranx, int ecrany)
+{
+    BITMAP *buuffer;
+    buuffer = create_bitmap(TAILLEMINICARTE_W,TAILLEMINICARTE_H);
+    BITMAP *contours;
+    contours = load_bitmap("../images/contours.bmp",NULL);
+    if (!contours){
+        allegro_message("Pb de l'image contours chargee");
+        allegro_exit();
+        exit(
+                EXIT_FAILURE);
+    }
+    stretch_blit(buffer,buuffer,0,0,buffer->w,buffer->h,0,0,buuffer->w,buuffer->h);
+    rect(buuffer,ecranx*buffer->w/TAILLEMINICARTE_W,ecrany*buffer->h/TAILLEMINICARTE_W,(ecranx+zoom_w)*buffer->w/TAILLEMINICARTE_W,(ecrany+zoom_h)*buffer->w/TAILLEMINICARTE_H,makecol(127,127,127));
+    stretch_sprite(buuffer,contours,0,0,buuffer->w,buuffer->h);
+    blit(buuffer,buffer,0,0,ecranx+zoom_w-TAILLEMINICARTE_W,ecrany+zoom_h-TAILLEMINICARTE_H,TAILLEMINICARTE_H,TAILLEMINICARTE_H);
+
+}
+
 void tab_score(t_player players[4],BITMAP *buffer)
 {
     clear(buffer);
@@ -36,7 +56,6 @@ void tab_score(t_player players[4],BITMAP *buffer)
 }
 
 void affichageVille(t_player players[4]){
-
     int zoom_w = 400;
     int zoom_h = 300;
     int ecranx,ecrany;
@@ -80,10 +99,10 @@ void affichageVille(t_player players[4]){
             {
                 ecranx = players[tour].x-zoom_w/2;
             }
-            stretch_blit(carte,buffer,0,0,carte->w,carte->h,0,0,screen->w,screen->h);
-            mouvementPersonnageZQSD(players,tour);
 
             ///dessin des joueurs sur la carte
+
+            stretch_blit(carte,buffer,0,0,carte->w,carte->h,0,0,screen->w,screen->h);
 
             for (int i = 0; i < players[0].nbJoueurs; i++) {
                 if (players[i].position == 0)
@@ -103,6 +122,8 @@ void affichageVille(t_player players[4]){
                     stretch_sprite(buffer, players[i].gauche[players[i].animation/10], players[i].x, players[i].y, W_PERSO, H_PERSO);
                 }
             }
+            mouvementPersonnageZQSD(players,tour);
+            minicarte(buffer,zoom_w,zoom_h,ecranx,ecrany);
             stretch_blit(buffer,screen,ecranx,ecrany,zoom_w,zoom_h,0,0,screen->w-wTABscore,screen->h);
             tab_score(players,buffer);
             rest(50);
