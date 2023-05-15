@@ -15,7 +15,7 @@ int main(){
     gameInit(players);
     //ballon(players);
     //game_PONG(players,1);
-    //game_GUITARE(&players[0]);
+    game_GUITARE(&players[0]);
     /// crée personnage de ville
     //creationPersonnageGoku(&goku);
     //creationPersonnageNaruto(&naruto);

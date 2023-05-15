@@ -94,6 +94,7 @@ typedef struct gardienBut{
 typedef struct tuiles{
     BITMAP *tuiles[4][8];
     int couleur[4][8];
+    int pressed[4][8];
 }t_tuiles;
 
 
