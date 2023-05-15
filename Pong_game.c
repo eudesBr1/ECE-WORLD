@@ -11,7 +11,6 @@ void dessin_balle(BITMAP *buffer,t_pong pongeurs[2])
 
 }
 
-
 void draw_terrain(BITMAP *buffer,t_pong pongeur[2]){
     clear(buffer);
     BITMAP *fond_space;
@@ -159,7 +158,6 @@ void deplacement_p(t_pong pongeurs[2])
         pongeurs[1].y+= SPEED_PONGISTES;
 }
 
-
 void deplacement_b(t_pong pongeurs[2],int speed)
 {
 
@@ -262,12 +260,11 @@ void game_PONG(t_player player[4],int numJoueur) {
 
     while (!condition) {
         stretch_blit(pong, buffer, 0, 0, pong->w, pong->h, 0, 0, buffer->w, buffer->h);
-        if (mouse_x <= (screen->w / 2 + h_tuile) && mouse_x >= (screen->w / 2 - h_tuile) &&
-            mouse_y >= (screen->h / 2 - 38) && mouse_y <= (screen->h / 2 + 38)) {
+        if (mouse_x <= (screen->w / 2 + 100) && mouse_x >= (screen->w / 2 - 100) &&mouse_y >= (screen->h / 2 - 100) && mouse_y <= (screen->h / 2 + 100)) {
             stretch_blit(pong, buffer, 0, 0, pong->w, pong->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - 150, screen->h / 2 - 38, 300, 75);
-            stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - 150, screen->h / 2 - 50, 300, 100);
             stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
+            stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
             if (mouse_b == 1) {
                 printf("debut du jeu\n");
                 condition = 1;
@@ -277,8 +274,9 @@ void game_PONG(t_player player[4],int numJoueur) {
         else if (mouse_x <= (screen->w) && mouse_x >= (screen->w - 80) && mouse_y >= (screen->h - 80) &&
                  mouse_y <= (screen->h)) {
             stretch_blit(pong, buffer, 0, 0, pong->w, pong->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - h_tuile, screen->h / 2 - 25, 200, H_BORDS);
-            stretch_sprite(buffer, settings_button, screen->w - 110, screen->h - 110, 130, 130);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - 100, screen->h / 2 - 25, 200, 50);
+            stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
+            stretch_sprite(buffer, settings_button, screen->w - 105, screen->h -105, 130, 130);
             stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
             if (mouse_b == 1) {
                 printf("parametres ouverts\n");
@@ -288,9 +286,9 @@ void game_PONG(t_player player[4],int numJoueur) {
             ///affichage si le boutton quit est au niveau de la souris
         else if (mouse_x <= (150) && mouse_x >= (0) && mouse_y >= (screen->h - 80) && mouse_y <= (screen->h)) {
             stretch_blit(pong, buffer, 0, 0, pong->w, pong->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - h_tuile, screen->h / 2 - 25, 200, H_BORDS);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - 100, screen->h / 2 - 25, 200, 50);
+            stretch_sprite(buffer, quit_button, -5, screen->h - 90, 200, 80);
             stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
-            stretch_sprite(buffer, quit_button, 0, screen->h - h_tuile, 200, 90);
             if (mouse_b == 1) {
                 destroy_bitmap(buffer);
                 destroy_bitmap(play_boutton);
@@ -303,7 +301,7 @@ void game_PONG(t_player player[4],int numJoueur) {
             ///affichage normal
         else {
             stretch_blit(pong, buffer, 0, 0, pong->w, pong->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - h_tuile, screen->h / 2 - 25, 200, H_BORDS);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - 100, screen->h / 2 - 25, 200, 50);
             stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
             stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
         }
@@ -365,6 +363,8 @@ void game_PONG(t_player player[4],int numJoueur) {
     rest(2000);
 
     destroy_bitmap(BEREADY);
+
+
     while (!condition_victoire(pongeur)) {
 
         condition = 0;
@@ -382,7 +382,7 @@ void game_PONG(t_player player[4],int numJoueur) {
             }
 
         } else
-            stretch_sprite(buffer,pausePlay[0],0,0,50,50);
+            stretch_sprite(buffer,pausePlay[1],0,0,50,50);
 
         if (key[KEY_ESC]||condition){
             do {
@@ -390,7 +390,6 @@ void game_PONG(t_player player[4],int numJoueur) {
                 condition = 0;
                 draw_terrain(buffer, pongeur);
                 stretch_sprite(buffer, mouse_sprite, mouse_x, mouse_y, mouse_sprite->w * 2, mouse_sprite->h * 2);
-                blit(buffer,screen,0,0,0,0,screen->w,screen->h);
                 if (mouse_x<=screen->w/2+150&&mouse_x>=screen->w/2-150 && mouse_y<=screen->h/2+150 && mouse_y >=screen->h/2-150){
                     stretch_sprite(buffer,pausePlay[0],screen->w/2-155,screen->h/2-150,300,300);
                     if (mouse_b == 1){
@@ -400,6 +399,8 @@ void game_PONG(t_player player[4],int numJoueur) {
                     stretch_sprite(buffer,pausePlay[1],screen->w/2-145,screen->h/2-150,300,300);
                 blit(buffer,screen,0,0,0,0,screen->w,screen->h);
             } while (!condition);
+
+
         }
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
 

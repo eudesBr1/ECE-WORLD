@@ -8,7 +8,6 @@ int calcul_speed(int iteration,int speed_base,int acceleration){
     return speed_base + iteration / 500 * acceleration;
 }
 
-
 void settings(int *speed,int *acceleration,BITMAP *buffer)
 {
     int width = text_length(font, "PARAMETRES");
@@ -81,8 +80,6 @@ void settings(int *speed,int *acceleration,BITMAP *buffer)
     } while (!condition);
     rest(300);
 }
-
-
 
 int check_tile_and_update_score(int column,t_tuiles *tuiles, int *score, int offset,BITMAP *tuilePLEINE[4]) {
     int numLigne;
@@ -172,6 +169,7 @@ int scroll_background(BITMAP *buffer, BITMAP *background[10], int game_iteration
         }
     return erreur_return;
     }
+
 void game_GUITARE(t_player *players)
 {
     int speed = 1;
@@ -225,50 +223,53 @@ void game_GUITARE(t_player *players)
 
     do {
         ///affichage si la souris est sur le boutton jouer
-        if (mouse_x<=(screen->w/2 + h_tuile) && mouse_x >= (screen->w / 2 - h_tuile) && mouse_y >= (screen->h / 2 - 38) && mouse_y <= (screen->h / 2 + 38)){
+        if (mouse_x <= (screen->w / 2 + 100) && mouse_x >= (screen->w / 2 - 100) &&mouse_y >= (screen->h / 2 - 100) && mouse_y <= (screen->h / 2 + 100)) {
             stretch_blit(loadingscreen, buffer, 0, 0, loadingscreen->w, loadingscreen->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - 150, screen->h / 2 - 38, 300, 75);
-            stretch_sprite(buffer, settings_button, screen->w -80, screen->h - 80, 80, 80);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - 150, screen->h / 2 - 50, 300, 100);
             stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
-            if (mouse_b == 1){
+            stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
+            if (mouse_b == 1) {
                 printf("debut du jeu\n");
                 condition = 1;
             }
         }
-        ///affichage si la souris est sur le boutton parametre
-        else if (mouse_x<=(screen->w)&&mouse_x>=(screen->w - 80)&&mouse_y>=(screen->h-80)&&mouse_y<=(screen->h)){
+            ///affichage si la souris est sur le boutton parametre
+        else if (mouse_x <= (screen->w) && mouse_x >= (screen->w - 80) && mouse_y >= (screen->h - 80) &&
+                 mouse_y <= (screen->h)) {
             stretch_blit(loadingscreen, buffer, 0, 0, loadingscreen->w, loadingscreen->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - h_tuile, screen->h / 2 - 25, 200, 50);
-            stretch_sprite(buffer, settings_button, screen->w -110, screen->h - 110, 130, 130);
-            stretch_sprite(buffer, quit_button, 0, screen->h  - 80, 150, 60);
-            if (mouse_b == 1){
-                settings(&speed,&acceleration,buffer);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - 100, screen->h / 2 - 25, 200, 50);
+            stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
+            stretch_sprite(buffer, settings_button, screen->w - 105, screen->h -105, 130, 130);
+            stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
+            if (mouse_b == 1) {
                 printf("parametres ouverts\n");
+                settings(&speed, &acceleration,buffer);
             }
         }
-        ///affichage si le boutton quit est au niveau de la souris
-        else if (mouse_x<=(150)&&mouse_x>=(0)&&mouse_y>=(screen->h-80)&&mouse_y<=(screen->h)){
+            ///affichage si le boutton quit est au niveau de la souris
+        else if (mouse_x <= (150) && mouse_x >= (0) && mouse_y >= (screen->h - 80) && mouse_y <= (screen->h)) {
             stretch_blit(loadingscreen, buffer, 0, 0, loadingscreen->w, loadingscreen->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - h_tuile, screen->h / 2 - 25, 200, 50);            stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
-            stretch_sprite(buffer, quit_button, 0, screen->h - h_tuile, 200, 90);
-            if (mouse_b==1){
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - 100, screen->h / 2 - 25, 200, 50);
+            stretch_sprite(buffer, quit_button, -5, screen->h - 90, 200, 80);
+            stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
+            if (mouse_b == 1) {
                 destroy_bitmap(buffer);
                 destroy_bitmap(play_boutton);
                 destroy_bitmap(loadingscreen);
                 destroy_bitmap(settings_button);
                 destroy_bitmap(quit_button);
-                destroy_bitmap(photo_guitare);
                 return;
             }
         }
-        ///affichage normal
+            ///affichage normal
         else {
             stretch_blit(loadingscreen, buffer, 0, 0, loadingscreen->w, loadingscreen->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - h_tuile, screen->h / 2 - 25, 200, 50);
-            stretch_sprite(buffer, quit_button, 0, screen->h  - 80, 150, 60);
-            stretch_sprite(buffer, settings_button, screen->w -80, screen->h - 80, 80, 80);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - 100, screen->h / 2 - 25, 200, 50);
+            stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
+            stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
         }
-        show_mouse(buffer);
+        stretch_sprite(buffer, mouse_sprite, mouse_x, mouse_y, mouse_sprite->w * 4, mouse_sprite->h * 4);
+        //blit(mouse_sprite,buffer,0,0,mouse_x,mouse_y,mouse_sprite->w,mouse_sprite->h);
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
     }   while (!condition);
     clear(buffer);

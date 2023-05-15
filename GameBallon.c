@@ -89,6 +89,7 @@ void ballon(t_player *player) {
     int vitesse_min = 2;
     BITMAP *podium_sprite;
     podium_sprite = create_bitmap(screen->w,screen->h);
+
     BITMAP *attention;
     attention = load_bitmap("../images/panneau_attention.bmp", NULL);
     if (!attention ) {
@@ -190,15 +191,12 @@ void ballon(t_player *player) {
                                           ballon_apparition->h);
     }
     int condition = 0;
-    do {
-        clear(buffer);
-        stretch_blit(acceuil_base, buffer, 0, 0, acceuil_base->w, acceuil_base->h, 0, 0, screen->w, screen->h);
-        if (mouse_x <= (screen->w / 2 + h_tuile) && mouse_x >= (screen->w / 2 - h_tuile) &&
-            mouse_y >= (screen->h / 2 - 38) && mouse_y <= (screen->h / 2 + 38)) {
+    do {stretch_blit(acceuil_base, buffer, 0, 0, acceuil_base->w, acceuil_base->h, 0, 0, buffer->w, buffer->h);
+        if (mouse_x <= (screen->w / 2 + 100) && mouse_x >= (screen->w / 2 - 100) &&mouse_y >= (screen->h / 2 - 100) && mouse_y <= (screen->h / 2 + 100)) {
             stretch_blit(acceuil_base, buffer, 0, 0, acceuil_base->w, acceuil_base->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - 150, screen->h / 2 - 38, 300, 75);
-            stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - 150, screen->h / 2 - 50, 300, 100);
             stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
+            stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
             if (mouse_b == 1) {
                 printf("debut du jeu\n");
                 condition = 1;
@@ -208,20 +206,21 @@ void ballon(t_player *player) {
         else if (mouse_x <= (screen->w) && mouse_x >= (screen->w - 80) && mouse_y >= (screen->h - 80) &&
                  mouse_y <= (screen->h)) {
             stretch_blit(acceuil_base, buffer, 0, 0, acceuil_base->w, acceuil_base->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - h_tuile, screen->h / 2 - 25, 200, 50);
-            stretch_sprite(buffer, settings_button, screen->w - 110, screen->h - 110, 130, 130);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - 100, screen->h / 2 - 25, 200, 50);
+            stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
+            stretch_sprite(buffer, settings_button, screen->w - 105, screen->h -105, 130, 130);
             stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
             if (mouse_b == 1) {
-                //printf("parametres ouverts\n");
-                Parametres(&vitesse_max, &vitesse_min, buffer);
+                printf("parametres ouverts\n");
+                Parametres(&vitesse_max, &vitesse_min,buffer);
             }
         }
             ///affichage si le boutton quit est au niveau de la souris
         else if (mouse_x <= (150) && mouse_x >= (0) && mouse_y >= (screen->h - 80) && mouse_y <= (screen->h)) {
             stretch_blit(acceuil_base, buffer, 0, 0, acceuil_base->w, acceuil_base->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - h_tuile, screen->h / 2 - 25, 200, 50);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - 100, screen->h / 2 - 25, 200, 50);
+            stretch_sprite(buffer, quit_button, -5, screen->h - 90, 200, 80);
             stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
-            stretch_sprite(buffer, quit_button, 0, screen->h - h_tuile, 200, 90);
             if (mouse_b == 1) {
                 destroy_bitmap(buffer);
                 destroy_bitmap(play_boutton);
@@ -234,15 +233,13 @@ void ballon(t_player *player) {
             ///affichage normal
         else {
             stretch_blit(acceuil_base, buffer, 0, 0, acceuil_base->w, acceuil_base->h, 0, 0, screen->w, screen->h);
-            stretch_sprite(buffer, play_boutton, screen->w / 2 - h_tuile, screen->h / 2 - 25, 200, 50);
+            stretch_sprite(buffer, play_boutton, screen->w / 2 - 100, screen->h / 2 - 25, 200, 50);
             stretch_sprite(buffer, quit_button, 0, screen->h - 80, 150, 60);
             stretch_sprite(buffer, settings_button, screen->w - 80, screen->h - 80, 80, 80);
         }
         stretch_sprite(buffer, mouse_sprite, mouse_x, mouse_y, mouse_sprite->w * 4, mouse_sprite->h * 4);
         //blit(mouse_sprite,buffer,0,0,mouse_x,mouse_y,mouse_sprite->w,mouse_sprite->h);
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
-
-
     } while (condition != 1 && condition != 2);
     ///initialisation du jeux
     int score = 0;
