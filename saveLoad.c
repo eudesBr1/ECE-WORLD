@@ -22,10 +22,9 @@ t_player charger(){
         printf("Erreur lors de l'ouverture du fichier.\n");
     }
     for (int i = 0; i < 4; ++i) {
-        fscanf(fichierSave, "%d %d %d %d %d %s %d %d %d",
+        fscanf(fichierSave, "%d %d %d %d %d %s %d %d %d %d %d",
                &player[i].x, &player[i].y, &player[i].ticket, &player[i].points, &player[i].nbJoueurs,
                player[i].name, &player[i].position, &player[i].animation, &player[i].cheval,&player[i].bitmap,&player[i].perso_sur_bmp);
-            creationPersonnageGoku(&player[i]);
     }
     fclose(fichierSave);
     return player[4];

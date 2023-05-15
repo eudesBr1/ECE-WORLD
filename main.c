@@ -10,22 +10,22 @@ int main(){
     install_mouse();
     srand(time(NULL));
    //  penalty(players);
-  //   gameInit(players);
-//    sauvegarde(players);
-      players[4] = charger();
+ //    gameInit(players);
+ //   sauvegarde(players);
+     players[4] = charger();
     for (int i = 0; i <= 4; ++i) {
         charger_skin(players,i);
     }
    //  game_PONG(players,1);
   // ballon(players);
    // courseHippique(players);
-    game_GUITARE(&players[0]);
+ //   game_GUITARE(&players[0]);
     /// crée personnage de ville
     //creationPersonnageGoku(&goku);
     //creationPersonnageNaruto(&naruto);
     //TODO mettre break pour jeu ballon
     /// affiche ville menu
-                   affichageVille(players);
+     affichageVille(players);
  //   allegro_exit();
     return 1;
 }
