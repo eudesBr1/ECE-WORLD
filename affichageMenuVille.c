@@ -69,6 +69,14 @@ void affichageVille(t_player players[4]){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+    BITMAP *carte_dessus;
+    /// charge carte ville par dessus
+    carte_dessus = load_bitmap("../images/map_pokemon_dessus.bmp",NULL);
+    if (!carte_dessus){
+        allegro_message("Pb de l'image chargee map_pokemon_dessus.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
     BITMAP *fond;
     fond = load_bitmap("../images/map_collision.bmp",NULL);
     if (!fond){
@@ -76,6 +84,7 @@ void affichageVille(t_player players[4]){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+    int collision_res;
 
     do {
         clear(buffer);
@@ -129,9 +138,19 @@ void affichageVille(t_player players[4]){
                     stretch_sprite(buffer, players[i].gauche[players[i].animation/10], players[i].x, players[i].y, W_PERSO, H_PERSO);
                 }
             }
-            mouvementPersonnageZQSD(players,tour,fond);
+
+            collision_res = collision(players[tour],fond);
+
+            mouvementPersonnageZQSD(players,tour,collision_res);
+
+
+            stretch_sprite(buffer,carte_dessus,0,0,screen->w,screen->h);
+
             minicarte(buffer,zoom_w,zoom_h,ecranx,ecrany);
+
+
             stretch_blit(buffer,screen,ecranx,ecrany,zoom_w,zoom_h,0,0,screen->w-wTABscore,screen->h);
+
             tab_score(players,buffer);
             rest(50);
             if (key[KEY_RIGHT])

@@ -44,9 +44,9 @@ t_player mouvementPersonnageFleche(t_player *player){
 
 
 
-void mouvementPersonnageZQSD(t_player player[4],int numJoueur,BITMAP *CARTECOL){
+void mouvementPersonnageZQSD(t_player player[4],int numJoueur,int collision_res){
 
-    int collision_res = collision(player[numJoueur],CARTECOL);
+
 
 
     if(key[KEY_A] && (collision_res%11==0)){
