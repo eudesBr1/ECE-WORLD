@@ -392,12 +392,22 @@ void game_PONG(t_player player[4],int numJoueur) {
                 stretch_sprite(buffer, mouse_sprite, mouse_x, mouse_y, mouse_sprite->w * 2, mouse_sprite->h * 2);
                 if (mouse_x<=screen->w/2+150&&mouse_x>=screen->w/2-150 && mouse_y<=screen->h/2+150 && mouse_y >=screen->h/2-150){
                     stretch_sprite(buffer,pausePlay[0],screen->w/2-155,screen->h/2-150,300,300);
+                    stretch_sprite(buffer,quit_button,0,screen->h-50,120,50);
                     if (mouse_b == 1){
                         condition = 1;
                     }
-                }else
-                    stretch_sprite(buffer,pausePlay[1],screen->w/2-145,screen->h/2-150,300,300);
-                blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+                }else if (mouse_x<=120&&mouse_x>=0 && mouse_y<=screen->h && mouse_y >=screen->h-50){
+                    stretch_sprite(buffer, pausePlay[1], screen->w / 2 - 145, screen->h / 2 - 150, 300, 300);
+                    stretch_sprite(buffer, quit_button, 0, screen->h - 75, 175, 75);
+                    if (mouse_b == 1){
+                        return;
+                    }
+                } else
+                {
+                    stretch_sprite(buffer, pausePlay[1], screen->w / 2 - 145, screen->h / 2 - 150, 300, 300);
+                    stretch_sprite(buffer, quit_button, 0, screen->h - 50, 120, 50);
+                }
+                    blit(buffer,screen,0,0,0,0,screen->w,screen->h);
             } while (!condition);
 
 
@@ -426,14 +436,11 @@ void game_PONG(t_player player[4],int numJoueur) {
         exit(EXIT_FAILURE);
     }
     int gagnant = 0;
-    int perdant = 0;
     if (condition_victoire(pongeur)==0){
         gagnant = numJoueur;
-        perdant = choixOpposant;
     }
     else {
         gagnant = choixOpposant;
-        perdant = choixOpposant;
     }
     BITMAP *WINNER;
     width = text_length(font, "0000000000000000");
