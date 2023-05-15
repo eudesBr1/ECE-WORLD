@@ -75,6 +75,7 @@ typedef struct ballonFootball{
     float rapidite;
     int coin;
     float modificateur;
+    float diminution;
 }t_ballonFoot;
 
 typedef struct gardienBut{
@@ -117,5 +118,7 @@ void penalty(t_player *player);
 void charger_skin(t_player players[4],int numJoueur);
 void bougerGardien(t_gardien *gardien);
 int choixAnimationGardien(t_gardien gardien,int b);
-void actionPenalty(t_player *player,t_gardien gardien, t_ballonFoot ballon,int b);
+void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int b);
 void finPenalty(t_player *player,t_gardien *gardien, t_ballonFoot *ballon,int b);
+void sauvegarde(t_player *player);
+t_player charger();
