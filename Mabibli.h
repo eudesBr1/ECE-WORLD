@@ -72,6 +72,7 @@ typedef struct ballonFootball{
     float tailleBallon;
     float rapidite;
     int coin;
+    float modificateur;
 }t_ballonFoot;
 
 typedef struct gardienBut{
