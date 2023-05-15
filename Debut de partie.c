@@ -133,7 +133,7 @@ void gameInit(t_player players[4]){
                 j++;
             }
             textprintf_centre_ex(buffer, font, screen->w / 2, screen->h / 2, blanc, -1, "%s",buuffname);
-            printf("%s/%d\t%d\n",buuffname,j,charac);
+            //printf("%s/%d\t%d\n",buuffname,j,charac);
             blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);clear(buffer);
             clear(buffer);
             if (key[KEY_ENTER] && j>1) {
