@@ -44,37 +44,41 @@ t_player mouvementPersonnageFleche(t_player *player){
 
 
 
-t_player mouvementPersonnageZQSD(t_player *player,int numJoueur){
-    if(key[KEY_A] && collision(player[numJoueur])%11==0){
+void mouvementPersonnageZQSD(t_player player[4],int numJoueur,BITMAP *CARTECOL){
+
+    int collision_res = collision(player[numJoueur],CARTECOL);
+
+
+    if(key[KEY_A] && (collision_res%11==0)){
         player[numJoueur].x -= vitesse;
         player[numJoueur].position = 3;
-        player[numJoueur].animation++;
+        player[numJoueur].animation+=3;
         player[numJoueur].animation = player[numJoueur].animation % 29;
 
     }
-    if(key[KEY_D && collision(player[numJoueur])%5==0]){
+    if(key[KEY_D] && (collision_res%5==0)){
         player[numJoueur].x += vitesse;
         player[numJoueur].position=1;
-        player[numJoueur].animation++;
+        player[numJoueur].animation+=3;
         player[numJoueur].animation = player[numJoueur].animation % 29;
 
     }
-    if(key[KEY_W && collision(player[numJoueur])%3==0]) {
+    if(key[KEY_W] && (collision_res%3==0)) {
         player[numJoueur].y -= vitesse;
         player[numJoueur].position=0;
-        player[numJoueur].animation++;
+        player[numJoueur].animation+=3;
         player[numJoueur].animation = player[numJoueur].animation % 29;
 
     }
-    if(key[KEY_S && collision(player[numJoueur])%7==0]){
+    if(key[KEY_S] && (collision_res%7==0)){
         player[numJoueur].y += vitesse;
         player[numJoueur].position=2;
-        player[numJoueur].animation++;
+        player[numJoueur].animation+=3;
         player[numJoueur].animation = player[numJoueur].animation % 29;
 
     }
     if (!key[KEY_W] && !key[KEY_S] && !key[KEY_D] && !key[KEY_A]){
         player[numJoueur].animation=0;
     }
-    return player[numJoueur];
+
 }

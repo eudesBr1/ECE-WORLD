@@ -4,28 +4,34 @@
 #include "Mabibli.h"
 
 
-int collision(t_player perso){
-    BITMAP *fond;
-    fond = load_bitmap("../images/map_collision.bmp",NULL);
-    if (!fond){
-        allegro_message("Pb de récupération de map_collision.bmp");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
-    int x = perso.x;
-    int y = perso.y;
+int collision(t_player perso,BITMAP *fond){
 
-    int h = getpixel(fond,x+10,y-3);
-    int d = getpixel(fond,x+20,y+20);
-    int b = getpixel(fond,x+10,y+40);
-    int g = getpixel(fond,x,y+20);
+
+
+    int x = perso.x*1000/1920;
+    int y = perso.y*920/1080;
+    int w = W_PERSO*1000/1920;
+    int hauteur = H_PERSO*920/1080;
+
+
+    int h = getpixel(fond,x+w/2,y);
+    int d = getpixel(fond,x+w,y+hauteur/2);
+    int b = getpixel(fond,x+w/2,y+hauteur);
+    int g = getpixel(fond,x,y+hauteur/2);
+
     int noir = makecol(0,0,0);
+
     int renvoie = 1;
-    printf("%d/%d\t %d/%d\n",perso.x,perso.y,x,y);
+
+
+    printf("%d/%d\t %d/%d/%d/%d/%d\n",x,y,noir,h,d,b,g);
+
     //multiple de 3 si le personnage peut monter
     //multiple de 5 si le personnage peut aller a droite
     //multiple de 7 si le personnage peut descendre
     //multiple de 11 si le personnage peut aller a gauche
+
+
     if (h != noir)
         renvoie = renvoie*3;
     if (d != noir)
@@ -34,5 +40,7 @@ int collision(t_player perso){
         renvoie = renvoie*7;
     if (g != noir)
         renvoie = renvoie*11;
+
+
     return renvoie;
 }

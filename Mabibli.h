@@ -22,8 +22,8 @@
 #define NBticketStart 5
 #define w_tuile screen->w/6
 #define vitesse 2
-#define TAILLEMINICARTE_W 1000*4/48
-#define TAILLEMINICARTE_H 923*4/48
+#define TAILLEMINICARTE_W 1000*2/20
+#define TAILLEMINICARTE_H 920*2/20
 #define qtAnim 40
 #define POINTSpourGAGNER 10
 #define TailleBalx 64
@@ -99,10 +99,10 @@ typedef struct tuiles{
 void initEcran();
 void gameInit(t_player players[4]);
 void ballon(t_player *player);
-int collision(t_player perso);
+int collision(t_player perso,BITMAP *fond);
 void game_GUITARE(t_player *players);
 t_player mouvementPersonnageFleche(t_player *player);
-t_player mouvementPersonnageZQSD(t_player *player,int numJoueur);
+void mouvementPersonnageZQSD(t_player player[4],int numJoueur,BITMAP *CARTECOL);
 t_player creationPersonnageGoku(t_player *player);
 void affichageVille(t_player players[4]);
 void courseHippique(t_player *player);

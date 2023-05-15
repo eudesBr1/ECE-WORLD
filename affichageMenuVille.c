@@ -69,6 +69,13 @@ void affichageVille(t_player players[4]){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+    BITMAP *fond;
+    fond = load_bitmap("../images/map_collision.bmp",NULL);
+    if (!fond){
+        allegro_message("Pb de récupération de map_collision.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
     do {
         clear(buffer);
@@ -122,7 +129,7 @@ void affichageVille(t_player players[4]){
                     stretch_sprite(buffer, players[i].gauche[players[i].animation/10], players[i].x, players[i].y, W_PERSO, H_PERSO);
                 }
             }
-            mouvementPersonnageZQSD(players,tour);
+            mouvementPersonnageZQSD(players,tour,fond);
             minicarte(buffer,zoom_w,zoom_h,ecranx,ecrany);
             stretch_blit(buffer,screen,ecranx,ecrany,zoom_w,zoom_h,0,0,screen->w-wTABscore,screen->h);
             tab_score(players,buffer);

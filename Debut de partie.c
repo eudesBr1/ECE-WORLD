@@ -42,7 +42,7 @@ void gameInit(t_player players[4]){
 
     do {
         textout_centre_ex(buffer, font, "Indiquez le nombre de jouers ?", screen->w / 2, screen->h / 2 - 100,blanc, -1);
-        textout_centre_ex(buffer, font, "(entre 1 et 4 joueurs)", screen->w/2, screen->h / 2 - 60,blanc, -1);
+        textout_centre_ex(buffer, font, "(entre 2 et 4 joueurs)", screen->w/2, screen->h / 2 - 60,blanc, -1);
         fflush(stdin);
         charac = readkey();
         fflush(stdin);
@@ -50,10 +50,8 @@ void gameInit(t_player players[4]){
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         clear(buffer);
         // printf("%d/%c\n", charac,charac);
-        if ((charac<= 52 && charac >= 49)){
-            if (charac == 49)
-                nbJoueur = 1;
-            else if (charac == 50)
+        if ((charac<= 52 && charac >= 50)){
+            if (charac == 50)
                 nbJoueur = 2;
             else if (charac == 51)
                 nbJoueur = 3;
