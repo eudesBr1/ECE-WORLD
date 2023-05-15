@@ -54,6 +54,8 @@ typedef struct player{
     int position;       ///0 haut, 1 droite, 2 bas, 3 gauche
     int animation;
     int cheval;
+    int bitmap;
+    int perso_sur_bmp;
 }t_player;
 
 typedef struct pong{
@@ -111,6 +113,7 @@ void jackpot_game();
 void game_PONG(t_player player[4],int numJoueur);
 int coinFlip();
 void penalty(t_player *player);
+void charger_skin(t_player players[4],int numJoueur);
 void bougerGardien(t_gardien *gardien);
 int choixAnimationGardien(t_gardien gardien,int b);
 void actionPenalty(t_player *player,t_gardien gardien, t_ballonFoot ballon,int b);
