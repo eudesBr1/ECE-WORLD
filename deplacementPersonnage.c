@@ -45,28 +45,28 @@ t_player mouvementPersonnageFleche(t_player *player){
 
 
 t_player mouvementPersonnageZQSD(t_player *player,int numJoueur){
-    if(key[KEY_A]){
+    if(key[KEY_A] && collision(player[numJoueur])%11==0){
         player[numJoueur].x -= vitesse;
         player[numJoueur].position = 3;
         player[numJoueur].animation++;
         player[numJoueur].animation = player[numJoueur].animation % 29;
 
     }
-    if(key[KEY_D]){
+    if(key[KEY_D && collision(player[numJoueur])%5==0]){
         player[numJoueur].x += vitesse;
         player[numJoueur].position=1;
         player[numJoueur].animation++;
         player[numJoueur].animation = player[numJoueur].animation % 29;
 
     }
-    if(key[KEY_W]) {
+    if(key[KEY_W && collision(player[numJoueur])%3==0]) {
         player[numJoueur].y -= vitesse;
         player[numJoueur].position=0;
         player[numJoueur].animation++;
         player[numJoueur].animation = player[numJoueur].animation % 29;
 
     }
-    if(key[KEY_S]){
+    if(key[KEY_S && collision(player[numJoueur])%7==0]){
         player[numJoueur].y += vitesse;
         player[numJoueur].position=2;
         player[numJoueur].animation++;
