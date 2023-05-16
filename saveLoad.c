@@ -33,8 +33,10 @@ void charger(t_player player[4]){
                player[i].x, player[i].y, player[i].ticket, player[i].points, player[i].nbJoueurs,
                player[i].name, player[i].position, player[i].animation, player[i].cheval,player[i].bitmap,player[i].perso_sur_bmp);
     }
+
     for (int i = 0; i < player[0].nbJoueurs; ++i) {
         charger_skin(player,i);
     }
+    
     fclose(fichierSave);
 }

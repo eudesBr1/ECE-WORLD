@@ -10,9 +10,9 @@ int main(){
     install_mouse();
     srand(time(NULL));
    //  penalty(players);
-    //gameInit(players);
+    gameInit(players);
     //sauvegarde(players);
-     charger(players);
+     //charger(players);
 
      //game_PONG(players,1);
   // ballon(players);

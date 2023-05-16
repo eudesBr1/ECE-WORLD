@@ -58,9 +58,7 @@ void charger_skin(t_player players[4],int numJoueur)
 
 void gameInit(t_player players[4]){
     BITMAP *buffer;
-    int test;
     int nbJoueur = 0;
-    int compteur = 0;
     int beige = makecol(127,255,197);
     int i,j,k;
     int sortie_boucle = 0;
@@ -69,6 +67,80 @@ void gameInit(t_player players[4]){
     char buuffname[16] = {0} ;
     int blanc = makecol(255,255,255);
     buffer = create_bitmap(screen->w,screen->h);
+    BITMAP *load;
+    BITMAP *nvlPartie;
+    int width;
+    int height;
+
+    int grocissement = 2;
+
+
+
+    width = text_length(font, "Charger partie");
+    height = text_height(font);
+    load = create_bitmap(width, height);
+
+    width = text_length(font, "Nouvelle partie");
+    nvlPartie = create_bitmap(width, height);
+
+    int y;
+    y = screen->h/2+grocissement*height;
+    int rouge = makecol(255, 55, 55);
+    int gris = makecol(127, 127, 127);
+
+    while (1)
+    {
+        clear(buffer);
+        ///sourie sur load la partie
+        if (mouse_y>=y &&mouse_y<= y + load->h * grocissement && mouse_x >= screen->w / 3 && mouse_x <= screen->w / 3 + load->w * grocissement)
+        {
+            rectfill(buffer,screen->w/3-load->w,y-height,screen->w/3+3*load->w,y+height*3, rouge);
+            rectfill(buffer,2*screen->w/3-load->w,y-height,2*screen->w/3+3*load->w,y+height*3, gris);
+            rectfill(load, 0, 0, load->w, load->h, rouge);
+            textout_ex(load, font, "Charger partie", 0, 0, gris, -1);
+            stretch_blit(load, buffer, 0, 0, load->w, load->h, screen->w / 3, y, load->w * 2, load->h * 2);
+            rectfill(nvlPartie, 0, 0, nvlPartie->w, nvlPartie->h, gris);
+            textout_ex(nvlPartie, font, "Nouvelle partie", 0, 0, rouge, -1);
+            stretch_blit(nvlPartie, buffer, 0, 0, nvlPartie->w, nvlPartie->h, 2*screen->w/3, y, nvlPartie->w * 2, nvlPartie->h * 2);
+            if (mouse_b == 1)
+            {
+                charger(players);
+                return;
+            }
+        }
+        ///sourie sur nouvelle partie
+        else if (mouse_y>=y &&mouse_y<= y + load->h * grocissement && mouse_x >= 2 * screen->w / 3 && mouse_x <= 2 * screen->w / 3 + load->w * grocissement)
+        {
+            rectfill(buffer,screen->w/3-load->w,y-height,screen->w/3+3*load->w,y+height*3, gris);
+            rectfill(buffer,2*screen->w/3-load->w,y-height,2*screen->w/3+3*load->w,y+height*3, rouge);
+            rectfill(load, 0, 0, load->w, load->h, gris);
+            textout_ex(load, font, "Charger partie", 0, 0, rouge, -1);
+            stretch_blit(load, buffer, 0, 0, load->w, load->h, screen->w / 3, y, load->w * 2, load->h * 2);
+            rectfill(nvlPartie, 0, 0, nvlPartie->w, nvlPartie->h, rouge);
+            textout_ex(nvlPartie, font, "Nouvelle partie", 0, 0, gris, -1);
+            stretch_blit(nvlPartie, buffer, 0, 0, nvlPartie->w, nvlPartie->h, 2*screen->w/3, y, nvlPartie->w * 2, nvlPartie->h * 2);
+            if (mouse_b == 1)
+            {
+                break;
+            }
+        }
+        ///sourie sur rien du tout
+        else {
+            rectfill(buffer,screen->w/3-load->w,y-height,screen->w/3+3*load->w,y+height*3, gris);
+            rectfill(buffer,2*screen->w/3-load->w,y-height,2*screen->w/3+3*load->w,y+height*3, gris);
+            rectfill(load, 0, 0, load->w, load->h, gris);
+            textout_ex(load, font, "Charger partie", 0, 0, makecol(55, 55, 55), -1);
+            stretch_blit(load, buffer, 0, 0, load->w, load->h, screen->w / 3, y, load->w * 2, load->h * 2);
+            rectfill(nvlPartie, 0, 0, nvlPartie->w, nvlPartie->h, gris);
+            textout_ex(nvlPartie, font, "Nouvelle partie", 0, 0, rouge, -1);
+            stretch_blit(nvlPartie, buffer, 0, 0, nvlPartie->w, nvlPartie->h, 2*screen->w/3, y, nvlPartie->w * 2, nvlPartie->h * 2);
+        }
+        stretch_sprite(buffer,mouse_sprite,mouse_x,mouse_y,mouse_sprite->w*2,mouse_sprite->h*2);
+        blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+    }
+
+
+
     for (i = 0; i < 4; i++) {
         rectfill(buffer, 0, 0, screen->w, screen->h, makecol(0, 0, 0));
         textout_ex(buffer, font, "Chargement du jeu .", 50, 50, blanc, -1);

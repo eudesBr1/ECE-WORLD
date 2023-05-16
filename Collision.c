@@ -24,7 +24,7 @@ int collision(t_player perso,BITMAP *fond){
     int renvoie = 1;
 
 
-    printf("%d/%d\t %d/%d/%d/%d/%d\n",x,y,noir,h,d,b,g);
+   // printf("%d/%d\t %d/%d/%d/%d/%d\n",x,y,noir,h,d,b,g);
 
     //multiple de 3 si le personnage peut monter
     //multiple de 5 si le personnage peut aller a droite

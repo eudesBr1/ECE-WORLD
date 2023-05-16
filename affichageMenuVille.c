@@ -158,6 +158,12 @@ void affichageVille(t_player players[4]){
                 tour++;
                 tour = tour % players[0].nbJoueurs;
             }
+            if (key[KEY_ESC])
+            {
+                sauvegarde(players);
+                allegro_exit();
+                exit(EXIT_SUCCESS);
+            }
         }
     } while (!check_defaite(players));
 
