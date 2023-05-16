@@ -4,6 +4,7 @@
 #include "Mabibli.h"
 
 
+
 int check_defaite(t_player players[4])
 {
     for (int i = 0; i < players[0].nbJoueurs; i++) {
@@ -55,6 +56,31 @@ void tab_score(t_player players[4],BITMAP *buffer)
     destroy_bitmap(SCORE);
 }
 
+void pause(t_player player[4],BITMAP *pausePlay[2],BITMAP *buffer,int ecranx,int ecrany, int zoom_w,int zoom_h)
+{
+    BITMAP *buuffer;
+    tab_score(player,buuffer);
+    stretch_blit(buffer,screen,ecranx,ecrany,zoom_w,zoom_h,0,0,screen->w-wTABscore,screen->h);
+    while (1)
+    {
+        if ()
+        {
+
+        } else if ()
+        {
+
+        }else
+        {
+
+        }
+    }
+
+
+
+
+
+}
+
 void affichageVille(t_player players[4]){
     int zoom_w = 400;
     int zoom_h = 300;
@@ -68,6 +94,17 @@ void affichageVille(t_player players[4]){
         allegro_message("Pb de l'image chargee");
         allegro_exit();
         exit(EXIT_FAILURE);
+    }
+    BITMAP *pause_play;
+    pause_play = load_bitmap("../images/pause_play.bmp", NULL);
+    if (!pause_play) {
+        allegro_message("Pb de l'image pause_play.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    BITMAP *pausePlay[2];
+    for (int i = 0; i < 2; i++) {
+        pausePlay[i] = create_sub_bitmap(pause_play,pause_play->w/2*i,0,pause_play->w/2,pause_play->h);
     }
     BITMAP *carte_dessus;
     /// charge carte ville par dessus
@@ -148,10 +185,12 @@ void affichageVille(t_player players[4]){
 
             minicarte(buffer,zoom_w,zoom_h,ecranx,ecrany);
 
-
             stretch_blit(buffer,screen,ecranx,ecrany,zoom_w,zoom_h,0,0,screen->w-wTABscore,screen->h);
 
             tab_score(players,buffer);
+
+            stretch_sprite(screen,mouse_sprite,mouse_x,mouse_y,mouse_sprite->w*2,mouse_sprite->h*2);
+
             rest(50);
             if (key[KEY_RIGHT])
             {
