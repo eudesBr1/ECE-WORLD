@@ -4,6 +4,54 @@
 
 #include "Mabibli.h"
 
+
+void charger_skin(t_player players[4],int numJoueur)
+{
+    int bmp = players[numJoueur].bitmap;
+    int perso = players[numJoueur].perso_sur_bmp;
+    int j = perso%4;
+    int k = 0;
+
+    BITMAP *spriteRPG[2];
+    spriteRPG[0] = load_bitmap("../images/Sprite_rpg1.bmp",NULL);
+    if (!spriteRPG[0]){
+        allegro_message("Pb de l'image Sprite_rpg1.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    spriteRPG[1] = load_bitmap("../images/Sprite_RPG2.bmp",NULL);
+    if (!spriteRPG[1]){
+        allegro_message("Pb de l'image Sprite_RPG2.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    spriteRPG[2] = load_bitmap("../images/Sprite_RPG_Duck.bmp",NULL);
+    if (!spriteRPG[2]){
+        allegro_message("Pb de l'image Sprite_RPG_Duck.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    if (perso>=4)
+    {
+        k = 1;
+    }
+
+
+    for (int m = 0; m < 3; m++) {
+        players[numJoueur].bas[m] = create_sub_bitmap(spriteRPG[bmp],(spriteRPG[bmp]->w*(m+j*3))/12,(spriteRPG[bmp]->h*k*4)/8,spriteRPG[bmp]->w/12,
+                                              spriteRPG[bmp]->h/8);
+        players[numJoueur].gauche[m] = create_sub_bitmap(spriteRPG[bmp],(spriteRPG[bmp]->w*(m+j*3))/12,(spriteRPG[bmp]->h*(k*4+1))/8,spriteRPG[bmp]->w/12,
+                                                 spriteRPG[bmp]->h/8);
+        players[numJoueur].droite[m] = create_sub_bitmap(spriteRPG[bmp],(spriteRPG[bmp]->w*(m+j*3))/12,(spriteRPG[bmp]->h*(k*4+2))/8,spriteRPG[bmp]->w/12,
+                                                 spriteRPG[bmp]->h/8);
+        players[numJoueur].haut[m] = create_sub_bitmap(spriteRPG[bmp],(spriteRPG[bmp]->w*(m+j*3))/12,(spriteRPG[bmp]->h*(k*4+3))/8,spriteRPG[bmp]->w/12,
+                                               spriteRPG[bmp]->h/8);
+    }
+}
+
+
 /// au début de la partie on cherche a savoir le nombre de joueur présent
 
 void gameInit(t_player players[4]){
@@ -42,7 +90,7 @@ void gameInit(t_player players[4]){
 
     do {
         textout_centre_ex(buffer, font, "Indiquez le nombre de jouers ?", screen->w / 2, screen->h / 2 - 100,blanc, -1);
-        textout_centre_ex(buffer, font, "(entre 1 et 4 joueurs)", screen->w/2, screen->h / 2 - 60,blanc, -1);
+        textout_centre_ex(buffer, font, "(entre 2 et 4 joueurs)", screen->w/2, screen->h / 2 - 60,blanc, -1);
         fflush(stdin);
         charac = readkey();
         fflush(stdin);
@@ -50,10 +98,8 @@ void gameInit(t_player players[4]){
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         clear(buffer);
         // printf("%d/%c\n", charac,charac);
-        if ((charac<= 52 && charac >= 49)){
-            if (charac == 49)
-                nbJoueur = 1;
-            else if (charac == 50)
+        if ((charac<= 52 && charac >= 50)){
+            if (charac == 50)
                 nbJoueur = 2;
             else if (charac == 51)
                 nbJoueur = 3;
@@ -87,7 +133,7 @@ void gameInit(t_player players[4]){
                 j++;
             }
             textprintf_centre_ex(buffer, font, screen->w / 2, screen->h / 2, blanc, -1, "%s",buuffname);
-            printf("%s/%d\t%d\n",buuffname,j,charac);
+            //printf("%s/%d\t%d\n",buuffname,j,charac);
             blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);clear(buffer);
             clear(buffer);
             if (key[KEY_ENTER] && j>1) {
@@ -106,6 +152,7 @@ void gameInit(t_player players[4]){
 
     ///on charge les sprite de rpg afin de donner un apercu a l'utilisateur du personnage qu'il peut utiliser
     BITMAP *spriteRPG[2];
+
     spriteRPG[0] = load_bitmap("../images/Sprite_rpg1.bmp",NULL);
     if (!spriteRPG[0]){
         allegro_message("Pb de l'image Sprite_rpg1.bmp");
@@ -150,7 +197,6 @@ void gameInit(t_player players[4]){
         while (!sortie_boucle) {
             clear(buffer);
             textprintf_centre_ex(buffer, font, screen->w / 2, 150, blanc, -1,"%s, cliques pour choisir ton personnage",players[l].name);
-            //printf("%s",players[l].name);
 
             ///affichage de toutes les personnages
 
@@ -192,18 +238,11 @@ void gameInit(t_player players[4]){
             for (j = 0; j <= 3 ; j++) {
                 for (k = 0; k < 2; k++) {
                     if (choix_personnage[i][j][k] == l + 1){
-                        for (int m = 0; m < 3; m++) {
-                            printf("%d\t%d\t%d\t%d\t%d\n",i,j,k,m,choix_personnage[i][j][k]);
-                            players[l].bas[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j*3))/12,(spriteRPG[i]->h*k*4)/8,spriteRPG[i]->w/12,
-                                                                  spriteRPG[i]->h/8);
-                            players[l].gauche[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j*3))/12,(spriteRPG[i]->h*(k*4+1))/8,spriteRPG[i]->w/12,
-                                                                     spriteRPG[i]->h/8);
-                            players[l].droite[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j*3))/12,(spriteRPG[i]->h*(k*4+2))/8,spriteRPG[i]->w/12,
-                                                                     spriteRPG[i]->h/8);
-                            players[l].haut[m] = create_sub_bitmap(spriteRPG[i],(spriteRPG[i]->w*(m+j*3))/12,(spriteRPG[i]->h*(k*4+3))/8,spriteRPG[i]->w/12,
-                                                                   spriteRPG[i]->h/8);
-                        }
 
+                        players[l].bitmap = i;
+                        players[l].perso_sur_bmp = j+4*k;
+
+                        charger_skin(players,l);
 
                     }
 
