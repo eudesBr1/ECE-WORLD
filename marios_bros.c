@@ -13,7 +13,7 @@ int gameMode = 0;
 int inputIndex;
 int lifeline = 5;
 
-int gamePlayMode = 0;
+int gamePlayMode = 1;
 int points = 0;
 
 
@@ -103,6 +103,14 @@ int pixel_perfect_colision(int x1, int y1, BITMAP * obj1, int x2, int y2, BITMAP
 float teta = 0.0;
 float beta = 0.0;
 
+void checkPtrNull(void *ptr) {
+    if (ptr == NULL) {
+        printf("Error\n");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+}
+
 
 void game_marios() {
     allegro_init();
@@ -120,8 +128,7 @@ void game_marios() {
 
 
 
-    //Using MayppyWin32 saved fmp files as text files and converted them into bmp file using the following online convert
-    //https://image.online-convert.com/convert-to-bmp
+
 
     //create bitmaps
     BITMAP *sky = load_bitmap("../images/122.bmp", NULL);
@@ -143,13 +150,13 @@ void game_marios() {
     BITMAP *bonus = load_bitmap("../images/bonus.bmp", NULL);
 
     //flag
-    BITMAP *crown = load_bitmap("images/crown.bmp", NULL);
+    BITMAP *crown = load_bitmap("../images/crown.bmp", NULL);
 
     //enemy for night mode
-    BITMAP *bridge = load_bitmap("images/bridge_1.bmp", NULL);
+    BITMAP *bridge = load_bitmap("../images/bridge_1.bmp", NULL);
 
     //point to collect for night mode is stars
-    BITMAP *star = load_bitmap("images/star_0.bmp", NULL);
+    BITMAP *star = load_bitmap("../images/star_0.bmp", NULL);
 
 
     while (!key[KEY_ESC]) {
@@ -170,11 +177,12 @@ void game_marios() {
 
             blit(buffer, screen, 0, 0, 0, 0, 640, 480);
 
-
+            printf("1 %d\n", mainMenuMode);
             if (mainMenuMode == 1) {
                 textout_ex(sky, font, "MarioBros (ESC to quit)", 0, 1, BLACK, WHITE);
                 textout_ex(sky, font, "Press Ctrl+H for Help", 460, 1, BLACK, WHITE);
 
+                printf("2\n");
 
                 if (key[KEY_LCONTROL] && key[KEY_H] || key[KEY_RCONTROL] && key[KEY_H]) {
                     textout_ex(sky, font, "Moving Your Sprites: ", 180, 35, BLACK, WHITE);
@@ -196,6 +204,7 @@ void game_marios() {
 
                 textout_ex(sky, font, "Game Mode", 485, 340, WHITE, BLACK);
 
+                printf("3\n");
 
                 //selection
                 textout_centre_ex(sky, font, "Press F1: Day Mode", 540, 360, WHITE, BLACK);
@@ -218,10 +227,9 @@ void game_marios() {
 
 
 
-
-
+            printf("lol\n");
             if (gamePlayMode == 1) {
-
+                printf("4\n");
                 draw_sprite(buffers, day, 0, 0);
 
 
@@ -234,11 +242,10 @@ void game_marios() {
                 int screenScrollXPosition = 0;
                 int width = SCREEN_W;
 
-
                 while (gamePlayMode == 1) {
-
+                    printf("5\n");
                     clearScreens();
-
+                    printf("5\n");
 
                     draw_sprite(buffers, day, screenScrollXPosition, 0);
 
@@ -336,15 +343,20 @@ void game_marios() {
                     draw_sprite(day, fireball2, 5005, 385);
 
 
+                    printf("5\n");
+                    if (day == NULL)
+                        printf("day\n");
+                    else if (crown == NULL)
+                        printf("crown");
 
                     draw_sprite(day, crown, 6250, 350);
 
-
+                    printf("6\n");
                     if (key[KEY_ESC]) {
                         break;
                     }
 
-
+                    printf("6\n");
 
 
                     //deal with collisions for coins
@@ -505,6 +517,8 @@ void game_marios() {
                             width = width + 5;
                             x = 10;
                         }
+
+
                     } else if (key[KEY_RIGHT]) {
                         velx = 1;
                         screenScrollXPosition = screenScrollXPosition - 10;
