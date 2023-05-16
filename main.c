@@ -10,13 +10,11 @@ int main(){
     install_mouse();
     srand(time(NULL));
    //  penalty(players);
- //    gameInit(players);
- //   sauvegarde(players);
-     players[4] = charger();
-    for (int i = 0; i <= 4; ++i) {
-        charger_skin(players,i);
-    }
-   //  game_PONG(players,1);
+    //gameInit(players);
+    //sauvegarde(players);
+     charger(players);
+
+     //game_PONG(players,1);
   // ballon(players);
    // courseHippique(players);
  //   game_GUITARE(&players[0]);

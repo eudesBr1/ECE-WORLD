@@ -13,6 +13,7 @@ void charger_skin(t_player players[4],int numJoueur)
     int k = 0;
 
     BITMAP *spriteRPG[2];
+
     spriteRPG[0] = load_bitmap("../images/Sprite_rpg1.bmp",NULL);
     if (!spriteRPG[0]){
         allegro_message("Pb de l'image Sprite_rpg1.bmp");
@@ -32,6 +33,7 @@ void charger_skin(t_player players[4],int numJoueur)
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+    printf("test");
 
     if (perso>=4)
     {

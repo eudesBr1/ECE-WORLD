@@ -121,4 +121,4 @@ int choixAnimationGardien(t_gardien gardien,int b);
 void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int b);
 void finPenalty(t_player *player,t_gardien *gardien, t_ballonFoot *ballon,int b);
 void sauvegarde(t_player *player);
-t_player charger();
+void charger(t_player player[4]);
