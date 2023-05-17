@@ -74,6 +74,16 @@ void penalty(t_player *player){
     for (int i = 0; i <= 1; ++i) {
         gardien.position[12+i] = create_sub_bitmap(templateGardien,800*i+40,2385,800,410);
     }
+    ///ecran avec points
+  //  create_bitmap(466,278);
+    int rouge = makecol(255, 55, 55);
+    int gris = makecol(127, 127, 127);
+    int width = text_length(font, "Au tour de ") + text_length(font,player[0].name);
+    int height = text_height(font);
+    BITMAP *ecran = create_bitmap(width,height+1);
+    rectfill(ecran,0,0,ecran->w,ecran->h, gris);
+    textprintf_ex(ecran, font, 0,1, rouge,-1,"Au tour de %s",player[0].name);
+
     ///commence le duel rien ne se passe
     while (!key[KEY_ESC] && !key[KEY_T]){
         ballon.tailleBallon = 100;
@@ -85,6 +95,7 @@ void penalty(t_player *player){
         stretch_sprite(buffer,ballon.effet[0],ballon.positionX,ballon.positionY,ballon.tailleBallon,ballon.tailleBallon);
         stretch_sprite(buffer,gardien.position[choixAnimationGardien(gardien,b)],gardien.positionX,gardien.positionY,gardien.largeur,gardien.hauteur);
         stretch_sprite(buffer,jauge[valeurJauge/10],screen->w-150,400,100,500);
+        stretch_blit(ecran,buffer,0,0,ecran->w,ecran->h,656,70,625,280);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
         rest(1);
         if (key[KEY_1_PAD] || key[KEY_2_PAD] || key[KEY_3_PAD] || key[KEY_4_PAD] || key[KEY_5_PAD] || key[KEY_6_PAD]){
