@@ -48,6 +48,10 @@ void tab_score(t_player players[4],BITMAP *buffer,int numJoueur)
     int red = makecol(255, 55, 55);
     int gris = makecol(127,127,127);
 
+    BITMAP *TICKETS;
+    width = text_length(font,"10");
+    TICKETS = create_bitmap(width,height);
+
     textout_ex(SCORE, font, "SCORE", 0, 0, blanc, -1);
     stretch_blit(SCORE, buffer, 0, 0, SCORE->w, SCORE->h, 0, 0, wTABscore, screen->h/5);
 
@@ -59,33 +63,33 @@ void tab_score(t_player players[4],BITMAP *buffer,int numJoueur)
     
     for (int i = 0; i < players[0].nbJoueurs; i++)
     {
-        clear(SCORE);
+        clear(TICKETS);
 
         if (i == numJoueur) {
-            clear(SCORE);
-            rectfill(SCORE, 0, 0, SCORE->w, SCORE->h, red);
-            textprintf_centre_ex(SCORE, font, SCORE->w / 2, 0, gris, -1, "%d", players[i].ticket);
-            stretch_blit(SCORE,buffer,0,0,SCORE->w,SCORE->h,wTABscore/3+1,(1+i)*screen->h/5+1,wTABscore/3-2,screen->h/5-2);
+            clear(TICKETS);
+            rectfill(TICKETS, 0, 0, TICKETS->w, TICKETS->h, red);
+            textprintf_centre_ex(TICKETS, font, TICKETS->w / 2, 1, gris, -1, "%d", players[i].ticket);
+            stretch_blit(TICKETS,buffer,0,0,TICKETS->w,TICKETS->h,wTABscore/3+1,(1+i)*screen->h/5+1,wTABscore/3-2,screen->h/5-2);
 
-            clear(SCORE);
-            rectfill(SCORE, 0, 0, SCORE->w, SCORE->h, red);
-            textprintf_centre_ex(SCORE, font, SCORE->w / 2, 0, gris, -1, "%d", players[i].points);
-            stretch_blit(SCORE,buffer,0,0,SCORE->w,SCORE->h,2*wTABscore/3+1,(1+i)*screen->h/5+1,wTABscore/3-2,screen->h/5-2);
+            clear(TICKETS);
+            rectfill(TICKETS, 0, 0, TICKETS->w, TICKETS->h, red);
+            textprintf_centre_ex(TICKETS, font, TICKETS->w / 2, 1, gris, -1, "%d", players[i].points);
+            stretch_blit(TICKETS,buffer,0,0,TICKETS->w,TICKETS->h,2*wTABscore/3+1,(1+i)*screen->h/5+1,wTABscore/3-2,screen->h/5-2);
 
 
         } else
         {
-            clear(SCORE);
-            rectfill(SCORE, 0, 0, SCORE->w, SCORE->h, gris);
-            textprintf_centre_ex(SCORE, font, SCORE->w / 2, 0, red, -1, "%d", players[i].ticket);
-            stretch_blit(SCORE,buffer,0,0,SCORE->w,SCORE->h,wTABscore/3+1,(1+i)*screen->h/5+1,wTABscore/3-2,screen->h/5-2);
+            clear(TICKETS);
+            rectfill(TICKETS, 0, 0, TICKETS->w, TICKETS->h, gris);
+            textprintf_centre_ex(TICKETS, font, TICKETS->w / 2, 1, red, -1, "%d", players[i].ticket);
+            stretch_blit(TICKETS,buffer,0,0,TICKETS->w,TICKETS->h,wTABscore/3+1,(1+i)*screen->h/5+1,wTABscore/3-2,screen->h/5-2);
 
-            clear(SCORE);
-            rectfill(SCORE, 0, 0, SCORE->w, SCORE->h, gris);
-            textprintf_centre_ex(SCORE, font, SCORE->w / 2, 0, red, -1, "%d", players[i].points);
-            stretch_blit(SCORE,buffer,0,0,SCORE->w,SCORE->h,2*wTABscore/3+1,(1+i)*screen->h/5+1,wTABscore/3-2,screen->h/5-2);
+            clear(TICKETS);
+            rectfill(TICKETS, 0, 0, TICKETS->w, TICKETS->h, gris);
+            textprintf_centre_ex(TICKETS, font, TICKETS->w / 2, 1, red, -1, "%d", players[i].points);
+            stretch_blit(TICKETS,buffer,0,0,TICKETS->w,TICKETS->h,2*wTABscore/3+1,(1+i)*screen->h/5+1,wTABscore/3-2,screen->h/5-2);
         }
-        line(buffer,0,i*screen->h/5,wTABscore,i*screen->w/5,noir);
+        line(buffer,0,(i+1)*screen->h/5,wTABscore,(i+1)*screen->h/5,noir);
         stretch_sprite(buffer,players[i].bas[1],0,(i+1)*screen->h/5,wTABscore/3,(1)*screen->h/5);
         textprintf_ex(buffer,font,0,(i+1)*screen->h/5, makecol(129,128,67),-1,"%s",players[i].name);
 
