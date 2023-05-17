@@ -12,15 +12,8 @@ int main(){
 
     gameInit(players);
 
-     //charger(players);
-  //  penalty(players);
-     //game_PONG(players,1);
-  // ballon(players);
-   // courseHippique(players);
- //   game_GUITARE(&players[0]);
     /// affiche ville menu
      affichageVille(players);
-    sauvegarde(players);
  //   allegro_exit();
     return 1;
 }

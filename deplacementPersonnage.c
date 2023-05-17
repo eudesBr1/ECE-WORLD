@@ -47,8 +47,6 @@ t_player mouvementPersonnageFleche(t_player *player){
 void mouvementPersonnageZQSD(t_player player[4],int numJoueur,int collision_res){
 
 
-
-
     if(key[KEY_A] && (collision_res%11==0)){
         player[numJoueur].x -= vitesse;
         player[numJoueur].position = 3;

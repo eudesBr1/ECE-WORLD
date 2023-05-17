@@ -26,11 +26,14 @@ void minicarte(BITMAP* buffer, int zoom_w,int zoom_h,int ecranx, int ecrany)
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+    //rect(buuffer,ecranx*TAILLEMINICARTE_W/buffer->w,ecrany*TAILLEMINICARTE_H/buffer->h,(zoom_w+ecranx)*TAILLEMINICARTE_W/buffer->w,(zoom_h+ecrany)*TAILLEMINICARTE_H/buffer->h,makecol(127,127,127));
     stretch_blit(buffer,buuffer,0,0,buffer->w,buffer->h,0,0,buuffer->w,buuffer->h);
-    rect(buuffer,ecranx*buffer->w/TAILLEMINICARTE_W,ecrany*buffer->h/TAILLEMINICARTE_W,(ecranx+zoom_w)*buffer->w/TAILLEMINICARTE_W,(ecrany+zoom_h)*buffer->w/TAILLEMINICARTE_H,makecol(127,127,127));
     stretch_sprite(buuffer,contours,0,0,buuffer->w,buuffer->h);
     blit(buuffer,buffer,0,0,ecranx+zoom_w-TAILLEMINICARTE_W,ecrany+zoom_h-TAILLEMINICARTE_H,TAILLEMINICARTE_H,TAILLEMINICARTE_H);
+    rect(buffer,ecranx+zoom_w-TAILLEMINICARTE_W+(ecranx*TAILLEMINICARTE_W/buffer->w),ecrany+zoom_h-TAILLEMINICARTE_H+(ecrany*TAILLEMINICARTE_H/buffer->h),ecranx+zoom_w-TAILLEMINICARTE_W+((ecranx+zoom_w)*TAILLEMINICARTE_W/buffer->w),ecrany+zoom_h-TAILLEMINICARTE_H+((ecrany+zoom_h)*TAILLEMINICARTE_H/buffer->h),makecol(182,255,0));
 
+
+    destroy_bitmap(buuffer);
 }
 
 void tab_score(t_player players[4],BITMAP *buffer,int numJoueur)
@@ -39,9 +42,9 @@ void tab_score(t_player players[4],BITMAP *buffer,int numJoueur)
     BITMAP *SCORE;
     int width = text_length(font, "SCORE");
     int height = text_height(font);
-    SCORE = create_bitmap(width, height);
+    SCORE = create_bitmap(width, height+1);
     rectfill(buffer,0,0,wTABscore,screen->h, makecol(195,195,195));
-    rectfill(SCORE, 0, 0, width, height, makecol(0, 0, 170));
+    rectfill(SCORE, 0, 0, width, height+1, makecol(0, 0, 170));
     
     int blanc = makecol(255, 255, 255);
     int noir = makecol(0, 0, 0);
@@ -50,9 +53,9 @@ void tab_score(t_player players[4],BITMAP *buffer,int numJoueur)
 
     BITMAP *TICKETS;
     width = text_length(font,"10");
-    TICKETS = create_bitmap(width,height);
+    TICKETS = create_bitmap(width,height+1);
 
-    textout_ex(SCORE, font, "SCORE", 0, 0, blanc, -1);
+    textout_ex(SCORE, font, "SCORE", 0, 1, blanc, -1);
     stretch_blit(SCORE, buffer, 0, 0, SCORE->w, SCORE->h, 0, 0, wTABscore, screen->h/5);
 
     line(buffer, wTABscore / 3, screen->h / 5, wTABscore / 3, screen->h, noir);
@@ -179,6 +182,13 @@ void affichageVille(t_player players[4]){
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+    BITMAP *E_touch;
+    E_touch = load_bitmap("../images/E_touch.bmp",NULL);
+    if (!E_touch){
+        allegro_message("Pb de l'image chargee E_touch.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
     BITMAP *fond;
     fond = load_bitmap("../images/map_collision.bmp",NULL);
     if (!fond){
@@ -246,7 +256,11 @@ void affichageVille(t_player players[4]){
                 pause(players,pausePlay,buffer);
             }
 
-            collision_res = collision(players[tour],fond);
+            collision_res = collision(players,fond,tour);
+            if (collision_res%17==0)
+            {
+                stretch_blit(E_touch,buffer,0,0,E_touch->w,E_touch->h,W_PERSO+players[tour].x,H_PERSO/2+players[tour].y,E_touch->w*2,E_touch->h*2);
+            }
 
             mouvementPersonnageZQSD(players,tour,collision_res);
 
@@ -261,8 +275,8 @@ void affichageVille(t_player players[4]){
 
             tab_score(players,buffer,tour);
 
+            rest(10);
 
-            rest(50);
             if (key[KEY_RIGHT])
             {
                 tour++;

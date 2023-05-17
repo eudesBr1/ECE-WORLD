@@ -3,15 +3,34 @@
 //
 #include "Mabibli.h"
 
+void animation()
+{
+    for (int i = 2*screen->w/3; i > 0 ; i--)
 
-int collision(t_player perso,BITMAP *fond){
+    {
+        circle(screen,screen->w/2+1,screen->h/2,i, makecol(0,0,0));
+        circle(screen,screen->w/2,screen->h/2,i, makecol(0,0,0));
+    }
+}
+
+
+int collision(t_player *perso,BITMAP *fond,int numJoueur){
 
 
 
-    int x = perso.x*1000/1920;
-    int y = perso.y*920/1080;
+    int x = perso[numJoueur].x*1000/1920;
+    int y = perso[numJoueur].y*920/1080;
     int w = W_PERSO*1000/1920;
     int hauteur = H_PERSO*920/1080;
+
+    int foot = makecol(0,255,255);
+    int course = makecol(165,255,127);
+    int guitare = makecol(255,0,110);
+    int pong = makecol(0,38,255);
+    int jackpot = makecol(182,255,0);
+    int tir = makecol(128, 128, 128);
+    int mario = makecol(255,55,55);
+
 
 
     int h = getpixel(fond,x+w/2,y);
@@ -22,7 +41,6 @@ int collision(t_player perso,BITMAP *fond){
     int noir = makecol(0,0,0);
 
     int renvoie = 1;
-
 
    // printf("%d/%d\t %d/%d/%d/%d/%d\n",x,y,noir,h,d,b,g);
 
@@ -41,6 +59,56 @@ int collision(t_player perso,BITMAP *fond){
     if (g != noir)
         renvoie = renvoie*11;
 
+    ///maintenant on va chercher a voir si le joueur cherche a rentrer dans un jeux ( pour tous les jeux on rentre par en bas sauf pour la course de cheval ou on doit rentrer par la gauche vers la droite)
+
+    if (h == foot)
+    {
+        renvoie = renvoie*17;
+        if (key[KEY_E])
+        {
+            animation();
+            penalty(perso);
+        }
+    }
+    if (h == course)
+    {
+        renvoie = renvoie*17;
+        if (key[KEY_E])
+        {
+            animation();
+            courseHippique(perso);
+        }
+    }
+    if (h == guitare)
+    {
+        renvoie = renvoie*17;
+        if (key[KEY_E])
+        {
+            animation();
+            game_GUITARE(&perso[numJoueur]);
+        }
+
+    }
+    if (h == pong)
+    {
+        renvoie = renvoie*17;
+        if (key[KEY_E])
+        {
+            animation();
+            game_PONG(perso,numJoueur);
+        }
+
+    }
+    if (h == tir)
+    {
+        renvoie = renvoie*17;
+        if (key[KEY_E])
+        {
+            animation();
+            ballon(perso);
+        }
+
+    }
 
     return renvoie;
 }
