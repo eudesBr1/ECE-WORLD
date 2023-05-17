@@ -88,26 +88,25 @@ void penalty(t_player *player){
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
         rest(1);
         if (key[KEY_1_PAD] || key[KEY_2_PAD] || key[KEY_3_PAD] || key[KEY_4_PAD] || key[KEY_5_PAD] || key[KEY_6_PAD]){
-
             if (valeurJauge>0){
-                ballon.rapidite=50;
-                ballon.diminution=0.05;
+                ballon.rapidite=100;
+                ballon.diminution=0.1;
             }
             if (valeurJauge>30){
                 ballon.rapidite=150;
-                ballon.diminution=0.1;
+                ballon.diminution=0.2;
             }
             if (valeurJauge>40){
                 ballon.rapidite=250;
-                ballon.diminution=0.2;
+                ballon.diminution=0.3;
             }
             if (valeurJauge>50){
                 ballon.rapidite=350;
-                ballon.diminution=0.4;
+                ballon.diminution=0.5;
             }
             if (valeurJauge>60){
                 ballon.rapidite=450;
-                ballon.diminution=0.6;
+                ballon.diminution=0.7;
             }
             if (valeurJauge>70){
                 ballon.rapidite=550;
@@ -117,7 +116,7 @@ void penalty(t_player *player){
             rest(1);
         }
         b++;
-        valeurJauge++;
+        valeurJauge+=2;
         valeurJauge=valeurJauge%80;
         ballon.positionX=screen->w/2-ballon.tailleBallon/2;
         ballon.positionY=screen->h-150;
@@ -269,6 +268,8 @@ void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int 
         if (ballon.positionY<700) ballon.positionY+=3;
     }
     gardien->arret=0;
+    gardien->positionX=screen->w/2-gardien->largeur/2;
+    gardien->positionY=screen->h/2+50;
 }
 void finPenalty(t_player *player,t_gardien *gardien, t_ballonFoot *ballon,int b){
     if ((ballon->positionX+ballon->tailleBallon/2)>gardien->positionX && (ballon->positionX+ballon->tailleBallon/2)< gardien->positionX+gardien->largeur){
