@@ -95,7 +95,7 @@ void tab_score(t_player players[4],BITMAP *buffer,int numJoueur)
     destroy_bitmap(SCORE);
 }
 
-void pause(t_player player[4],BITMAP *pausePlay[2],BITMAP *buffer,int ecranx,int ecrany, int zoom_w,int zoom_h)
+void pause(t_player player[4],BITMAP *pausePlay[2],BITMAP *buffer)
 {
     BITMAP *quit_button;
     quit_button = load_bitmap("../images/quit_boutton.bmp", NULL);
@@ -241,7 +241,7 @@ void affichageVille(t_player players[4]){
 
             if (key[KEY_ESC])
             {
-                pause(players,pausePlay,buffer,ecranx,ecrany,zoom_w,zoom_h);
+                pause(players,pausePlay,buffer);
             }
 
             collision_res = collision(players[tour],fond);
