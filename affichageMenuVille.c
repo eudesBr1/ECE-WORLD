@@ -24,8 +24,7 @@ void minicarte(BITMAP* buffer, int zoom_w,int zoom_h,int ecranx, int ecrany)
     if (!contours){
         allegro_message("Pb de l'image contours chargee");
         allegro_exit();
-        exit(
-                EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     }
     stretch_blit(buffer,buuffer,0,0,buffer->w,buffer->h,0,0,buuffer->w,buuffer->h);
     rect(buuffer,ecranx*buffer->w/TAILLEMINICARTE_W,ecrany*buffer->h/TAILLEMINICARTE_W,(ecranx+zoom_w)*buffer->w/TAILLEMINICARTE_W,(ecrany+zoom_h)*buffer->w/TAILLEMINICARTE_H,makecol(127,127,127));
@@ -34,7 +33,7 @@ void minicarte(BITMAP* buffer, int zoom_w,int zoom_h,int ecranx, int ecrany)
 
 }
 
-void tab_score(t_player players[4],BITMAP *buffer)
+void tab_score(t_player players[4],BITMAP *buffer,int numJoueur)
 {
     clear(buffer);
     BITMAP *SCORE;
@@ -43,10 +42,50 @@ void tab_score(t_player players[4],BITMAP *buffer)
     SCORE = create_bitmap(width, height);
     rectfill(buffer,0,0,wTABscore,screen->h, makecol(195,195,195));
     rectfill(SCORE, 0, 0, width, height, makecol(0, 0, 170));
-    textout_ex(SCORE, font, "SCORE", 0, 0, makecol(255, 255, 255), -1);
+    
+    int blanc = makecol(255, 255, 255);
+    int noir = makecol(0, 0, 0);
+    int red = makecol(255, 55, 55);
+    int gris = makecol(127,127,127);
+
+    textout_ex(SCORE, font, "SCORE", 0, 0, blanc, -1);
     stretch_blit(SCORE, buffer, 0, 0, SCORE->w, SCORE->h, 0, 0, wTABscore, screen->h/5);
+
+    line(buffer, wTABscore / 3, screen->h / 5, wTABscore / 3, screen->h, noir);
+    line(buffer,2*wTABscore/3,screen->h/5,2*wTABscore/3, screen->h, noir);
+    textprintf_centre_ex(buffer, font,wTABscore/2,screen->h/5-height, blanc, -1, "TICKETS");
+    textprintf_centre_ex(buffer, font,5*wTABscore/6,screen->h/5-height, blanc, -1, "POINTS");
+    
+    
     for (int i = 0; i < players[0].nbJoueurs; i++)
     {
+        clear(SCORE);
+
+        if (i == numJoueur) {
+            clear(SCORE);
+            rectfill(SCORE, 0, 0, SCORE->w, SCORE->h, red);
+            textprintf_centre_ex(SCORE, font, SCORE->w / 2, 0, gris, -1, "%d", players[i].ticket);
+            stretch_blit(SCORE,buffer,0,0,SCORE->w,SCORE->h,wTABscore/3+1,(1+i)*screen->h/5+1,wTABscore/3-2,screen->h/5-2);
+
+            clear(SCORE);
+            rectfill(SCORE, 0, 0, SCORE->w, SCORE->h, red);
+            textprintf_centre_ex(SCORE, font, SCORE->w / 2, 0, gris, -1, "%d", players[i].points);
+            stretch_blit(SCORE,buffer,0,0,SCORE->w,SCORE->h,2*wTABscore/3+1,(1+i)*screen->h/5+1,wTABscore/3-2,screen->h/5-2);
+
+
+        } else
+        {
+            clear(SCORE);
+            rectfill(SCORE, 0, 0, SCORE->w, SCORE->h, gris);
+            textprintf_centre_ex(SCORE, font, SCORE->w / 2, 0, red, -1, "%d", players[i].ticket);
+            stretch_blit(SCORE,buffer,0,0,SCORE->w,SCORE->h,wTABscore/3+1,(1+i)*screen->h/5+1,wTABscore/3-2,screen->h/5-2);
+
+            clear(SCORE);
+            rectfill(SCORE, 0, 0, SCORE->w, SCORE->h, gris);
+            textprintf_centre_ex(SCORE, font, SCORE->w / 2, 0, red, -1, "%d", players[i].points);
+            stretch_blit(SCORE,buffer,0,0,SCORE->w,SCORE->h,2*wTABscore/3+1,(1+i)*screen->h/5+1,wTABscore/3-2,screen->h/5-2);
+        }
+        line(buffer,0,i*screen->h/5,wTABscore,i*screen->w/5,noir);
         stretch_sprite(buffer,players[i].bas[1],0,(i+1)*screen->h/5,wTABscore/3,(1)*screen->h/5);
         textprintf_ex(buffer,font,0,(i+1)*screen->h/5, makecol(129,128,67),-1,"%s",players[i].name);
 
@@ -58,27 +97,51 @@ void tab_score(t_player players[4],BITMAP *buffer)
 
 void pause(t_player player[4],BITMAP *pausePlay[2],BITMAP *buffer,int ecranx,int ecrany, int zoom_w,int zoom_h)
 {
-    BITMAP *buuffer;
-    tab_score(player,buuffer);
-    stretch_blit(buffer,screen,ecranx,ecrany,zoom_w,zoom_h,0,0,screen->w-wTABscore,screen->h);
+    BITMAP *quit_button;
+    quit_button = load_bitmap("../images/quit_boutton.bmp", NULL);
+    if (!quit_button) {
+        allegro_message("Pb de l'image quit_boutton.bmp");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    BITMAP *carte;
+    carte = create_bitmap(screen->w,screen->h);
+    blit(buffer,carte,0,0,0,0,screen->w,screen->h);
+   // carte = buffer;
+
     while (1)
     {
-        if ()
-        {
+        blit(carte,buffer,0,0,0,0,screen->w,screen->h);
 
-        } else if ()
-        {
+        if (mouse_x<=screen->w/2+150&&mouse_x>=screen->w/2-150 && mouse_y<=screen->h/2+150 && mouse_y >=screen->h/2-150){
 
-        }else
+            stretch_sprite(buffer,pausePlay[0],screen->w/2-155,screen->h/2-150,300,300);
+            stretch_sprite(buffer,quit_button,0,screen->h-50,120,50);
+            if (mouse_b == 1){
+                destroy_bitmap(quit_button);
+                return;
+            }
+        }else if (mouse_x<=120&&mouse_x>=0 && mouse_y<=screen->h && mouse_y >=screen->h-50){
+            stretch_sprite(buffer, pausePlay[1], screen->w / 2 - 145, screen->h / 2 - 150, 300, 300);
+            stretch_sprite(buffer, quit_button, 0, screen->h - 75, 175, 75);
+            if (mouse_b == 1){
+                sauvegarde(player);
+                allegro_exit();
+                exit(EXIT_SUCCESS);
+            }
+        } else
         {
-
+            stretch_sprite(buffer, pausePlay[1], screen->w / 2 - 145, screen->h / 2 - 150, 300, 300);
+            stretch_sprite(buffer, quit_button , 0, screen->h - 50, 120, 50);
         }
+
+
+        stretch_sprite(buffer,mouse_sprite,mouse_x,mouse_y,mouse_sprite->w*2,mouse_sprite->h*2);
+        blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+        stretch_blit(buffer,screen,0,0,screen->w,screen->h,0,0,screen->w,screen->h);
+
+        clear(buffer);
     }
-
-
-
-
-
 }
 
 void affichageVille(t_player players[4]){
@@ -176,6 +239,11 @@ void affichageVille(t_player players[4]){
                 }
             }
 
+            if (key[KEY_ESC])
+            {
+                pause(players,pausePlay,buffer,ecranx,ecrany,zoom_w,zoom_h);
+            }
+
             collision_res = collision(players[tour],fond);
 
             mouvementPersonnageZQSD(players,tour,collision_res);
@@ -183,25 +251,20 @@ void affichageVille(t_player players[4]){
 
             stretch_sprite(buffer,carte_dessus,0,0,screen->w,screen->h);
 
+
             minicarte(buffer,zoom_w,zoom_h,ecranx,ecrany);
+
 
             stretch_blit(buffer,screen,ecranx,ecrany,zoom_w,zoom_h,0,0,screen->w-wTABscore,screen->h);
 
-            tab_score(players,buffer);
+            tab_score(players,buffer,tour);
 
-            stretch_sprite(screen,mouse_sprite,mouse_x,mouse_y,mouse_sprite->w*2,mouse_sprite->h*2);
 
             rest(50);
             if (key[KEY_RIGHT])
             {
                 tour++;
                 tour = tour % players[0].nbJoueurs;
-            }
-            if (key[KEY_ESC])
-            {
-                sauvegarde(players);
-                allegro_exit();
-                exit(EXIT_SUCCESS);
             }
         }
     } while (!check_defaite(players));
