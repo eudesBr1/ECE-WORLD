@@ -126,8 +126,6 @@ void pause(t_player player[4],BITMAP *pausePlay[2],BITMAP *buffer)
             stretch_sprite(buffer, quit_button, 0, screen->h - 75, 175, 75);
             if (mouse_b == 1){
                 sauvegarde(player);
-                allegro_exit();
-                exit(EXIT_SUCCESS);
             }
         } else
         {

@@ -13,7 +13,7 @@ int main(){
     gameInit(players);
 
      //charger(players);
-    penalty(players);
+  //  penalty(players);
      //game_PONG(players,1);
   // ballon(players);
    // courseHippique(players);
