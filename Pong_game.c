@@ -345,7 +345,7 @@ void game_PONG(t_player player[4],int numJoueur) {
     clear(BEREADY);
     rest(2000);
 
-    width = text_length(font, "0000 a gauche");
+    width = text_length(font, player[numJoueur].name) + text_length(font, " left ");
     height = text_height(font);
     BEREADY = create_bitmap(width, height);
     rectfill(BEREADY, 0, 0, width, height, makecol(0, 0, 170));
@@ -353,7 +353,7 @@ void game_PONG(t_player player[4],int numJoueur) {
     stretch_blit(BEREADY, screen, 0, 0, BEREADY->w, BEREADY->h, 0, 75, screen->w, screen->h - 150);
     clear(BEREADY);
     rest(2000);
-    width = text_length(font, "0000 a gauche");
+    width = text_length(font, player[choixOpposant].name) + text_length(font, " right ");
     height = text_height(font);
     BEREADY = create_bitmap(width, height);
     rectfill(BEREADY, 0, 0, width, height, makecol(0, 0, 170));
@@ -436,18 +436,22 @@ void game_PONG(t_player player[4],int numJoueur) {
         exit(EXIT_FAILURE);
     }
     int gagnant = 0;
+    int perdant = 0;
     if (condition_victoire(pongeur)==0){
         gagnant = numJoueur;
+        perdant = choixOpposant;
     }
     else {
         gagnant = choixOpposant;
+        perdant = numJoueur;
     }
     BITMAP *WINNER;
-    width = text_length(font, "0000000000000000");
+    width = text_length(font, player[gagnant].name);
     height = text_height(font);
     WINNER = create_bitmap(width, height);
     rectfill(WINNER, 0, 0, screen->w, screen->h, makecol(255, 0, 255));
-    textprintf_centre_ex(WINNER, font, WINNER->w / 2, WINNER->h / 2, makecol(255, 30, 30), -1, "%s",player[gagnant].name);
+    textprintf_ex(WINNER,font,0,0, makecol(255,55,55),-1,"%s",player[gagnant].name);
+
     for (int i = 0; i < 95; i++) {
         clear(buffer);
         stretch_blit(fond_space,buffer,0,0,fond_space->w,fond_space->h,0,0,screen->w,screen->h);
@@ -460,11 +464,13 @@ void game_PONG(t_player player[4],int numJoueur) {
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
         rest(80);
     }
-
+    player[perdant].ticket--;
+    player[gagnant].points++;
     destroy_bitmap(fond_space);
     destroy_bitmap(WINNER);
     for (int i = 0; i <= 14; i++) {
         destroy_bitmap(confettis[i]);
-    }    destroy_bitmap(buffer);
+    }
+    destroy_bitmap(buffer);
 
 }
