@@ -209,7 +209,7 @@ void deplacement_b(t_pong pongeurs[2],int speed)
 int condition_victoire(t_pong pongeurs[2])
 {
     for (int i = 0; i < 2; i++) {
-        if (pongeurs[i].point == 10)
+        if (pongeurs[i].point == 5)
         {
             return i+1;
         }
@@ -345,19 +345,19 @@ void game_PONG(t_player player[4],int numJoueur) {
     clear(BEREADY);
     rest(2000);
 
-    width = text_length(font, player[numJoueur].name) + text_length(font, " left ");
+    width = text_length(font, player[choixOpposant].name) + text_length(font, " left ");
     height = text_height(font);
     BEREADY = create_bitmap(width, height);
     rectfill(BEREADY, 0, 0, width, height, makecol(0, 0, 170));
-    textprintf_ex(BEREADY, font, 0, 0, makecol(255,255,255), -1, "%s left", player[numJoueur].name);
+    textprintf_ex(BEREADY, font, 0, 0, makecol(255,255,255), -1, "%s left", player[choixOpposant].name);
     stretch_blit(BEREADY, screen, 0, 0, BEREADY->w, BEREADY->h, 0, 75, screen->w, screen->h - 150);
     clear(BEREADY);
     rest(2000);
-    width = text_length(font, player[choixOpposant].name) + text_length(font, " right ");
+    width = text_length(font, player[numJoueur].name) + text_length(font, " right ");
     height = text_height(font);
     BEREADY = create_bitmap(width, height);
     rectfill(BEREADY, 0, 0, width, height, makecol(0, 0, 170));
-    textprintf_ex(BEREADY, font, 0, 0, makecol(255,255,255), -1, "%s right", player[choixOpposant].name);
+    textprintf_ex(BEREADY, font, 0, 0, makecol(255,255,255), -1, "%s right", player[numJoueur].name);
     stretch_blit(BEREADY, screen, 0, 0, BEREADY->w, BEREADY->h, 0, 75, screen->w, screen->h - 150);
     clear(BEREADY);
     rest(2000);
