@@ -1,17 +1,14 @@
 #include "Mabibli.h"
 
 void display(int y, float x, BITMAP *buffer, BITMAP *symbole_3,BITMAP *background, int jeton) {
+    blit(symbole_3, buffer, 0, 0, x, y, symbole_3->w, symbole_3->h);
+    //stretch_blit(background,buffer,0,0,background->w,background->h,0,0,symbole_3->w,symbole_3->h);
 
-    stretch_blit(background,buffer,0,0,background->w,background->h,0,0,symbole_3->w,symbole_3->h);
-    rectfill(buffer, 1000, 350, 0, 349, makeacol(200, 0, 0, 250));
-    rectfill(buffer, 1000, 0, 0, 300, makecol(22, 16, 16));
-    rectfill(buffer, 1000, 500, 0, 700, makecol(22, 16, 16));
-    rectfill(buffer, 300, 0, 0, 700, makecol(22, 16, 16));
-    rectfill(buffer, 700, 0, 1000, 700, makecol(22, 16, 16));
     masked_blit(background, buffer, 0, 0, 500-(background->w/2), 385-(background->h/2), background->w, background->h);
     textprintf_ex(buffer,font,550,20, makecol(255,255,255),-1, "jeton: %d" ,jeton);
 
-    stretch_blit(background,buffer,0,0,background->w,background->h,0,0,screen->w,screen->h);
+    //stretch_blit(background,buffer,0,0,background->w,background->h,0,0,screen->w,screen->h);
+    blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
 }
 
 void defilement( int i, float position_actuelle, int x, BITMAP *buffer, BITMAP *symbole_3, BITMAP *background,  float position_retenu, int jeton) {
@@ -89,109 +86,77 @@ void jackpot_game() {
     int JETON = 10;
     int JETONboucle = 1;
     int JETONboucle2 = 1;
-    int x1 = 419;
+    int x1 = 319;
     int x2 = 477;
     int x3 = 536;
 
-    stretch_blit(background, screen, 0, 0, background->w, background->h, 0, 0, screen->w, screen->h);
+    //stretch_blit(background, screen, 0, 0, background->w, background->h, 0, 0, screen->w, screen->h);
+    blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
     while (!key[KEY_ESC]) {
-        printf("1");
         clear(buffer);
 
-        int random1 = rand() % 6;
-        position_actuelle1 = position[random1];
-        display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-        random1 = rand() % 6;
-        position_actuelle2 = position[random1];
-        display(position_actuelle2, x2, buffer, symbole_3, background, JETON);
-        random1 = rand() % 6;
-        position_actuelle3 = position[random1];
-        display(position_actuelle3, x3, buffer, symbole_3, background, JETON);
-        boucle = 1;
-        JETONboucle2 = JETONboucle;
-
-        stretch_blit(background,buffer,0,0,background->w,background->h,0,0,screen->w,screen->h);
-    }
-    while (JETONboucle == JETONboucle2) {
-        if (key[KEY_ESC]) {
-            break;
-        }
-        while (boucle == 1 && !key[KEY_ESC]) {
-
-            if (key[KEY_E]) {
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(50);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(40);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(30);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(30);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(30);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(30);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-
-                rest(40);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(50);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(80);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(100);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-
-                rest(150);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(100);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(80);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(50);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(40);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(30);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(30);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(30);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(30);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(40);
-                display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
-                rest(50);
-
-                int resultat = rand() % 6;
-                finition = resultat_position[resultat];
-                resultat = rand() % 6;
-                finition2 = resultat_position[resultat];
-                resultat = rand() % 6;
-                finition3 = resultat_position[resultat];
-                float k = 0, l = 0;
-                float i = -position_actuelle1 + finition;
-                float i2 = -position_actuelle2 + finition2;
-                float i3 = -position_actuelle3 + finition3;
-                float positionretenu = position_actuelle1;
-                float positionretenu2 = position_actuelle2;
-                float positionretenu3 = position_actuelle3;
-
-                defilement(i, position_actuelle1, x1, buffer, symbole_3, background, positionretenu, JETON);
-                display(finition, x1, buffer, symbole_3, background, JETON);
-                defilement(i2, position_actuelle2, x2, buffer, symbole_3, background, positionretenu2, JETON);
-                display(finition2, x2, buffer, symbole_3, background, JETON);
-                defilement(i3, position_actuelle3, x3, buffer, symbole_3, background, positionretenu3, JETON);
-                display(finition3, x3, buffer, symbole_3, background, JETON);
-                boucle = 2;
+        while (boucle == 0 && arret == 0) {
+            //printf("%d",boucle);
+            if (key[KEY_ESC]) {
+                break;
             }
 
+
+            int random1 = rand() % 6;
+            position_actuelle1 = position[random1];
+            display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
+            random1 = rand() % 6;
+            position_actuelle2 = position[random1];
+            display(position_actuelle2, x2, buffer, symbole_3, background, JETON);
+            random1 = rand() % 6;
+            position_actuelle3 = position[random1];
+            display(position_actuelle3, x3, buffer, symbole_3, background, JETON);
+            boucle = 1;
+            JETONboucle2 = JETONboucle;
+            printf("1");
+
+            //stretch_blit(background, buffer, 0, 0, background->w, background->h, 0, 0, screen->w, screen->h);
+            blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
         }
-        destroy_bitmap(background);
-        destroy_bitmap(symbole_3);
-        destroy_bitmap(buffer);
+        while (JETONboucle == JETONboucle2) {
+            if (key[KEY_ESC]) {
+                break;
+            }
+            while (boucle == 1 && !key[KEY_ESC]) {
+
+                if (key[KEY_E]) {
+                    printf("lol");
+                    int resultat = rand() % 6;
+                    finition = resultat_position[resultat];
+                    resultat = rand() % 6;
+                    finition2 = resultat_position[resultat];
+                    resultat = rand() % 6;
+                    finition3 = resultat_position[resultat];
+                    float k = 0, l = 0;
+                    float i = -position_actuelle1 + finition;
+                    float i2 = -position_actuelle2 + finition2;
+                    float i3 = -position_actuelle3 + finition3;
+                    float positionretenu = position_actuelle1;
+                    float positionretenu2 = position_actuelle2;
+                    float positionretenu3 = position_actuelle3;
+                    printf("zebi");
+
+                    defilement(i, position_actuelle1, x1, buffer, symbole_3, background, positionretenu, JETON);
+                    display(finition, x1, buffer, symbole_3, background, JETON);
+                    defilement(i2, position_actuelle2, x2, buffer, symbole_3, background, positionretenu2, JETON);
+                    display(finition2, x2, buffer, symbole_3, background, JETON);
+                    defilement(i3, position_actuelle3, x3, buffer, symbole_3, background, positionretenu3, JETON);
+                    display(finition3, x3, buffer, symbole_3, background, JETON);
+                    printf("lola");
+
+                }
+
+            }
+            destroy_bitmap(background);
+            destroy_bitmap(symbole_3);
+            destroy_bitmap(buffer);
 // Created by malik on 29/04/2023.
 //
+        }
     }
 }
