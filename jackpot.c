@@ -3,12 +3,19 @@
 void display(int y, float x, BITMAP *buffer, BITMAP *symbole_3,BITMAP *background, int jeton) {
     blit(symbole_3, buffer, 0, 0, x, y, symbole_3->w, symbole_3->h);
     //stretch_blit(background,buffer,0,0,background->w,background->h,0,0,symbole_3->w,symbole_3->h);
-
+  //stretch_sprite(symbole_3,buffer,0,0,symbole_3->w,symbole_3->h);
+    //rectfill(buffer, 1000, 350, 0, 349, makeacol(200, 0, 0, 250));
+    rectfill(buffer, 1000, 0, 0, 300, makecol(22, 16, 16));
+    rectfill(buffer, 1000, 500, 0, 700, makecol(22, 16, 16));
+    rectfill(buffer, 300, 0, 0, 1200, makecol(22, 16, 16));
+    rectfill(buffer, 700, 0, 1000, 1200, makecol(22, 16, 16));
+    rectfill(buffer, 300, 500, 700, 1200, makecol(22, 16, 16));
     masked_blit(background, buffer, 0, 0, 500-(background->w/2), 385-(background->h/2), background->w, background->h);
     textprintf_ex(buffer,font,550,20, makecol(255,255,255),-1, "jeton: %d" ,jeton);
 
     //stretch_blit(background,buffer,0,0,background->w,background->h,0,0,screen->w,screen->h);
     blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+    //stretch_sprite(background,buffer,0,0,background->w,background->h);
 }
 
 void defilement( int i, float position_actuelle, int x, BITMAP *buffer, BITMAP *symbole_3, BITMAP *background,  float position_retenu, int jeton) {
@@ -92,6 +99,7 @@ void jackpot_game() {
 
     //stretch_blit(background, screen, 0, 0, background->w, background->h, 0, 0, screen->w, screen->h);
     blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+    //stretch_blit(buffer,screen,0,0,buffer->w,buffer->h,0,0,screen->w,screen->h)
     while (!key[KEY_ESC]) {
         clear(buffer);
 
