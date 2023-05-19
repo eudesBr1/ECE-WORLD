@@ -63,7 +63,6 @@ typedef struct pong{
     int point;
     int bx,by;
     int dx,dy;
-    char *name;
 }t_pong;
 
 typedef struct ballonFootball{

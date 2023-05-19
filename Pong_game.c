@@ -319,8 +319,6 @@ void game_PONG(t_player player[4],int numJoueur) {
         pongeur[i].point = 0;
     }
 
-    pongeur[0].name = player[numJoueur].name;
-    pongeur[1].name = player[choixOpposant].name;
 
     BITMAP *pause_play;
     pause_play = load_bitmap("../images/pause_play.bmp", NULL);
@@ -345,19 +343,19 @@ void game_PONG(t_player player[4],int numJoueur) {
     clear(BEREADY);
     rest(2000);
 
-    width = text_length(font, player[choixOpposant].name) + text_length(font, " left ");
+    width = text_length(font, player[numJoueur].name) + text_length(font, " left ");
     height = text_height(font);
     BEREADY = create_bitmap(width, height);
     rectfill(BEREADY, 0, 0, width, height, makecol(0, 0, 170));
-    textprintf_ex(BEREADY, font, 0, 0, makecol(255,255,255), -1, "%s left", player[choixOpposant].name);
+    textprintf_ex(BEREADY, font, 0, 0, makecol(255,255,255), -1, "%s left", player[numJoueur].name);
     stretch_blit(BEREADY, screen, 0, 0, BEREADY->w, BEREADY->h, 0, 75, screen->w, screen->h - 150);
     clear(BEREADY);
     rest(2000);
-    width = text_length(font, player[numJoueur].name) + text_length(font, " right ");
+    width = text_length(font, player[choixOpposant].name) + text_length(font, " right ");
     height = text_height(font);
     BEREADY = create_bitmap(width, height);
     rectfill(BEREADY, 0, 0, width, height, makecol(0, 0, 170));
-    textprintf_ex(BEREADY, font, 0, 0, makecol(255,255,255), -1, "%s right", player[numJoueur].name);
+    textprintf_ex(BEREADY, font, 0, 0, makecol(255,255,255), -1, "%s right", player[choixOpposant].name);
     stretch_blit(BEREADY, screen, 0, 0, BEREADY->w, BEREADY->h, 0, 75, screen->w, screen->h - 150);
     clear(BEREADY);
     rest(2000);
@@ -437,7 +435,7 @@ void game_PONG(t_player player[4],int numJoueur) {
     }
     int gagnant = 0;
     int perdant = 0;
-    if (condition_victoire(pongeur)==0){
+    if (condition_victoire(pongeur)==1){
         gagnant = numJoueur;
         perdant = choixOpposant;
     }
@@ -452,6 +450,12 @@ void game_PONG(t_player player[4],int numJoueur) {
     rectfill(WINNER, 0, 0, screen->w, screen->h, makecol(255, 0, 255));
     textprintf_ex(WINNER,font,0,0, makecol(255,55,55),-1,"%s",player[gagnant].name);
 
+    SAMPLE *applause = load_wav("../images/sons/applause.wav");
+    SAMPLE *You_Win = load_wav("../images/sons/You_Win.wav");
+
+
+    play_sample(applause,255,0,2000,0);
+
     for (int i = 0; i < 95; i++) {
         clear(buffer);
         stretch_blit(fond_space,buffer,0,0,fond_space->w,fond_space->h,0,0,screen->w,screen->h);
@@ -462,8 +466,11 @@ void game_PONG(t_player player[4],int numJoueur) {
         stretch_sprite(buffer,confettis[i%14],screen->w/2-300-tailleConfetis,screen->h/2+tailleConfetis,tailleConfetis,tailleConfetis);
         stretch_sprite(buffer,confettis[i%14],screen->w/2+300,screen->h/2+tailleConfetis,tailleConfetis,tailleConfetis);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+        if (i == 30 )
+            play_sample(You_Win,255,0,2000,0);
         rest(80);
     }
+    stop_sample(applause);
     player[perdant].ticket--;
     player[gagnant].points++;
     destroy_bitmap(fond_space);

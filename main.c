@@ -6,6 +6,7 @@ int main(){
     //t_player goku;
     //t_player naruto;
     initEcran();
+    install_sound(DIGI_AUTODETECT ,MIDI_AUTODETECT,NULL);
     install_keyboard();
     install_mouse();
     srand(time(NULL));
