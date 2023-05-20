@@ -1,6 +1,6 @@
 #include "Mabibli.h"
 
-void display(int y, float x, BITMAP *buffer, BITMAP *symbole_3,BITMAP *background, int jeton) {
+void affichage(int y, float x, BITMAP *buffer, BITMAP *symbole_3,BITMAP *background, int ticket) {
     blit(symbole_3, buffer, 0, 0, x, y, symbole_3->w, symbole_3->h);
     //stretch_blit(background,buffer,0,0,background->w,background->h,0,0,symbole_3->w,symbole_3->h);
   //stretch_sprite(symbole_3,buffer,0,0,symbole_3->w,symbole_3->h);
@@ -12,19 +12,19 @@ void display(int y, float x, BITMAP *buffer, BITMAP *symbole_3,BITMAP *backgroun
     rectfill(buffer, 700, 0, 1000, 1200, makecol(22, 16, 16));
     rectfill(buffer, 300, 500, 700, 1200, makecol(22, 16, 16));*/
    masked_blit(background, buffer, 0, 0, 0, 50, background->w, background->h);
-    textprintf_ex(buffer,font,550,20, makecol(255,255,255),-1, "TICKET: %d" ,jeton);
+    textprintf_ex(buffer,font,550,20, makecol(255,255,255),-1, "TICKET: %d" ,ticket);
 
     //stretch_blit(background,buffer,0,0,background->w,background->h,0,0,screen->w,screen->h);
     blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
     //stretch_sprite(background,buffer,0,0,background->w,background->h);
 }
 
-void defilement( int i, float position_actuelle, int x, BITMAP *buffer, BITMAP *symbole_3, BITMAP *background,  float position_retenu, int jeton,float k) {
+void defilement(  float position_actuelle, int x, BITMAP *buffer, BITMAP *symbole_3, BITMAP *background ,int ticket) {
 
     /*for (float j = 0; j < i; j++) {
         k = (2.45 * j) / i;
         position_actuelle = position_actuelle + (-(k * k) + 2.45 * k);
-        display(position_actuelle, x, buffer, symbole_3, background, jeton);
+        affichage(position_actuelle, x, buffer, symbole_3, background, ticket);
         printf("%f`\n",k);
         //printf("%d\n",i);
         printf("%f\n",position_actuelle);
@@ -35,14 +35,14 @@ void defilement( int i, float position_actuelle, int x, BITMAP *buffer, BITMAP *
     }*/
     for (int j = 0; j <46 ; ++j) {
         position_actuelle = position_actuelle+2*j;
-        display(position_actuelle, x, buffer, symbole_3, background, jeton);
+        affichage(position_actuelle, x, buffer, symbole_3, background, ticket);
         rest(50);
         //printf("%f\n",position_actuelle);
     }
     for (int g = 46; g>0  ; --g) {
         position_actuelle = position_actuelle+2*g;
         //printf("lol");
-        display(position_actuelle, x, buffer, symbole_3, background, jeton);
+        affichage(position_actuelle, x, buffer, symbole_3, background, ticket);
         rest(50);
         //printf("%f\n",position_actuelle);
     }
@@ -105,9 +105,9 @@ void jackpot_game() {
     int finition, finition2, finition3;
 
     int arret = 0;
-    int JETON = 5;
-    int JETONboucle = 1;
-    int JETONboucle2 = 1;
+    int ticket = 5;
+    int ticketboucle = 1;
+    int ticketboucle2 = 1;
     int x1 = 443;
     int x2 = 681;
     int x3 = 926;
@@ -127,27 +127,27 @@ void jackpot_game() {
 
             int random1 = rand() % 6;
             position_actuelle1 = position[1];
-            display(position_actuelle1, x1, buffer, symbole_3, background, JETON);
+            affichage(position_actuelle1, x1, buffer, symbole_3, background, ticket);
             random1 = rand() % 6;
             position_actuelle2 = position[1];
-            display(position_actuelle2, x2, buffer, symbole_3, background, JETON);
+            affichage(position_actuelle2, x2, buffer, symbole_3, background, ticket);
             random1 = rand() % 6;
             position_actuelle3 = position[1];
-            display(position_actuelle3, x3, buffer, symbole_3, background, JETON);
+            affichage(position_actuelle3, x3, buffer, symbole_3, background, ticket);
             boucle = 1;
-            JETONboucle2 = JETONboucle;
+            ticketboucle2 = ticketboucle;
             printf("1");
 
             //stretch_blit(background, buffer, 0, 0, background->w, background->h, 0, 0, screen->w, screen->h);
             blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
         }
-        while (JETONboucle == JETONboucle2) {
+        while (ticketboucle == ticketboucle2) {
             if (key[KEY_ESC]) {
                 break;
             }
             while (boucle == 1 && !key[KEY_ESC]) {
 
-                if (key[KEY_E]) {
+                if (key[KEY_J]) {
                    // printf("lol");
                     int resultat = rand() % 3;
                     finition = resultat_position[resultat];
@@ -158,24 +158,18 @@ void jackpot_game() {
                     printf("%d\n",finition2);
                     finition3 = resultat_position[resultat];
                     printf("%d\n",finition3);
-                    float k = 0;
-                    float i = -position_actuelle1 + finition;
-                    float i2 = -position_actuelle2 + finition2;
-                    float i3 = -position_actuelle3 + finition3;
-                    float positionretenu = position_actuelle1;
-                    float positionretenu2 = position_actuelle2;
-                    float positionretenu3 = position_actuelle3;
+
                     position_actuelle1=position_actuelle1+finition;
                     position_actuelle2=position_actuelle2+finition2;
                     position_actuelle3=position_actuelle3+finition3;
                     printf("zebi");
 
-                    defilement(i, position_actuelle1, x1, buffer, symbole_3, background, positionretenu, JETON,k);
-                    //display(finition, x1, buffer, symbole_3, background, JETON);
-                    defilement(i2, position_actuelle2, x2, buffer, symbole_3, background, positionretenu2, JETON,k);
-                    //display(finition2, x2, buffer, symbole_3, background, JETON);
-                    defilement(i3, position_actuelle3, x3, buffer, symbole_3, background, positionretenu3, JETON,k);
-                    //display(finition3, x3, buffer, symbole_3, background, JETON);
+                    defilement( position_actuelle1, x1, buffer, symbole_3, background,  ticket);
+                    //affichage(finition, x1, buffer, symbole_3, background, ticket);
+                    defilement( position_actuelle2, x2, buffer, symbole_3, background, ticket);
+                    //affichage(finition2, x2, buffer, symbole_3, background, ticket);
+                    defilement( position_actuelle3, x3, buffer, symbole_3, background, ticket);
+                    //affichage(finition3, x3, buffer, symbole_3, background, ticket);
                     printf("lola");
 
                 }
