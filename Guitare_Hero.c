@@ -83,7 +83,7 @@ void settings(int *speed,int *acceleration,BITMAP *buffer)
     rest(300);
 }
 
-void check_tile_and_update_score(int column,t_tuiles *tuiles, int *score, int offset,BITMAP *tuilePLEINE[4],int *erreurs) {
+void verif_score(int column, t_tuiles *tuiles, int *score, int offset, BITMAP *tuilePLEINE[4], int *erreurs) {
     int numLigne;
     printf("%d",offset);
     if (offset<70){
@@ -406,7 +406,7 @@ void game_GUITARE(t_player *players)
         }
         /// Si une touche a été enfoncée, on appelle la fonction qui gère le score et modifie la couleur de la tuile
         if (column != -1) {
-            check_tile_and_update_score(column, &tuiles, &score, offset,touchePLEINE,&erreurs);
+            verif_score(column, &tuiles, &score, offset, touchePLEINE, &erreurs);
 
             /// On affiche le cercle rouge correspondant à l'endroit où le joueur est en train d'appuyer
             circlefill(buffer, offsetX + column * w_tuile + w_tuile/2, screen->h - 2 - 50, 5,
@@ -457,6 +457,5 @@ void game_GUITARE(t_player *players)
         game_iteration++;
     }
     rest(500);
-
 
 }
