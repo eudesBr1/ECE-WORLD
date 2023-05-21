@@ -6,11 +6,6 @@ void affichage(int y, float x, BITMAP *buffer, BITMAP *symbole_3,BITMAP *backgro
   //stretch_sprite(symbole_3,buffer,0,0,symbole_3->w,symbole_3->h);
     rectfill(buffer, 0, 0, screen->w, 349, makeacol(177, 60, 255, 250));
     rectfill(buffer, 1200, 349, screen->w, screen->h, makeacol(177, 60, 255, 250));
-    /*rectfill(buffer, 1000, 0, 0, 300, makecol(22, 16, 16));
-    rectfill(buffer, 1000, 500, 0, 700, makecol(22, 16, 16));
-    rectfill(buffer, 300, 0, 0, 1200, makecol(22, 16, 16));
-    rectfill(buffer, 700, 0, 1000, 1200, makecol(22, 16, 16));
-    rectfill(buffer, 300, 500, 700, 1200, makecol(22, 16, 16));*/
    masked_blit(background, buffer, 0, 0, 0, 50, background->w, background->h);
     textprintf_ex(buffer,font,550,20, makecol(255,255,255),-1, "TICKET: %d" ,ticket);
 
@@ -84,7 +79,13 @@ void jackpot_game() {
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-
+    BITMAP *lose;
+    lose= load_bitmap("../images/lose.bmp", NULL);
+    if (!lose) {
+        allegro_message("Pb de l'image lose");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
 
     int position0 = -4425;
@@ -105,13 +106,13 @@ void jackpot_game() {
     float position_actuelle1 = 0;
     float position_actuelle2 = 0;
     float position_actuelle3 = 0;
-    int boucle = 0;
+    int set = 0;
     int finition, finition2, finition3;
 
     int arret = 0;
     int ticket = 5;
-    int ticketboucle = 1;
-    int ticketboucle2 = 1;
+    int ticketset = 1;
+    int ticketset2 = 1;
     int x1 = 443;
     int x2 = 681;
     int x3 = 926;
@@ -122,8 +123,8 @@ void jackpot_game() {
     while (!key[KEY_ESC]) {
         clear(buffer);
 
-        while (boucle == 0 && arret == 0) {
-            //printf("%d",boucle);
+        while (set == 0 && arret == 0) {
+            //printf("%d",set);
             if (key[KEY_ESC]) {
                 break;
             }
@@ -138,18 +139,18 @@ void jackpot_game() {
             random1 = rand() % 6;
             position_actuelle3 = position[1];
             affichage(position_actuelle3, x3, buffer, symbole_3, background, ticket);
-            boucle = 1;
-            ticketboucle2 = ticketboucle;
+            set = 1;
+            ticketset2 = ticketset;
             printf("1");
 
             //stretch_blit(background, buffer, 0, 0, background->w, background->h, 0, 0, screen->w, screen->h);
             blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
 
-        while (ticketboucle == ticketboucle2) {
+        while (ticketset == ticketset2) {
             if (key[KEY_ESC]) {
                 break;
             }
-            while (boucle == 1 && !key[KEY_ESC]) {
+            while (set == 1 && !key[KEY_ESC]) {
 
                 position_actuelle1 = position[1];
                 affichage(position_actuelle1, x1, buffer, symbole_3, background, ticket);
@@ -161,8 +162,8 @@ void jackpot_game() {
                 affichage(position_actuelle3, x3, buffer, symbole_3, background, ticket);
                 if (key[KEY_L]) {
                     printf("cr7");
-                    boucle = 0;
-                    ticketboucle2 = 0;
+                    set = 0;
+                    ticketset2 = 0;
 
                 }
                 if (key[KEY_J]) {
@@ -189,45 +190,62 @@ void jackpot_game() {
                     defilement(position_actuelle3, x3, buffer, symbole_3, background, ticket);
                     //affichage(finition3, x3, buffer, symbole_3, background, ticket);
                     printf("lola");
-                    boucle = 2;
+                    set = 2;
                 }
 
-                while (boucle == 2) {
+                while (set == 2) {
 
                     if (finition == finition2 || finition3 == finition2 || finition == finition3) {
                         if (finition == finition2 && finition3 == finition2) {
                             ticket = ticket + 1;
                             printf("you won");
-                            for (int p = 0; p < 50; p++) {
-                                masked_blit(win2, buffer, 0, 0, (background->w / 2), (background->h / 2), buffer->w,
+                            for (int p = 0; p < 30; p++) {
+                                masked_blit(win2, buffer, 0, 0, 450, 50, buffer->w,
                                             buffer->h);
                                 blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
-                                rest(50);
-                                //masked_blit(background, buffer, 0, 0, (background->w/2), 385-(background->h/2), buffer->w, buffer->h);
-                                //blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
-                                rest(50);
+                                rest(200);
+                                masked_blit(background, buffer, 0, 0, 0, 50, buffer->w, buffer->h);
+                                blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+                                rest(100);
                             }
 
                         } else {
-                            printf("you nearly won\n");
+                            for (int p = 0; p < 30; p++) {
+                                masked_blit(lose, buffer, 0, 0, 450, 50, buffer->w,
+                                            buffer->h);
+                                blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+                                rest(200);
+                                masked_blit(background, buffer, 0, 0, 0, 50, buffer->w, buffer->h);
+                                blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+                                rest(100);
+                            }
 
                         }
                     } else {
                         printf("too bad\n");
+                        for (int p = 0; p < 30; p++) {
+                            masked_blit(lose, buffer, 0, 0, 450, 50, buffer->w,
+                                        buffer->h);
+                            blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+                            rest(200);
+                            masked_blit(background, buffer, 0, 0, 0, 50, buffer->w, buffer->h);
+                            blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+                            rest(100);
+                        }
                         ticket = ticket - 1;
                     }
                     affichage(0, 0, buffer, symbole_3, background, ticket);
-                    boucle = 3;
+                    set = 3;
 
                     printf("kilo\n");
                 }
                 blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
                 printf("howard\n");
-                while (boucle == 3) {
+                while (set == 3) {
 
 
                         rest(3000);
-                        boucle=1;
+                        set=1;
 
 
                 }
