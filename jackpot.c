@@ -14,21 +14,21 @@ void affichage(int y, float x, BITMAP *buffer, BITMAP *symbole_3,BITMAP *backgro
     //stretch_sprite(background,buffer,0,0,background->w,background->h);
 }
 
-void defilement(  float position_actuelle, int x, BITMAP *buffer, BITMAP *symbole_3, BITMAP *background ,int ticket) {
+void defilement(  float coordonees_actuelle, int x, BITMAP *buffer, BITMAP *symbole_3, BITMAP *background ,int ticket) {
 
 
     for (int j = 0; j <46 ; ++j) {
-        position_actuelle = position_actuelle+2*j;
-        affichage(position_actuelle, x, buffer, symbole_3, background, ticket);
+        coordonees_actuelle = coordonees_actuelle+2*j;
+        affichage(coordonees_actuelle, x, buffer, symbole_3, background, ticket);
         rest(50);
-        //printf("%f\n",position_actuelle);
+        //printf("%f\n",coordonees_actuelle);
     }
     for (int g = 46; g>0  ; --g) {
-        position_actuelle = position_actuelle+2*g;
+        coordonees_actuelle = coordonees_actuelle+2*g;
         //printf("lol");
-        affichage(position_actuelle, x, buffer, symbole_3, background, ticket);
+        affichage(coordonees_actuelle, x, buffer, symbole_3, background, ticket);
         rest(50);
-        //printf("%f\n",position_actuelle);
+        //printf("%f\n",coordonees_actuelle);
     }
 
 }
@@ -88,24 +88,24 @@ void jackpot_game() {
     }
 
 
-    int position0 = -4425;
-    int position1 = -4380;
-    int position2 = -4337;
-    int position3 = -4303;
-    int position4 = -4260;
-    int position5 = -4215;
-    int position[] = {position0, position1, position2, position3, position4, position5};
+    int coordonees0 = -4425;
+    int coordonees1 = -4380;
+    int coordonees2 = -4337;
+    int coordonees3 = -4303;
+    int coordonees4 = -4260;
+    int coordonees5 = -4215;
+    int coordonees[] = {coordonees0, coordonees1, coordonees2, coordonees3, coordonees4, coordonees5};
 
-    int resultat_position0 = 5;
-    int resultat_position1 = 163;
-    int resultat_position2 = 320;
+    int resultat_coordonees0 = 5;
+    int resultat_coordonees1 = 163;
+    int resultat_coordonees2 = 320;
 
-    int resultat_position[] = {resultat_position0, resultat_position1, resultat_position2 };
+    int resultat_coordonees[] = {resultat_coordonees0, resultat_coordonees1, resultat_coordonees2 };
 
 
-    float position_actuelle1 = 0;
-    float position_actuelle2 = 0;
-    float position_actuelle3 = 0;
+    float coordonees_actuelle1 = 0;
+    float coordonees_actuelle2 = 0;
+    float coordonees_actuelle3 = 0;
     int set = 0;
     int finition, finition2, finition3;
 
@@ -131,14 +131,14 @@ void jackpot_game() {
 
 
             int random1 = rand() % 6;
-            position_actuelle1 = position[1];
-            affichage(position_actuelle1, x1, buffer, symbole_3, background, ticket);
+            coordonees_actuelle1 = coordonees[1];
+            affichage(coordonees_actuelle1, x1, buffer, symbole_3, background, ticket);
             random1 = rand() % 6;
-            position_actuelle2 = position[1];
-            affichage(position_actuelle2, x2, buffer, symbole_3, background, ticket);
+            coordonees_actuelle2 = coordonees[1];
+            affichage(coordonees_actuelle2, x2, buffer, symbole_3, background, ticket);
             random1 = rand() % 6;
-            position_actuelle3 = position[1];
-            affichage(position_actuelle3, x3, buffer, symbole_3, background, ticket);
+            coordonees_actuelle3 = coordonees[1];
+            affichage(coordonees_actuelle3, x3, buffer, symbole_3, background, ticket);
             set = 1;
             ticketset2 = ticketset;
             printf("1");
@@ -152,14 +152,14 @@ void jackpot_game() {
             }
             while (set == 1 && !key[KEY_ESC]) {
 
-                position_actuelle1 = position[1];
-                affichage(position_actuelle1, x1, buffer, symbole_3, background, ticket);
+                coordonees_actuelle1 = coordonees[1];
+                affichage(coordonees_actuelle1, x1, buffer, symbole_3, background, ticket);
                 random1 = rand() % 6;
-                position_actuelle2 = position[1];
-                affichage(position_actuelle2, x2, buffer, symbole_3, background, ticket);
+                coordonees_actuelle2 = coordonees[1];
+                affichage(coordonees_actuelle2, x2, buffer, symbole_3, background, ticket);
                 random1 = rand() % 6;
-                position_actuelle3 = position[1];
-                affichage(position_actuelle3, x3, buffer, symbole_3, background, ticket);
+                coordonees_actuelle3 = coordonees[1];
+                affichage(coordonees_actuelle3, x3, buffer, symbole_3, background, ticket);
                 if (key[KEY_L]) {
                     printf("cr7");
                     set = 0;
@@ -169,25 +169,25 @@ void jackpot_game() {
                 if (key[KEY_J]) {
                     // printf("lol");
                     int resultat = rand() % 3;
-                    finition = resultat_position[resultat];
+                    finition = resultat_coordonees[resultat];
                     resultat = rand() % 3;
                     printf("%d\n", finition);
-                    finition2 = resultat_position[resultat];
+                    finition2 = resultat_coordonees[resultat];
                     resultat = rand() % 3;
                     printf("%d\n", finition2);
-                    finition3 = resultat_position[resultat];
+                    finition3 = resultat_coordonees[resultat];
                     printf("%d\n", finition3);
 
-                    position_actuelle1 = position_actuelle1 + finition;
-                    position_actuelle2 = position_actuelle2 + finition2;
-                    position_actuelle3 = position_actuelle3 + finition3;
+                    coordonees_actuelle1 = coordonees_actuelle1 + finition;
+                    coordonees_actuelle2 = coordonees_actuelle2 + finition2;
+                    coordonees_actuelle3 = coordonees_actuelle3 + finition3;
                     printf("zebi");
 
-                    defilement(position_actuelle1, x1, buffer, symbole_3, background, ticket);
+                    defilement(coordonees_actuelle1, x1, buffer, symbole_3, background, ticket);
                     //affichage(finition, x1, buffer, symbole_3, background, ticket);
-                    defilement(position_actuelle2, x2, buffer, symbole_3, background, ticket);
+                    defilement(coordonees_actuelle2, x2, buffer, symbole_3, background, ticket);
                     //affichage(finition2, x2, buffer, symbole_3, background, ticket);
-                    defilement(position_actuelle3, x3, buffer, symbole_3, background, ticket);
+                    defilement(coordonees_actuelle3, x3, buffer, symbole_3, background, ticket);
                     //affichage(finition3, x3, buffer, symbole_3, background, ticket);
                     printf("lola");
                     set = 2;
@@ -199,8 +199,8 @@ void jackpot_game() {
                         if (finition == finition2 && finition3 == finition2) {
                             ticket = ticket + 1;
                             printf("you won");
-                            for (int p = 0; p < 30; p++) {
-                                masked_blit(win2, buffer, 0, 0, 450, 50, buffer->w,
+                            for (int p = 0; p < 23; p++) {
+                                masked_blit(win2, buffer, 0, 0, 500, 50, buffer->w,
                                             buffer->h);
                                 blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
                                 rest(200);
@@ -210,7 +210,7 @@ void jackpot_game() {
                             }
 
                         } else {
-                            for (int p = 0; p < 30; p++) {
+                            for (int p = 0; p < 23; p++) {
                                 masked_blit(lose, buffer, 0, 0, 450, 50, buffer->w,
                                             buffer->h);
                                 blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
@@ -223,7 +223,7 @@ void jackpot_game() {
                         }
                     } else {
                         printf("too bad\n");
-                        for (int p = 0; p < 30; p++) {
+                        for (int p = 0; p < 23; p++) {
                             masked_blit(lose, buffer, 0, 0, 450, 50, buffer->w,
                                         buffer->h);
                             blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
