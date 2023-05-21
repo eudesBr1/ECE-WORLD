@@ -280,8 +280,10 @@ void affichageVille(t_player players[4]){
             if (key[KEY_RIGHT])
             {
                 tour++;
-                tour = tour % players[0].nbJoueurs;
             }
+
+            tour = tour % players[0].nbJoueurs;
+
         }
     } while (!check_defaite(players));
 
