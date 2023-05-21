@@ -450,11 +450,11 @@ void game_PONG(t_player player[4],int numJoueur) {
     rectfill(WINNER, 0, 0, screen->w, screen->h, makecol(255, 0, 255));
     textprintf_ex(WINNER,font,0,0, makecol(255,55,55),-1,"%s",player[gagnant].name);
 
-    SAMPLE *applause = load_wav("../images/sons/applause.wav");
-    SAMPLE *You_Win = load_wav("../images/sons/You_Win.wav");
+    //SAMPLE *applause = load_wav("../images/sons/applause.wav");
+    //SAMPLE *You_Win = load_wav("../images/sons/You_Win.wav");
 
 
-    play_sample(applause,255,0,2000,0);
+    //play_sample(applause,255,0,2000,0);
 
     for (int i = 0; i < 95; i++) {
         clear(buffer);
@@ -467,10 +467,10 @@ void game_PONG(t_player player[4],int numJoueur) {
         stretch_sprite(buffer,confettis[i%14],screen->w/2+300,screen->h/2+tailleConfetis,tailleConfetis,tailleConfetis);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
         if (i == 30 )
-            play_sample(You_Win,255,0,2000,0);
+            //play_sample(You_Win,255,0,2000,0);
         rest(80);
     }
-    stop_sample(applause);
+    //stop_sample(applause);
     player[perdant].ticket--;
     player[gagnant].points++;
     destroy_bitmap(fond_space);

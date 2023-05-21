@@ -256,7 +256,7 @@ void affichageVille(t_player players[4]){
                 pause(players,pausePlay,buffer);
             }
 
-            collision_res = collision(players,fond,tour);
+            collision_res = collision(players,fond,&tour);
             if (collision_res%17==0)
             {
                 stretch_blit(E_touch,buffer,0,0,E_touch->w,E_touch->h,W_PERSO+players[tour].x,H_PERSO/2+players[tour].y,E_touch->w*2,E_touch->h*2);
@@ -280,8 +280,10 @@ void affichageVille(t_player players[4]){
             if (key[KEY_RIGHT])
             {
                 tour++;
-                tour = tour % players[0].nbJoueurs;
             }
+
+            tour = tour % players[0].nbJoueurs;
+
         }
     } while (!check_defaite(players));
 

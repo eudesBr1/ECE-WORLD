@@ -100,7 +100,7 @@ typedef struct tuiles{
 void initEcran();
 void gameInit(t_player players[4]);
 void ballon(t_player *player);
-int collision(t_player *perso,BITMAP *fond,int numJoueur);
+int collision(t_player *perso,BITMAP *fond,int *numJoueur);
 void game_GUITARE(t_player *players);
 t_player mouvementPersonnageFleche(t_player *player);
 void mouvementPersonnageZQSD(t_player player[4],int numJoueur,int collision_res);
