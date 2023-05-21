@@ -21,18 +21,7 @@ void affichage(int y, float x, BITMAP *buffer, BITMAP *symbole_3,BITMAP *backgro
 
 void defilement(  float position_actuelle, int x, BITMAP *buffer, BITMAP *symbole_3, BITMAP *background ,int ticket) {
 
-    /*for (float j = 0; j < i; j++) {
-        k = (2.45 * j) / i;
-        position_actuelle = position_actuelle + (-(k * k) + 2.45 * k);
-        affichage(position_actuelle, x, buffer, symbole_3, background, ticket);
-        printf("%f`\n",k);
-        //printf("%d\n",i);
-        printf("%f\n",position_actuelle);
-        if (position_actuelle > position_retenu + 60) {
 
-            position_retenu = position_actuelle;
-        }
-    }*/
     for (int j = 0; j <46 ; ++j) {
         position_actuelle = position_actuelle+2*j;
         affichage(position_actuelle, x, buffer, symbole_3, background, ticket);
@@ -81,6 +70,14 @@ void jackpot_game() {
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+    BITMAP *win;
+    win = load_bitmap("../images/win.bmp", NULL);
+    if (!symbole_3) {
+        allegro_message("Pb de l'image win");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
 
 
     int position0 = -4425;
@@ -148,33 +145,77 @@ void jackpot_game() {
             while (boucle == 1 && !key[KEY_ESC]) {
 
                 if (key[KEY_J]) {
-                   // printf("lol");
+                    // printf("lol");
                     int resultat = rand() % 3;
                     finition = resultat_position[resultat];
                     resultat = rand() % 3;
-                    printf("%d\n",finition);
+                    printf("%d\n", finition);
                     finition2 = resultat_position[resultat];
                     resultat = rand() % 3;
-                    printf("%d\n",finition2);
+                    printf("%d\n", finition2);
                     finition3 = resultat_position[resultat];
-                    printf("%d\n",finition3);
+                    printf("%d\n", finition3);
 
-                    position_actuelle1=position_actuelle1+finition;
-                    position_actuelle2=position_actuelle2+finition2;
-                    position_actuelle3=position_actuelle3+finition3;
+                    position_actuelle1 = position_actuelle1 + finition;
+                    position_actuelle2 = position_actuelle2 + finition2;
+                    position_actuelle3 = position_actuelle3 + finition3;
                     printf("zebi");
 
-                    defilement( position_actuelle1, x1, buffer, symbole_3, background,  ticket);
+                    defilement(position_actuelle1, x1, buffer, symbole_3, background, ticket);
                     //affichage(finition, x1, buffer, symbole_3, background, ticket);
-                    defilement( position_actuelle2, x2, buffer, symbole_3, background, ticket);
+                    defilement(position_actuelle2, x2, buffer, symbole_3, background, ticket);
                     //affichage(finition2, x2, buffer, symbole_3, background, ticket);
-                    defilement( position_actuelle3, x3, buffer, symbole_3, background, ticket);
+                    defilement(position_actuelle3, x3, buffer, symbole_3, background, ticket);
                     //affichage(finition3, x3, buffer, symbole_3, background, ticket);
                     printf("lola");
+                    boucle = 2;
+                }
+            }
+                while (boucle == 2) {
+
+                    if (finition == finition2 || finition3 == finition2 || finition == finition3) {
+                        if (finition == finition2 && finition3 == finition2) {
+                            ticket=ticket+1;
+                            printf("you won");
+                            for (int p=0; p<50; p++) {
+                                masked_blit(win, buffer, 0, 0, (background->w/2), (background->h/2), buffer->w, buffer->h);
+                                blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+                                rest(50);
+                                //masked_blit(background, buffer, 0, 0, (background->w/2), 385-(background->h/2), buffer->w, buffer->h);
+                                blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+                                rest(50);
+                            }
+
+                        } else {
+                            printf("you nearly won\n");
+
+                        }
+                    } else {
+                        printf("too bad\n");
+                        ticket=ticket-1;
+                    }
+                    affichage(0, 0, buffer, symbole_3, background, ticket);
+                    boucle = 3;
+
+                    printf("kilo\n");
+                }
+                blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+                printf("howard\n");
+                while (boucle==3) {
+
+                    if (key[KEY_E]) {
+                        printf("cr7");
+                        boucle = 0;
+                        ticketboucle2=0;
+
+                    }
+                    else{
+                        boucle=1;
+                    }
 
                 }
 
-            }
+
             destroy_bitmap(background);
             destroy_bitmap(symbole_3);
             destroy_bitmap(buffer);
