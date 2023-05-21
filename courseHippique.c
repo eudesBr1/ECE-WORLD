@@ -21,7 +21,7 @@ void courseHippique(t_player *player){
     ///affichage menu
     while (!key[KEY_ESC] && !key[KEY_G]){
         stretch_blit(menuCourseHippique,buffer,0,0,menuCourseHippique->w,menuCourseHippique->h,0,0,screen->w,screen->h);
-        textprintf_centre_ex(buffer,font,20,30, makecol(255,255,255),-1,"oui");
+      //  textprintf_centre_ex(buffer,font,20,30, makecol(255,255,255),-1,"oui");
         if (mouse_x>20 && mouse_x<200 && mouse_y>screen->h-60 && mouse_y<screen->h-10){
             stretch_sprite(buffer, boutonQuitter, 0, screen->h - 80, 260, 80);
             stretch_sprite(buffer,boutonStart,screen->w/2-60,screen->h/2+30,120,70);

@@ -4,9 +4,102 @@
 #include "Mabibli.h"
 
 void penalty(t_player *player){
-     ///charge image menu et boutons
+    while (1){
+        ///charge image menu et boutons
+        BITMAP *buffer;
+        buffer = create_bitmap(screen->w,screen->h);
+        BITMAP *menuPenalty;
+        menuPenalty = load_bitmap("../images/penalty/butDeFootLoading.bmp", NULL);
+        BITMAP *boutonQuitter;
+        boutonQuitter = load_bitmap("../images/quit_boutton.bmp",NULL);
+        BITMAP *boutonStart;
+        boutonStart = load_bitmap("../images/boutonStartCourse.bmp",NULL);
+        int tailleCheval = 50;
+        ///affichage menu
+        while (!key[KEY_ESC] && !key[KEY_G]){
+            stretch_blit(menuPenalty, buffer, 0, 0, menuPenalty->w, menuPenalty->h, 0, 0, screen->w, screen->h);
+            textprintf_centre_ex(buffer,font,20,30, makecol(255,255,255),-1,"oui");
+            if (mouse_x>20 && mouse_x<200 && mouse_y>screen->h-60 && mouse_y<screen->h-10){
+                stretch_sprite(buffer, boutonQuitter, 0, screen->h - 80, 260, 80);
+                stretch_sprite(buffer,boutonStart,screen->w/2-60,screen->h/2+30,120,70);
+                if (mouse_b == 1){
+                    destroy_bitmap(buffer);
+                    destroy_bitmap(menuPenalty);
+                    destroy_bitmap(boutonQuitter);
+                    return;
+                }
+            }
+            else if (mouse_x>screen->w/2-60 && mouse_x<screen->w/2+60 && mouse_y> screen->h/2+30 && mouse_y < screen->h/2+130){
+                stretch_sprite(buffer, boutonQuitter, 20, screen->h - 60, 180, 50);
+                stretch_sprite(buffer,boutonStart,screen->w/2-80,screen->h/2+15,160,100);
+                if (mouse_b == 1) break;
+            }
+
+            else{
+                stretch_sprite(buffer, boutonQuitter, 20, screen->h - 60, 180, 50);
+                stretch_sprite(buffer,boutonStart,screen->w/2-60,screen->h/2+30,120,70);
+            }
+            show_mouse(buffer);
+            blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+            clear(buffer);
+
+        }
+        rest(250);
+        clear(buffer);
+        int choixJoueur = 10;
+        do{
+            stretch_blit(menuPenalty, buffer, 0, 0, menuPenalty->w, menuPenalty->h, 0, 0, screen->w, screen->h);
+            for (int i = 0; i < player[0].nbJoueurs; ++i) {
+                stretch_sprite(buffer,player[i].bas[1],((screen->w*(i+1))/6),(2*screen->h/4),screen->w/6,1.5*screen->h/4);
+                if (mouse_x >((screen->w*(i+1))/6) && mouse_x < ((screen->w*(i+1))/6) + screen->w/6 && mouse_y > (2*screen->h/4) && mouse_y < (2*screen->h/4) + (2*screen->h/4) && mouse_b == 1){
+                    choixJoueur = i;
+                    printf(" choix %d",i);
+                    break;
+                }
+            }
+            show_mouse(buffer);
+            blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+        } while ( choixJoueur == 10);
+        rest(250);
+        int choixJoueur2 = 10;
+        do{
+            stretch_blit(menuPenalty, buffer, 0, 0, menuPenalty->w, menuPenalty->h, 0, 0, screen->w, screen->h);
+            for (int i = 0; i < player[0].nbJoueurs; ++i) {
+                stretch_sprite(buffer,player[i].bas[1],((screen->w*(i+1))/6),(2*screen->h/4),screen->w/6,1.5*screen->h/4);
+                textprintf_centre_ex(buffer,font,screen->w/2,screen->h/2, makecol(0,0,0),-1," 1er joueur est %s",player[choixJoueur].name);
+                if (mouse_x >((screen->w*(i+1))/6) && mouse_x < ((screen->w*(i+1))/6) + screen->w/6 && mouse_y > (2*screen->h/4) && mouse_y < (2*screen->h/4) + (2*screen->h/4) && mouse_b == 1){
+                    choixJoueur2 = i;
+                    printf(" choix %d",i);
+                    break;
+                }
+            }
+            show_mouse(buffer);
+            blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+        } while ( choixJoueur2 == 10);
+        player[choixJoueur].score = 0;
+        for (int i = 0; i < 2; ++i) {
+            debutPenalty(player,choixJoueur);
+        }
+        printf("nmb penausq %d\n",player[choixJoueur].score);
+
+        for (int i = 0; i < 3; ++i) {
+            debutPenalty(player,choixJoueur2);
+        }
+        printf("nmb penausq %d\n",player[choixJoueur2].score);
+        if (player[choixJoueur].score < player[choixJoueur2].score){
+            player[choixJoueur].ticket--;
+            player[choixJoueur2].points++;
+        }
+        if (player[choixJoueur].score > player[choixJoueur2].score){
+            player[choixJoueur].ticket++;
+            player[choixJoueur2].points--;
+        }
+    }
+}
+int debutPenalty(t_player *player,int choixJoueur){
     BITMAP *buffer;
     buffer = create_bitmap(screen->w,screen->h);
+    clear(buffer);
     BITMAP *fondStade = load_bitmap("../images/penalty/butDeFoot.bmp",NULL);
     if (!fondStade){
         allegro_message("Pb de l'image fondStade.bmp");
@@ -75,14 +168,14 @@ void penalty(t_player *player){
         gardien.position[12+i] = create_sub_bitmap(templateGardien,800*i+40,2385,800,410);
     }
     ///ecran avec points
-  //  create_bitmap(466,278);
+    //  create_bitmap(466,278);
     int rouge = makecol(255, 55, 55);
     int gris = makecol(127, 127, 127);
-    int width = text_length(font, "Au tour de ") + text_length(font,player[0].name);
+    int width = text_length(font, "Au tour de ") + text_length(font,player[choixJoueur].name);
     int height = text_height(font);
     BITMAP *ecran = create_bitmap(width,height+1);
     rectfill(ecran,0,0,ecran->w,ecran->h, gris);
-    textprintf_ex(ecran, font, 0,1, rouge,-1,"Au tour de %s",player[0].name);
+    textprintf_ex(ecran, font, 0,1, rouge,-1,"Au tour de %s",player[choixJoueur].name);
 
     ///commence le duel rien ne se passe
     while (!key[KEY_ESC] && !key[KEY_T]){
@@ -97,7 +190,7 @@ void penalty(t_player *player){
         stretch_sprite(buffer,jauge[valeurJauge/10],screen->w-150,400,100,500);
         stretch_blit(ecran,buffer,0,0,ecran->w,ecran->h,656,70,625,280);
         blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-        rest(1);
+        rest(5);
         if (key[KEY_1_PAD] || key[KEY_2_PAD] || key[KEY_3_PAD] || key[KEY_4_PAD] || key[KEY_5_PAD] || key[KEY_6_PAD]){
             if (valeurJauge>0){
                 ballon.rapidite=100;
@@ -123,8 +216,11 @@ void penalty(t_player *player){
                 ballon.rapidite=550;
                 ballon.diminution=0.8;
             }
-            actionPenalty(&player,&gardien,ballon,b);
-            rest(1);
+            int resultat= actionPenalty(player, &gardien,ballon,b,choixJoueur);
+            printf("seconde borne %d\n",resultat);
+            return resultat;
+            break;
+            rest(110);
         }
         b++;
         valeurJauge+=2;
@@ -134,9 +230,9 @@ void penalty(t_player *player){
         ballon.tailleBallon = 100;
         //    gardien.positionX=screen->w/2-gardien.largeur/2;
         //   gardien.positionY=screen->h/2+50;
+    }
 }
-}
-void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int b){
+int actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int b, int choixJoueur){
     ///charge image menu et boutons
     BITMAP *buffer;
     buffer = create_bitmap(screen->w,screen->h);
@@ -148,7 +244,7 @@ void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int 
     }
     ///le ballon tourne et se deplace
     if (key[KEY_4_PAD]){
-         b=0;
+        b=0;
         ///haut gauche
         // 250 gauche 400 haut
         while (!key[KEY_ESC] && ballon.positionX > 700 ){
@@ -157,7 +253,7 @@ void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int 
             stretch_sprite(buffer,gardien->position[choixAnimationGardien(*gardien,b)],gardien->positionX,gardien->positionY,gardien->largeur,gardien->hauteur);
             stretch_sprite(buffer,ballon.effet[(b/10)%3],ballon.positionX,ballon.positionY,ballon.tailleBallon,ballon.tailleBallon);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-            rest(1);
+            rest(5);
             ballon.positionX-=ballon.rapidite/100;
             ballon.positionY-=ballon.rapidite*1.9/100;
             ballon.tailleBallon-=ballon.diminution;
@@ -175,7 +271,7 @@ void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int 
             stretch_sprite(buffer,gardien->position[choixAnimationGardien(*gardien,b)],gardien->positionX,gardien->positionY,gardien->largeur,gardien->hauteur);
             stretch_sprite(buffer,ballon.effet[(b/10)%3],ballon.positionX,ballon.positionY,ballon.tailleBallon,ballon.tailleBallon);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-            rest(1);
+            rest(5);
             ballon.positionX-=ballon.rapidite/100;
             ballon.positionY-=ballon.rapidite*1.2/100;
             //   printf("%f\n",ballon.positionY);
@@ -194,7 +290,7 @@ void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int 
             stretch_sprite(buffer,gardien->position[choixAnimationGardien(*gardien,b)],gardien->positionX,gardien->positionY,gardien->largeur,gardien->hauteur);
             stretch_sprite(buffer,ballon.effet[(b/10)%3],ballon.positionX,ballon.positionY,ballon.tailleBallon,ballon.tailleBallon);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-            rest(1);
+            rest(5);
             ballon.positionY-=ballon.rapidite/100;
             ballon.tailleBallon-=ballon.diminution;
             b++;
@@ -211,7 +307,7 @@ void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int 
             stretch_sprite(buffer,gardien->position[choixAnimationGardien(*gardien,b)],gardien->positionX,gardien->positionY,gardien->largeur,gardien->hauteur);
             stretch_sprite(buffer,ballon.effet[(b/10)%3],ballon.positionX,ballon.positionY,ballon.tailleBallon,ballon.tailleBallon);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-            rest(1);
+            rest(5);
             ballon.positionY-=ballon.rapidite/100;
             ballon.tailleBallon-=ballon.diminution;
             b++;
@@ -228,7 +324,7 @@ void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int 
             stretch_sprite(buffer,gardien->position[choixAnimationGardien(*gardien,b)],gardien->positionX,gardien->positionY,gardien->largeur,gardien->hauteur);
             stretch_sprite(buffer,ballon.effet[(b/10)%3],ballon.positionX,ballon.positionY,ballon.tailleBallon,ballon.tailleBallon);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-            rest(1);
+            rest(5);
             ballon.positionX+=ballon.rapidite/100;
             ballon.positionY-=ballon.rapidite*1.55/100;
             ballon.tailleBallon-=ballon.diminution;
@@ -246,7 +342,7 @@ void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int 
             stretch_sprite(buffer,gardien->position[choixAnimationGardien(*gardien,b)],gardien->positionX,gardien->positionY,gardien->largeur,gardien->hauteur);
             stretch_sprite(buffer,ballon.effet[(b/10)%3],ballon.positionX,ballon.positionY,ballon.tailleBallon,ballon.tailleBallon);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-            rest(1);
+            rest(5);
             ballon.positionY-=ballon.rapidite/100;
             ballon.positionX+=ballon.rapidite*1.2/100;
             ballon.tailleBallon-=ballon.diminution;
@@ -255,7 +351,7 @@ void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int 
             bougerGardien(gardien);
         }
     }
-    finPenalty(player,gardien,&ballon,b);
+    int resultat = finPenalty(player,gardien,&ballon,b,choixJoueur);
     int h=0;
     while (h<100 && !key[KEY_ESC]){
         bougerGardien(gardien);
@@ -265,7 +361,7 @@ void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int 
             stretch_blit(fondStadeResultat,buffer,0,0,fondStade->w,fondStade->h,0,0,screen->w,screen->h);
             stretch_sprite(buffer,gardien->position[choixAnimationGardien(*gardien,b)],gardien->positionX,gardien->positionY,gardien->largeur,gardien->hauteur);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-            rest(1);
+            rest(5);
         }
         if (gardien->arret==0){
             BITMAP *fondStadeResultat= load_bitmap("../images/penalty/butDeFootGoal.bmp",NULL);
@@ -273,7 +369,7 @@ void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int 
             stretch_sprite(buffer,ballon.effet[0],ballon.positionX,ballon.positionY,ballon.tailleBallon,ballon.tailleBallon);
             stretch_sprite(buffer,gardien->position[choixAnimationGardien(*gardien,b)],gardien->positionX,gardien->positionY,gardien->largeur,gardien->hauteur);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
-            rest(1);
+            rest(5);
         }
         h++;
         if (ballon.positionY<700) ballon.positionY+=3;
@@ -281,15 +377,21 @@ void actionPenalty(t_player *player,t_gardien *gardien, t_ballonFoot ballon,int 
     gardien->arret=0;
     gardien->positionX=screen->w/2-gardien->largeur/2;
     gardien->positionY=screen->h/2+50;
+    printf("borne %d\n",resultat);
+    return resultat;
 }
-void finPenalty(t_player *player,t_gardien *gardien, t_ballonFoot *ballon,int b){
+int finPenalty(t_player *player,t_gardien *gardien, t_ballonFoot *ballon,int b, int choixJoueur){
     if ((ballon->positionX+ballon->tailleBallon/2)>gardien->positionX && (ballon->positionX+ballon->tailleBallon/2)< gardien->positionX+gardien->largeur){
         if ((ballon->positionY+ballon->tailleBallon/2)>gardien->positionY && (ballon->positionY-ballon->tailleBallon/2)<gardien->positionY+gardien->largeur){
-            printf("%f %f %f \n",ballon->positionY+ballon->tailleBallon/2,gardien->positionY+gardien->largeur);
+            printf("\n l'arret %d \n",gardien->arret);
             gardien->arret=1;
+            return 0;
+            rest(5);
         }
     }
-    rest(10);
+    rest(5);
+    player[choixJoueur].score++;
+    return 1;
 }
 void bougerGardien(t_gardien *gardien){
     if (gardien->positionY == screen->h/2+50){
@@ -303,8 +405,8 @@ void bougerGardien(t_gardien *gardien){
             gardien->dY=-5;
         }
         if (key[KEY_E]){
-             gardien->dX=+5;
-             gardien->dY=-4;
+            gardien->dX=+5;
+            gardien->dY=-4;
         }
         if (key[KEY_S]){
             if (key[KEY_A]){
@@ -315,8 +417,8 @@ void bougerGardien(t_gardien *gardien){
             }
         }
         else if (key[KEY_A]){
-             gardien->dX=-6.5;
-             gardien->dY=-1.5;
+            gardien->dX=-6.5;
+            gardien->dY=-1.5;
         }
 
         else if (key[KEY_D]){
