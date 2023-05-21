@@ -14,12 +14,12 @@ void animation()
 }
 
 
-int collision(t_player *perso,BITMAP *fond,int numJoueur){
+int collision(t_player *perso,BITMAP *fond,int *numJoueur){
 
 
 
-    int x = perso[numJoueur].x*1000/1920;
-    int y = perso[numJoueur].y*920/1080;
+    int x = perso[*numJoueur].x*1000/1920;
+    int y = perso[*numJoueur].y*920/1080;
     int w = W_PERSO*1000/1920;
     int hauteur = H_PERSO*920/1080;
 
@@ -29,7 +29,7 @@ int collision(t_player *perso,BITMAP *fond,int numJoueur){
     int pong = makecol(0,38,255);
     int jackpot = makecol(182,255,0);
     int tir = makecol(128, 128, 128);
-    int mario = makecol(255,55,55);
+    //int mario = makecol(255,55,55);
 
 
 
@@ -68,6 +68,7 @@ int collision(t_player *perso,BITMAP *fond,int numJoueur){
         {
             animation();
             penalty(perso);
+            *numJoueur+=1;
         }
     }
     if (h == course)
@@ -77,6 +78,7 @@ int collision(t_player *perso,BITMAP *fond,int numJoueur){
         {
             animation();
             courseHippique(perso);
+            *numJoueur+=1;
         }
     }
     if (h == guitare)
@@ -85,7 +87,8 @@ int collision(t_player *perso,BITMAP *fond,int numJoueur){
         if (key[KEY_E])
         {
             animation();
-            game_GUITARE(&perso[numJoueur]);
+            game_GUITARE(&perso[*numJoueur]);
+            *numJoueur+=1;
         }
 
     }
@@ -95,7 +98,8 @@ int collision(t_player *perso,BITMAP *fond,int numJoueur){
         if (key[KEY_E])
         {
             animation();
-            game_PONG(perso,numJoueur);
+            game_PONG(perso,*numJoueur);
+            *numJoueur+=1;
         }
 
     }
@@ -106,6 +110,18 @@ int collision(t_player *perso,BITMAP *fond,int numJoueur){
         {
             animation();
             ballon(perso);
+            *numJoueur+=1;
+        }
+
+    }
+    if (h == jackpot)
+    {
+        renvoie = renvoie*17;
+        if (key[KEY_E])
+        {
+            animation();
+            jackpot_game();
+            *numJoueur+=1;
         }
 
     }
