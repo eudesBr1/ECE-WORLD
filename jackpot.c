@@ -72,8 +72,15 @@ void jackpot_game() {
     }
     BITMAP *win;
     win = load_bitmap("../images/win.bmp", NULL);
-    if (!symbole_3) {
+    if (!win) {
         allegro_message("Pb de l'image win");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    BITMAP *win2;
+    win2 = load_bitmap("../images/win2.bmp", NULL);
+    if (!win2) {
+        allegro_message("Pb de l'image win2");
         allegro_exit();
         exit(EXIT_FAILURE);
     }
@@ -137,13 +144,27 @@ void jackpot_game() {
 
             //stretch_blit(background, buffer, 0, 0, background->w, background->h, 0, 0, screen->w, screen->h);
             blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
-        }
+
         while (ticketboucle == ticketboucle2) {
             if (key[KEY_ESC]) {
                 break;
             }
             while (boucle == 1 && !key[KEY_ESC]) {
 
+                position_actuelle1 = position[1];
+                affichage(position_actuelle1, x1, buffer, symbole_3, background, ticket);
+                random1 = rand() % 6;
+                position_actuelle2 = position[1];
+                affichage(position_actuelle2, x2, buffer, symbole_3, background, ticket);
+                random1 = rand() % 6;
+                position_actuelle3 = position[1];
+                affichage(position_actuelle3, x3, buffer, symbole_3, background, ticket);
+                if (key[KEY_L]) {
+                    printf("cr7");
+                    boucle = 0;
+                    ticketboucle2 = 0;
+
+                }
                 if (key[KEY_J]) {
                     // printf("lol");
                     int resultat = rand() % 3;
@@ -170,19 +191,20 @@ void jackpot_game() {
                     printf("lola");
                     boucle = 2;
                 }
-            }
+
                 while (boucle == 2) {
 
                     if (finition == finition2 || finition3 == finition2 || finition == finition3) {
                         if (finition == finition2 && finition3 == finition2) {
-                            ticket=ticket+1;
+                            ticket = ticket + 1;
                             printf("you won");
-                            for (int p=0; p<50; p++) {
-                                masked_blit(win, buffer, 0, 0, (background->w/2), (background->h/2), buffer->w, buffer->h);
+                            for (int p = 0; p < 50; p++) {
+                                masked_blit(win2, buffer, 0, 0, (background->w / 2), (background->h / 2), buffer->w,
+                                            buffer->h);
                                 blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
                                 rest(50);
                                 //masked_blit(background, buffer, 0, 0, (background->w/2), 385-(background->h/2), buffer->w, buffer->h);
-                                blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+                                //blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
                                 rest(50);
                             }
 
@@ -192,7 +214,7 @@ void jackpot_game() {
                         }
                     } else {
                         printf("too bad\n");
-                        ticket=ticket-1;
+                        ticket = ticket - 1;
                     }
                     affichage(0, 0, buffer, symbole_3, background, ticket);
                     boucle = 3;
@@ -201,20 +223,16 @@ void jackpot_game() {
                 }
                 blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
                 printf("howard\n");
-                while (boucle==3) {
+                while (boucle == 3) {
 
-                    if (key[KEY_E]) {
-                        printf("cr7");
-                        boucle = 0;
-                        ticketboucle2=0;
 
-                    }
-                    else{
+                        rest(3000);
                         boucle=1;
-                    }
+
 
                 }
-
+            }
+        }
 
             destroy_bitmap(background);
             destroy_bitmap(symbole_3);
