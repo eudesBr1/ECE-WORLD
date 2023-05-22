@@ -94,8 +94,8 @@ void penalty(t_player *player){
             player[choixJoueur2].points++;
         }
         if (player[choixJoueur].score > player[choixJoueur2].score){
-            player[choixJoueur].ticket++;
-            player[choixJoueur2].points--;
+            player[choixJoueur].points++;
+            player[choixJoueur2].ticket--;
         }
     }
 }
