@@ -279,6 +279,8 @@ void affichageVille(t_player players[4]){
 
             if (key[KEY_RIGHT])
             {
+                rest(200);
+
                 tour++;
             }
 
