@@ -99,9 +99,9 @@ int pixel_perfect_colision(int x1, int y1, BITMAP * obj1, int x2, int y2, BITMAP
 
 
 
-//local variable
-float teta = 0.0;
-float beta = 0.0;
+
+
+
 
 void checkPtrNull(void *ptr) {
     if (ptr == NULL) {
@@ -116,7 +116,6 @@ void game_marios() {
     allegro_init();
     set_color_depth(32);
     set_gfx_mode(GFX_AUTODETECT_WINDOWED, 640, 480, 0, 0);
-    install_keyboard();
     install_mouse();
     install_timer();
     install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL);
@@ -152,11 +151,7 @@ void game_marios() {
     //flag
     BITMAP *crown = load_bitmap("../images/crown.bmp", NULL);
 
-    //enemy for night mode
-    BITMAP *bridge = load_bitmap("../images/bridge_1.bmp", NULL);
 
-    //point to collect for night mode is stars
-    BITMAP *star = load_bitmap("../images/star_0.bmp", NULL);
 
 
     while (!key[KEY_ESC]) {
@@ -234,6 +229,8 @@ void game_marios() {
 
 
 
+
+
                 int x = 10, y = 10;
                 int velx, vely;
                 velx = vely = 0;
@@ -249,7 +246,7 @@ void game_marios() {
 
                     draw_sprite(buffers, day, screenScrollXPosition, 0);
 
-
+                    float teta = 0.0;
                     teta += 2.5;
 
                     //coins worth 1 point
@@ -344,10 +341,7 @@ void game_marios() {
 
 
                     printf("5\n");
-                    if (day == NULL)
-                        printf("day\n");
-                    else if (crown == NULL)
-                        printf("crown");
+
 
                     draw_sprite(day, crown, 6250, 350);
 
@@ -356,7 +350,6 @@ void game_marios() {
                         break;
                     }
 
-                    printf("6\n");
 
 
                     //deal with collisions for coins
@@ -504,9 +497,10 @@ void game_marios() {
 
                     //pressing left, right and up
                     //include for gravitational effect when the character (mario) is jumping up
-
-                    if (key[KEY_LEFT]) {
+                    printf("zz\n");
+                    if (key[KEY_L]) {
                         velx = -1;
+                        printf("7");
                         screenScrollXPosition = screenScrollXPosition + 5;
                         width = width - 5;
 
@@ -519,8 +513,9 @@ void game_marios() {
                         }
 
 
-                    } else if (key[KEY_RIGHT]) {
+                    } else if (key[KEY_J]) {
                         velx = 1;
+                        printf("9");
                         screenScrollXPosition = screenScrollXPosition - 10;
                         width = width + 10;
 
@@ -543,7 +538,7 @@ void game_marios() {
                         velx = 0;
                     }
 
-                    if (key[KEY_UP] && y >= groundheight) {
+                    if (key[KEY_E] && y >= groundheight) {
                         vely = -15;
                         width = width + 30;
                     }
@@ -566,7 +561,7 @@ void game_marios() {
                     textprintf_ex(day, font, 10, 15, BLACK, WHITE, " Health: %i", lifeline);
                     textprintf_ex(day, font, 10, 30, BLACK, WHITE, " Points: %i", points);
                 }
-
+                printf("8");
 
             }
 
