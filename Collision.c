@@ -27,7 +27,7 @@ int collision(t_player *perso,BITMAP *fond,int *numJoueur){
     int pong = makecol(0,38,255);
     int jackpot = makecol(182,255,0);
     int tir = makecol(128, 128, 128);
-    //int mario = makecol(255,55,55);
+    int mario = makecol(255,55,55);
 
 
 
@@ -101,6 +101,18 @@ int collision(t_player *perso,BITMAP *fond,int *numJoueur){
         }
 
     }
+    if (h == mario)
+    {
+        renvoie = renvoie*17;
+        if (key[KEY_E])
+        {
+            animation();
+            game_marios();
+            *numJoueur+=1;
+        }
+
+    }
+
     if (h == tir)
     {
         renvoie = renvoie*17;
