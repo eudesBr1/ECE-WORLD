@@ -5,10 +5,6 @@
 #include "string.h"
 #define tailleCheval 120
 void courseHippique(t_player *player){
-    ///enleve ticket a tout les participants
-    for (int i = 0; i < player[0].nbJoueurs; ++i) {
-            player[i].ticket--;
-    }
     ///charge image menu et boutons
     BITMAP *buffer;
     buffer = create_bitmap(screen->w,screen->h);
@@ -36,6 +32,10 @@ void courseHippique(t_player *player){
             stretch_sprite(buffer, boutonQuitter, 20, screen->h - 60, 180, 50);
             stretch_sprite(buffer,boutonStart,screen->w/2-80,screen->h/2+15,160,100);
             if (mouse_b == 1){
+                ///enleve ticket a tout les participants
+                for (int i = 0; i < player[0].nbJoueurs; ++i) {
+                    player[i].ticket--;
+                }
                 choixChevaux(player);
                 printf("nombre joueur est de %d\n",player[0].nbJoueurs);
                 for (int i = 0; i < player[0].nbJoueurs; ++i) {
