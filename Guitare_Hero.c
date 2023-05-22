@@ -86,12 +86,12 @@ void settings(int *speed,int *acceleration,BITMAP *buffer)
 void verif_score(int column, t_tuiles *tuiles, int *score, int offset, BITMAP *tuilePLEINE[4], int *erreurs) {
     int numLigne;
     printf("%d",offset);
-    if (offset<70){
+        if (offset<140){
         numLigne = 1;
     } else{
         numLigne = 0;
     }
-    if (offset>70)
+    if (offset>140)
         numLigne = 2;
     //printf("\t%d",numLigne);
     //printf("\t %d:%d\n",numLigne,tuiles->couleur[column][numLigne]);
@@ -110,7 +110,7 @@ void verif_score(int column, t_tuiles *tuiles, int *score, int offset, BITMAP *t
         return;
 
     } else {
-
+        tuiles->couleur[column][numLigne] = 9;
         tuiles->pressed[column][numLigne] = 1;
         *erreurs+=1;
         return;

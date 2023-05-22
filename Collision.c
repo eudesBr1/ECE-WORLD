@@ -16,8 +16,6 @@ void animation()
 
 int collision(t_player *perso,BITMAP *fond,int *numJoueur){
 
-
-
     int x = perso[*numJoueur].x*1000/1920;
     int y = perso[*numJoueur].y*920/1080;
     int w = W_PERSO*1000/1920;

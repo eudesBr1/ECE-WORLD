@@ -371,7 +371,7 @@ int debutCourse(t_player *player){
         chevalGagnant = 1;
         return chevalGagnant;
     }
-    if (400+avanceeCheval1<400+avanceeCheval2 && 400+avanceeCheval3<400+avanceeCheval2){
+    if (avanceeCheval2>avanceeCheval1 && avanceeCheval2>avanceeCheval3){
         printf("Cheval 2 a gagne !\n");
         chevalGagnant = 2;
         return chevalGagnant;

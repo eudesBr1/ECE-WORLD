@@ -80,6 +80,7 @@ void penalty(t_player *player){
 
         } while ( choixJoueur2 == 10);
         player[choixJoueur].score = 0;
+        player[choixJoueur2].score = 0;
         for (int i = 0; i < 2; ++i) {
             debutPenalty(player,choixJoueur);
         }
@@ -93,10 +94,12 @@ void penalty(t_player *player){
             player[choixJoueur].ticket--;
             player[choixJoueur2].points++;
         }
-        if (player[choixJoueur].score > player[choixJoueur2].score){
+        if (player[choixJoueur].score > player[choixJoueur2].score) {
             player[choixJoueur].points++;
             player[choixJoueur2].ticket--;
         }
+        player[choixJoueur].score = 0;
+        player[choixJoueur2].score = 0;
     }
 }
 int debutPenalty(t_player *player,int choixJoueur){

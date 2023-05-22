@@ -188,6 +188,7 @@ void gameInit(t_player players[4]){
     ///on initialise alors chaque joueur avec leurs noms et leur personnages
     for (i = 0; i < nbJoueur; i++) {
         players[i].points = 0;
+        players[i].score = 0;
         players[i].nbJoueurs = nbJoueur;
         players[i].ticket = NBticketStart;
         players[i].position = 1;

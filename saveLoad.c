@@ -109,9 +109,9 @@ void sauvegarde(t_player *player){
         return;
     }
     for (int i = 0; i < player[0].nbJoueurs; ++i) {
-        fprintf(fichierSave, "%d %d %d %d %d %s %d %d %d %d %d\n",
+        fprintf(fichierSave, "%d %d %d %d %d %s %d %d %d %d %d %d\n",
                 player[i].x, player[i].y, player[i].ticket, player[i].points, player[0].nbJoueurs,
-                player[i].name, player[i].position, player[i].animation, player[i].cheval,player[i].bitmap,player[i].perso_sur_bmp);
+                player[i].name, player[i].position, player[i].animation, player[i].cheval,player[i].bitmap,player[i].perso_sur_bmp,player[i].score);
     }
     allegro_exit();
     exit(EXIT_SUCCESS);
@@ -220,9 +220,9 @@ void charger(t_player player[4]){
         printf("Erreur lors de l'ouverture du fichier.\n");
     }
     for (int i = 0; i < player[0].nbJoueurs; i++) {
-        fscanf(fichierSave, "%d %d %d %d %d %s %d %d %d %d %d",
+        fscanf(fichierSave, "%d %d %d %d %d %s %d %d %d %d %d %d",
                &player[i].x, &player[i].y, &player[i].ticket, &player[i].points, &player[i].nbJoueurs,
-               player[i].name, &player[i].position, &player[i].animation, &player[i].cheval,&player[i].bitmap,&player[i].perso_sur_bmp);
+               player[i].name, &player[i].position, &player[i].animation, &player[i].cheval,&player[i].bitmap,&player[i].perso_sur_bmp,&player[i].score);
         printf("%d %d %d %d %d %s %d %d %d %d %d\n",
                player[i].x, player[i].y, player[i].ticket, player[i].points, player[i].nbJoueurs,
                player[i].name, player[i].position, player[i].animation, player[i].cheval,player[i].bitmap,player[i].perso_sur_bmp);
