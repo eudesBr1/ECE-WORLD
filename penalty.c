@@ -4,7 +4,7 @@
 #include "Mabibli.h"
 
 void penalty(t_player *player){
-    while (1){
+    while (!key[KEY_ESC]){
         ///charge image menu et boutons
         BITMAP *buffer;
         buffer = create_bitmap(screen->w,screen->h);
@@ -59,6 +59,7 @@ void penalty(t_player *player){
             }
             show_mouse(buffer);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+            if (key[KEY_ESC]) return;
         } while ( choixJoueur == 10);
         rest(250);
         int choixJoueur2 = 10;
@@ -75,6 +76,8 @@ void penalty(t_player *player){
             }
             show_mouse(buffer);
             blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+            if (key[KEY_ESC]) return;
+
         } while ( choixJoueur2 == 10);
         player[choixJoueur].score = 0;
         for (int i = 0; i < 2; ++i) {
