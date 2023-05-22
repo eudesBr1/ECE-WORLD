@@ -91,6 +91,13 @@ void jackpot_game() {
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+    BITMAP *debut;
+    debut= load_bitmap("../images/debut.bmp", NULL);
+    if (!debut) {
+        allegro_message("Pb de l'image debut");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
 
 ///coordonées de depart des symboles
     int coordonees0 = -4425;
@@ -155,16 +162,23 @@ void jackpot_game() {
             if (key[KEY_ESC]) {
                 break;
             }
+
             while (set == 1 && !key[KEY_ESC]) {
 
-                coordonees_actuelle1 = coordonees[1];
+
+                /*coordonees_actuelle1 = coordonees[1];
                 affichage(coordonees_actuelle1, x1, buffer, symbole_3, background, ticket);
 
                 coordonees_actuelle2 = coordonees[1];
                 affichage(coordonees_actuelle2, x2, buffer, symbole_3, background, ticket);
 
                 coordonees_actuelle3 = coordonees[1];
-                affichage(coordonees_actuelle3, x3, buffer, symbole_3, background, ticket);
+                affichage(coordonees_actuelle3, x3, buffer, symbole_3, background, ticket);*/
+
+                stretch_sprite(buffer,debut,0,0,screen->w,screen->h);
+
+                //masked_blit(debut, buffer, 0, 0, 500, 50, buffer->w,buffer->h);
+
                 if (key[KEY_L]) {///pour quitter le jeu
                     printf("cr7");
                     set = 0;
@@ -173,6 +187,21 @@ void jackpot_game() {
                 }
                 if (key[KEY_J]) {///pour lancer le jeu
                     // printf("lol");
+                    clear(buffer);
+                    coordonees_actuelle1 = coordonees[1];
+                    affichage(coordonees_actuelle1, x1, buffer, symbole_3, background, ticket);
+
+                    coordonees_actuelle2 = coordonees[1];
+                    affichage(coordonees_actuelle2, x2, buffer, symbole_3, background, ticket);
+
+                    coordonees_actuelle3 = coordonees[1];
+                    affichage(coordonees_actuelle3, x3, buffer, symbole_3, background, ticket);
+                    rest(1000);
+                    blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+                    rest(200);
+                    masked_blit(background, buffer, 0, 0, 0, 50, buffer->w, buffer->h);
+                    blit(buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
+                    rest(100);
                     int resultat = rand() % 3;///coordonés d arrivé tiré aleatoiremnt afin d avoir des symbole aléatoire lors du jeu
                     dest = resultat_coordonees[resultat];
                     resultat = rand() % 3;
