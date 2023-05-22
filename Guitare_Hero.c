@@ -427,26 +427,26 @@ void game_GUITARE(t_player *players)
 
         blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         if (erreurs >= 5){
-            allegro_message("fin du jeux vouas avez fait un score de %d",score);
+            //allegro_message("fin du jeux vouas avez fait un score de %d",score);
             if (score<10){
-                allegro_message("pas de chance ... vous pouvez réessayer");
+              //  allegro_message("pas de chance ... vous pouvez réessayer");
                 players->ticket--;
                 return;
             } else if (score<20){
-                allegro_message("pas mal continuez de vous entrainez vous remportez un points mais perdez un ticket");
+                //allegro_message("pas mal continuez de vous entrainez vous remportez un points mais perdez un ticket");
                 players->ticket--;
                 players->points++;
                 return;
             }else if (score<30){
-                allegro_message("vous etes fort vous remportez un point");
+                //allegro_message("vous etes fort vous remportez un point");
                 players->points++;
                 return;
             } else if (score < 50){
-                allegro_message("un sur homme vous gagnez 2 points");
+                //allegro_message("un sur homme vous gagnez 2 points");
                 players->points+=2;
                 return;
             } else if (score > 50){
-                allegro_message("etes vous humains ? vous remportez 2 points et 1 tickets ");
+                //allegro_message("etes vous humains ? vous remportez 2 points et 1 tickets ");
                 players->points+=2;
                 players->ticket++;
                 return;
