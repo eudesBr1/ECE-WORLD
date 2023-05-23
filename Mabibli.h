@@ -66,6 +66,7 @@ typedef struct pong{
     int dx,dy;
 }t_pong;
 
+
 typedef struct ballonFootball{
     BITMAP *effet[6];
     float positionX;

@@ -96,13 +96,13 @@ void ecranFin(int chevalGagnant){
     while (!key[KEY_ESC] && j<2000){
         stretch_blit(menuCourseHippique,buffer,0,0,menuCourseHippique->w,menuCourseHippique->h,0,0,screen->w,screen->h);
         if (chevalGagnant == 1){
-            stretch_sprite(buffer,cheval1,screen->w/2-tailleCheval/2,screen->h/2,tailleCheval*3,tailleCheval*3);
+            stretch_sprite(buffer,cheval1,screen->w/2-tailleCheval,screen->h/2,tailleCheval*3,tailleCheval*3);
         }
         if (chevalGagnant == 2){
-            stretch_sprite(buffer,cheval2,screen->w/2-tailleCheval/2,screen->h/2,tailleCheval*3,tailleCheval*3);
+            stretch_sprite(buffer,cheval2,screen->w/2-tailleCheval,screen->h/2,tailleCheval*3,tailleCheval*3);
         }
         if (chevalGagnant == 3){
-            stretch_sprite(buffer,cheval3,screen->w/2-tailleCheval/2,screen->h/2,tailleCheval*3,tailleCheval*3);
+            stretch_sprite(buffer,cheval3,screen->w/2-tailleCheval,screen->h/2,tailleCheval*3,tailleCheval*3);
         }
         stretch_sprite(buffer,confettis[(j/10)%14],200,screen->h/2,100,100);
         stretch_sprite(buffer,confettis[(j/10)%14],screen->w-200,screen->h/2,100,100);
@@ -316,7 +316,7 @@ int debutCourse(t_player *player){
 
     }
     ///la camera attend a la ligne d'arrivée que les chevaux arrivent
-    while (!key[KEY_ESC] && avanceeCheval1<screen->w/2 && avanceeCheval2<screen->w/2-300){
+    while (!key[KEY_ESC] && avanceeCheval1<screen->w/2 && avanceeCheval2<screen->w/2){
         stretch_blit(fondCourseHippique, buffer, coordonneesPiste, 0, fondCourseHippique->w,fondCourseHippique->h,0,0,fondCourseHippique->w,buffer->h);
         stretch_sprite(buffer,cheval1[i/4],avanceeCheval1,350,tailleCheval,tailleCheval);
         stretch_sprite(buffer,cheval2[k/4],avanceeCheval2,700,tailleCheval,tailleCheval);
@@ -328,7 +328,9 @@ int debutCourse(t_player *player){
         rest(40);
         ///la camera n'avance plus
         //  coordonneesPiste +=10;
-       // printf("Coordonnes cheval %d\n",avanceeCheval1);
+        printf("Coordonnes cheval 1 %d\n",avanceeCheval1);
+        printf("Coordonnes cheval 2 %d\n",avanceeCheval2);
+        printf("Coordonnes cheval 3 %d\n",avanceeCheval3);
         srand(time(NULL));
         avanceeCheval1 += rand()%8+7;
         srand(time(NULL));
@@ -340,7 +342,7 @@ int debutCourse(t_player *player){
         if (k==16) k=0;
         if (j==16) j=0;
     }
-    while (!key[KEY_ESC] && avanceeCheval1<screen->w && avanceeCheval2<screen->w && avanceeCheval3<screen->w){
+    while (!key[KEY_ESC] && avanceeCheval1<screen->w +700){
         #define tailleConfetis 80
         stretch_blit(fondCourseHippique, buffer, coordonneesPiste, 0, fondCourseHippique->w,fondCourseHippique->h,0,0,fondCourseHippique->w,buffer->h);
         stretch_sprite(buffer,cheval1[i/4],avanceeCheval1,350,tailleCheval,tailleCheval);
@@ -353,7 +355,10 @@ int debutCourse(t_player *player){
         rest(40);
         ///la camera n'avance plus
         //  coordonneesPiste +=10;
-      //  printf("Coordonnes cheval %d\n",avanceeCheval1);
+        printf("Coordonnes cheval 1 %d\n",avanceeCheval1);
+        printf("Coordonnes cheval 2 %d\n",avanceeCheval2);
+        printf("Coordonnes cheval 3 %d\n",avanceeCheval3);
+
         //  srand(time(NULL));
         avanceeCheval1 += rand()%8+7;
         srand(time(NULL));
@@ -366,18 +371,18 @@ int debutCourse(t_player *player){
         if (j==16) j=0;
     ///test cheval qui franchit la ligne en premier
     int chevalGagnant;
-    if (400+avanceeCheval1>400+avanceeCheval2 && 400+avanceeCheval1>400+avanceeCheval3){
+    if (avanceeCheval1 > 950 && avanceeCheval1>avanceeCheval2 && avanceeCheval1 > avanceeCheval3){
         printf("Cheval 1 a gagne !\n");
         chevalGagnant = 1;
         return chevalGagnant;
     }
-    if (avanceeCheval2>avanceeCheval1 && avanceeCheval2>avanceeCheval3){
+    if (avanceeCheval2>950 && avanceeCheval2>avanceeCheval1 && avanceeCheval2 > avanceeCheval3){
         printf("Cheval 2 a gagne !\n");
         chevalGagnant = 2;
         return chevalGagnant;
     }
 
-    if (400+avanceeCheval1<400+avanceeCheval3 && 400+avanceeCheval1<400+avanceeCheval3){
+    if (avanceeCheval3>950){
         printf("Cheval 3 a gagne !\n");
         chevalGagnant = 3;
         return chevalGagnant;
