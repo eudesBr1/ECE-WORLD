@@ -99,6 +99,8 @@ typedef struct tuiles{
     int pressed[4][8];
 }t_tuiles;
 
+
+void game_marios();
 void initEcran();
 void gameInit(t_player players[4]);
 void ballon(t_player *player);
@@ -110,7 +112,7 @@ t_player creationPersonnageGoku(t_player *player);
 void affichageVille(t_player players[4]);
 void courseHippique(t_player *player);
 int debutCourse(t_player *player);
-void jackpot_game();
+void jackpot_game(t_player players[4],int numJoueur);
 void game_PONG(t_player player[4],int numJoueur);
 int coinFlip();
 void penalty(t_player *player);
@@ -124,4 +126,5 @@ void charger(t_player player[4]);
 void choixChevaux(t_player *player);
 void ecranFin(int chevalGagnant);
 void game_marios();
+void animation();
 int debutPenalty(t_player *player,int choixJoueur);

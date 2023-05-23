@@ -38,7 +38,7 @@ void defilement(  float coordonees_actuelle, int x, BITMAP *buffer, BITMAP *symb
 
 }
 
-void jackpot_game() {
+void jackpot_game(t_player players[4],int numjoueur) {
     BITMAP *background;
     BITMAP *buffer;
     buffer = create_bitmap(screen->w, screen->h);
@@ -232,6 +232,7 @@ void jackpot_game() {
                     if (dest == dest2 || dest3 == dest2 || dest == dest3) {
                         if (dest == dest2 && dest3 == dest2) {
                             ticket = ticket + 1;
+                            players[numjoueur].points+=2;
                             printf("you won");
                             for (int p = 0; p < 23; p++) {///boucle d'affichage pour faire clignoter le message de fin
                                 masked_blit(win2, buffer, 0, 0, 500, 50, buffer->w,
@@ -267,6 +268,7 @@ void jackpot_game() {
                             rest(100);
                         }
                         ticket = ticket - 1;
+                        players[numjoueur].ticket--;
                     }
                     affichage(0, 0, buffer, symbole_3, background, ticket);
                     set = 3;
