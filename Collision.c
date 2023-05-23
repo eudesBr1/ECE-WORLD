@@ -130,7 +130,7 @@ int collision(t_player *perso,BITMAP *fond,int *numJoueur){
         if (key[KEY_E])
         {
             animation();
-            jackpot_game();
+            jackpot_game(perso,*numJoueur);
             *numJoueur+=1;
         }
 
