@@ -125,4 +125,5 @@ void charger(t_player player[4]);
 void choixChevaux(t_player *player);
 void ecranFin(int chevalGagnant);
 void game_marios();
+void animation();
 int debutPenalty(t_player *player,int choixJoueur);
