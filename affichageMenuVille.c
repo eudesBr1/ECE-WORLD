@@ -3,7 +3,29 @@
 //
 #include "Mabibli.h"
 
+void affichage_defaite(t_player players[4],int perdant)
+{
+    BITMAP *buffer = create_bitmap(screen->w,screen->h);
+    BITMAP *fond;
+    fond = load_bitmap("../images/map_pokemon.bmp",NULL);
+    BITMAP *looser;
+    looser = load_bitmap("../images/looser.bmp",NULL);
 
+    stretch_blit(fond,buffer,0,0,fond->w,fond->h,0,0,buffer->w,buffer->h);
+    stretch_sprite(buffer,looser,screen->w/2-200,200,400,400);
+    stretch_sprite(buffer,players[perdant].bas[1],screen->w/2-100,screen->h/2,200,200);
+    blit(buffer,screen,0,0,0,0,screen->w,screen->h);
+    rest(5000);
+
+    destroy_bitmap(buffer);
+    destroy_bitmap(fond);
+    destroy_bitmap(looser);
+
+    allegro_exit();
+    EXIT_SUCCESS;
+
+
+}
 
 int check_defaite(t_player players[4])
 {
@@ -286,7 +308,13 @@ void affichageVille(t_player players[4]){
 
             tour = tour % players[0].nbJoueurs;
 
+            if (check_defaite(players)!=0)
+                break;
+
         }
-    } while (!check_defaite(players));
+
+    } while (check_defaite(players) == 0);
+    animation();
+    affichage_defaite(players, check_defaite(players)-1);
 
 }
